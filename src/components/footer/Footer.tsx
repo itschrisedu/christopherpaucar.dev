@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { Container } from "@/components/layout/Container";
+import { SectionContent } from "@/components/layout/SectionContent";
 
 const links = [
   { label: "Home", href: "#hero" },
@@ -13,8 +15,9 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border dark:border-white/8 bg-surface dark:bg-[#0e0e0e]">
-      <div className="max-w-[1240px] mx-auto px-6 sm:px-10 lg:px-20 py-16">
+    <footer className="border-t border-border dark:border-white/10 bg-surface dark:bg-[#0d0d0d]">
+      <Container className="py-16">
+        <SectionContent>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-10">
           {/* Logo */}
           <div className="flex items-center gap-4">
@@ -36,17 +39,18 @@ export default function Footer() {
           <div className="flex items-center gap-3">
             {socials.map((s) => (
               <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
-                className="flex items-center justify-center h-10 w-10 rounded-xl border border-border dark:border-white/8 text-[12px] font-bold text-secondary hover:text-accent hover:border-accent/25 transition-all duration-200"
+                className="flex items-center justify-center h-10 w-10 rounded-xl border border-border dark:border-white/10 text-[12px] font-bold text-secondary hover:text-accent hover:border-accent/25 transition-all duration-200"
               >{s.icon}</a>
             ))}
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-border dark:border-white/8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-12 pt-8 border-t border-border dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-[12px] text-muted">&copy; {new Date().getFullYear()} Christopher Paucar. All rights reserved.</p>
           <p className="text-[12px] text-faint">Built with Next.js, TailwindCSS & Framer Motion</p>
         </div>
-      </div>
+        </SectionContent>
+      </Container>
     </footer>
   );
 }

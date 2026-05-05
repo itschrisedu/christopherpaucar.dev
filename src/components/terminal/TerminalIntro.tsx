@@ -62,9 +62,6 @@ export default function TerminalIntro({ onComplete }: TerminalIntroProps) {
   const [accessDots, setAccessDots] = useState("");
 
   const scrollRef = useRef<HTMLDivElement>(null);
-  const audioPool = useRef<HTMLAudioElement[]>([]);
-  const audioIndex = useRef(0);
-  const audioUnlocked = useRef(false);
   const hasStarted = useRef(false);
 
   // Auto-scroll
@@ -73,44 +70,6 @@ export default function TerminalIntro({ onComplete }: TerminalIntroProps) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [displayedLines, currentTyping]);
-
-  // Create a pool of audio elements for fast overlapping playback
-  useEffect(() => {
-    const POOL_SIZE = 6;
-    const pool: HTMLAudioElement[] = [];
-    for (let i = 0; i < POOL_SIZE; i++) {
-      const audio = new Audio("/assets/sounds/sound.ogg");
-      audio.volume = 0.35;
-      audio.preload = "auto";
-      pool.push(audio);
-    }
-    audioPool.current = pool;
-    return () => {
-      pool.forEach((a) => { a.pause(); a.src = ""; });
-    };
-  }, []);
-
-  /* ── Invisible audio unlock on first user gesture ───────────── */
-  useEffect(() => {
-    const unlock = () => {
-      if (audioUnlocked.current) return;
-      // Unlock all pool elements with a silent play
-      audioPool.current.forEach((audio) => {
-        audio.play().then(() => { audio.pause(); audio.currentTime = 0; }).catch(() => {});
-      });
-      audioUnlocked.current = true;
-    };
-
-    window.addEventListener("click", unlock, { once: true });
-    window.addEventListener("keydown", unlock, { once: true });
-    window.addEventListener("touchstart", unlock, { once: true });
-
-    return () => {
-      window.removeEventListener("click", unlock);
-      window.removeEventListener("keydown", unlock);
-      window.removeEventListener("touchstart", unlock);
-    };
-  }, []);
 
   // ESC to skip
   useEffect(() => {
@@ -121,24 +80,6 @@ export default function TerminalIntro({ onComplete }: TerminalIntroProps) {
     return () => window.removeEventListener("keydown", handleKey);
   }, [onComplete]);
 
-  /* ── Keystroke sound (round-robin pool, fast) ───────────────── */
-  const playKeystroke = useCallback(() => {
-    if (!audioUnlocked.current || audioPool.current.length === 0) return;
-    const pool = audioPool.current;
-    const audio = pool[audioIndex.current % pool.length];
-    audioIndex.current++;
-    try {
-      const maxOffset = audio.duration - 0.1;
-      if (maxOffset > 0 && !isNaN(maxOffset)) {
-        audio.currentTime = Math.random() * maxOffset;
-      }
-      audio.play().catch(() => {});
-      setTimeout(() => { audio.pause(); }, 60);
-    } catch {
-      // silent
-    }
-  }, []);
-
   /* ── Typing engine ──────────────────────────────────────────── */
   const typeCommand = useCallback(
     (text: string, speed: number = TYPING_SPEED): Promise<void> => {
@@ -148,7 +89,6 @@ export default function TerminalIntro({ onComplete }: TerminalIntroProps) {
         const interval = setInterval(() => {
           i++;
           setCurrentTyping(text.slice(0, i));
-          playKeystroke();
           if (i >= text.length) {
             clearInterval(interval);
             setIsTyping(false);
@@ -157,7 +97,7 @@ export default function TerminalIntro({ onComplete }: TerminalIntroProps) {
         }, speed);
       });
     },
-    [playKeystroke]
+    []
   );
 
   const showOutputs = useCallback(
@@ -344,7 +284,7 @@ export default function TerminalIntro({ onComplete }: TerminalIntroProps) {
             <span className="block h-3 w-3 rounded-full bg-terminal-green/80" />
           </div>
           <div className="flex-1 text-center">
-            <span className="text-xs font-mono text-terminal-muted tracking-wide">
+            <span suppressHydrationWarning className="text-xs font-mono text-terminal-muted tracking-wide">
               christopher@dev ~ portfolio
             </span>
           </div>

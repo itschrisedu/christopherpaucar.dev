@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /* ── Design System Tokens ─────────────────────────────────────── */
 @theme inline {
@@ -51,21 +52,21 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
-.dark body {
-  background-color: #0b0b0b;
+[data-theme="dark"] body {
+  background-color: #070707;
   color: #ffffff;
 }
 
 /* ── Dark mode color overrides ────────────────────────────────── */
-.dark {
+[data-theme="dark"] {
   --color-primary: #ffffff;
-  --color-secondary: #a0a0a0;
-  --color-muted: #666;
-  --color-faint: #444;
-  --color-surface: #111;
-  --color-card: #161616;
-  --color-border: #2a2a2a;
-  --color-border-hover: #3a3a3a;
+  --color-secondary: #b4b4b4;
+  --color-muted: #8a8a8a;
+  --color-faint: #5a5a5a;
+  --color-surface: #101010;
+  --color-card: #171717;
+  --color-border: #2f2f2f;
+  --color-border-hover: #454545;
 }
 
 /* ── Terminal ──────────────────────────────────────────────────── */

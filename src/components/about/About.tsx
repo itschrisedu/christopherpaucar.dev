@@ -3,6 +3,9 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
+import { Container } from "@/components/layout/Container";
+import { SectionContent } from "@/components/layout/SectionContent";
+import { SectionHeading } from "@/components/layout/SectionHeading";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -19,15 +22,16 @@ export default function About() {
   ];
 
   return (
-    <section id="about" ref={ref} className="relative py-24 sm:py-32 bg-white dark:bg-[#0b0b0b] overflow-hidden">
+    <section id="about" ref={ref} className="relative scroll-mt-28 py-20 sm:py-24 bg-white dark:bg-[#0b0b0b] overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       <div className="absolute top-[20%] right-[-5%] w-[500px] h-[500px] bg-accent/[0.04] rounded-full blur-[150px] pointer-events-none" />
 
-      <div className="max-w-[1240px] mx-auto px-6 sm:px-10 lg:px-20 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+      <Container>
+        <SectionContent>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start">
           {/* Photo + Stats */}
           <motion.div initial={{ opacity: 0, x: -30 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.8, ease: EASE }} className="space-y-6">
-            <div className="relative overflow-hidden rounded-3xl border border-border dark:border-white/8 shadow-2xl shadow-black/8 dark:shadow-black/30">
+            <div className="relative overflow-hidden rounded-3xl border border-border dark:border-white/10 shadow-xl shadow-black/8 dark:shadow-black/30">
               <Image src="/assets/icons/hero1.svg" alt="Christopher Paucar" width={600} height={400} className="w-full h-auto object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/15 to-transparent" />
             </div>
@@ -46,12 +50,10 @@ export default function About() {
 
           {/* Text */}
           <motion.div initial={{ opacity: 0, x: 30 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.8, delay: 0.15, ease: EASE }} className="space-y-8 lg:pt-4">
-            <div>
-              <span className="inline-block text-[11px] font-mono font-bold uppercase tracking-[0.3em] text-accent mb-4">{locale === "en" ? "About" : "Acerca"}</span>
-              <h2 className="text-[2rem] sm:text-[2.5rem] font-bold tracking-[-0.03em] text-primary leading-[1.15] whitespace-pre-line">
-                {locale === "en" ? "Focused on what matters —\nbuilding software that works." : "Enfocado en lo que importa —\nconstruir software que funciona."}
-              </h2>
-            </div>
+            <SectionHeading
+              label={locale === "en" ? "About" : "Acerca"}
+              title={locale === "en" ? "Focused on what matters — building software that works." : "Enfocado en lo que importa — construir software que funciona."}
+            />
             <p className="text-[15px] leading-[1.8] text-secondary">
               {locale === "en"
                 ? "I'm a Full Stack Developer from Ecuador. I build web applications that solve real business problems using modern technologies. My approach: understand the problem, design clean architecture, execute with precision, deliver measurable results."
@@ -75,7 +77,8 @@ export default function About() {
             </div>
           </motion.div>
         </div>
-      </div>
+        </SectionContent>
+      </Container>
     </section>
   );
 }

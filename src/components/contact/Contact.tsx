@@ -2,6 +2,9 @@
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
+import { Container } from "@/components/layout/Container";
+import { SectionContent } from "@/components/layout/SectionContent";
+import { SectionHeading } from "@/components/layout/SectionHeading";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 const WHATSAPP = "593987964745";
@@ -47,17 +50,16 @@ export default function Contact() {
   const inputClass = "w-full rounded-xl border border-border dark:border-white/10 bg-white dark:bg-[#0b0b0b] px-4 py-3.5 text-[14px] text-primary placeholder:text-muted outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition-all duration-300";
 
   return (
-    <section id="contact" ref={ref} className="relative py-32 sm:py-40 bg-white dark:bg-[#0b0b0b] overflow-hidden">
+    <section id="contact" ref={ref} className="relative scroll-mt-28 py-20 sm:py-24 bg-white dark:bg-[#0b0b0b] overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-accent/[0.04] rounded-full blur-[180px] pointer-events-none" />
 
-      <div className="max-w-[1240px] mx-auto px-6 sm:px-10 lg:px-20 w-full relative">
+      <Container className="relative">
+        <SectionContent>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20">
           {/* Left: Info */}
           <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: EASE }}>
-            <span className="inline-block text-[11px] font-mono font-bold uppercase tracking-[0.3em] text-accent mb-5">{t.contact.label[locale]}</span>
-            <h2 className="text-[2.2rem] sm:text-[2.8rem] lg:text-[3.2rem] font-bold tracking-[-0.03em] text-primary leading-[1.1]">{t.contact.title[locale]}</h2>
-            <p className="mt-6 text-[15px] text-secondary max-w-md leading-[1.8]">{t.contact.subtitle[locale]}</p>
+            <SectionHeading label={t.contact.label[locale]} title={t.contact.title[locale]} subtitle={t.contact.subtitle[locale]} />
 
             <div className="mt-10 space-y-4">
               <div className="flex items-center gap-5 p-5 rounded-2xl bg-surface dark:bg-[#151515] border border-border dark:border-white/8 hover:border-accent/25 transition-all duration-500">
@@ -84,7 +86,7 @@ export default function Contact() {
 
           {/* Right: Form */}
           <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: 0.15, ease: EASE }}>
-            <form onSubmit={handleSubmit} className="p-9 sm:p-10 rounded-3xl bg-surface dark:bg-[#151515] border border-border dark:border-white/8 shadow-2xl shadow-black/5 dark:shadow-black/30 space-y-6">
+            <form onSubmit={handleSubmit} className="p-9 sm:p-10 rounded-3xl bg-card dark:bg-[#151515] border border-border dark:border-white/10 shadow-xl shadow-black/5 dark:shadow-black/30 space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                   <label htmlFor="name" className="block text-[11px] font-bold text-primary mb-2.5 uppercase tracking-[0.15em]">{t.contact.name[locale]}</label>
@@ -138,7 +140,8 @@ export default function Contact() {
             </form>
           </motion.div>
         </div>
-      </div>
+        </SectionContent>
+      </Container>
     </section>
   );
 }

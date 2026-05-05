@@ -6,6 +6,8 @@ import dynamic from "next/dynamic";
 import { useLanguage } from "@/context/LanguageContext";
 import { ShootingStars } from "@/components/ui/shooting-stars";
 import { StarsBackground } from "@/components/ui/stars-background";
+import { Container } from "@/components/layout/Container";
+import { Button } from "@/components/ui/button";
 
 const World = dynamic(() => import("@/components/ui/globe").then((m) => m.World), { ssr: false });
 
@@ -52,7 +54,7 @@ export default function Hero() {
   const { locale, t } = useLanguage();
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center overflow-hidden bg-white dark:bg-[#0b0b0b]">
+    <section id="hero" className="relative scroll-mt-28 min-h-screen overflow-hidden bg-white dark:bg-[#070707]">
       {/* Background effects */}
       <div className="absolute inset-0">
         <div className="hidden dark:block">
@@ -61,8 +63,8 @@ export default function Hero() {
           <ShootingStars minSpeed={10} maxSpeed={25} minDelay={2500} maxDelay={5000} starColor="#67e8f9" trailColor="#06b6d4" starWidth={12} starHeight={1} />
         </div>
         <div className="absolute inset-0 opacity-[0.25] dark:opacity-0" style={{ backgroundImage: `radial-gradient(circle at 1px 1px, #d4d4d4 1px, transparent 0)`, backgroundSize: "40px 40px" }} />
-        <div className="absolute top-[-10%] right-[10%] w-[600px] h-[600px] bg-accent/8 rounded-full blur-[150px]" />
-        <div className="absolute bottom-[-5%] left-[5%] w-[400px] h-[400px] bg-accent-orange/5 rounded-full blur-[120px]" />
+        <div className="absolute top-[-10%] right-[10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[150px]" />
+        <div className="absolute bottom-[-5%] left-[5%] w-[400px] h-[400px] bg-accent-orange/10 rounded-full blur-[120px]" />
         <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-white/80 dark:from-[#0b0b0b]/80 to-transparent z-[1]" />
       </div>
 
@@ -77,10 +79,10 @@ export default function Hero() {
       </motion.div>
 
       {/* Content — centered with grid layout */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-20 py-32 sm:py-40">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Left column */}
-          <div className="flex flex-col gap-7">
+      <div className="relative z-10 flex min-h-screen items-center pt-28 pb-20 sm:pt-32 sm:pb-24">
+        <Container>
+          <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-12 lg:gap-10">
+            <div className="mx-auto max-w-2xl lg:mx-0 lg:col-span-5 lg:col-start-2 lg:max-w-none flex flex-col gap-7 rounded-3xl border border-border/80 dark:border-white/10 bg-white/80 dark:bg-white/[0.04] p-6 sm:p-8 backdrop-blur-md shadow-xl shadow-black/5">
             {/* Badge */}
             <motion.div custom={0} variants={fadeUp} initial="hidden" animate="visible">
               <span className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-border bg-white/80 dark:bg-white/5 backdrop-blur-sm shadow-sm">
@@ -102,15 +104,15 @@ export default function Hero() {
               </div>
               <div>
                 <p className="text-[12px] font-mono font-bold text-accent tracking-[0.2em] uppercase mb-1.5">{t.hero.role[locale]}</p>
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-primary leading-[1.05]">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-primary leading-[1.02]">
                   Christopher<br />
-                  <span className="text-secondary">Paucar</span>
+                  <span className="text-primary/80">Paucar</span>
                 </h1>
               </div>
             </motion.div>
 
             {/* Tagline */}
-            <motion.h2 custom={2} variants={fadeUp} initial="hidden" animate="visible" className="text-xl sm:text-2xl font-semibold text-primary/90 leading-snug max-w-lg whitespace-pre-line">
+            <motion.h2 custom={2} variants={fadeUp} initial="hidden" animate="visible" className="text-xl sm:text-2xl font-semibold text-primary leading-snug max-w-lg whitespace-pre-line">
               {t.hero.title[locale]}
             </motion.h2>
 
@@ -121,13 +123,17 @@ export default function Hero() {
 
             {/* CTAs */}
             <motion.div custom={4} variants={fadeUp} initial="hidden" animate="visible" className="flex flex-col sm:flex-row items-start gap-4">
-              <a href="#contact" className="group inline-flex h-[52px] items-center justify-center gap-3 rounded-2xl bg-accent px-9 text-sm font-bold text-[#0b0b0b] shadow-xl shadow-accent/25 hover:shadow-2xl hover:shadow-accent/35 hover:bg-accent-hover transition-all duration-300 hover:-translate-y-0.5">
+              <Button asChild size="lg" className="group hover:-translate-y-0.5">
+                <a href="#contact">
                 {t.hero.cta[locale]}
                 <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-              </a>
-              <a href="#projects" className="inline-flex h-[52px] items-center justify-center rounded-2xl border-2 border-border dark:border-white/15 px-9 text-sm font-semibold text-primary hover:border-accent hover:text-accent hover:bg-accent/5 transition-all duration-300">
+                </a>
+              </Button>
+              <Button asChild size="lg" variant="secondary">
+                <a href="#projects">
                 {t.hero.ctaSecondary[locale]}
-              </a>
+                </a>
+              </Button>
             </motion.div>
 
             {/* Stack */}
@@ -141,9 +147,10 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Right column — empty spacer for globe area on desktop */}
-          <div className="hidden lg:block" aria-hidden="true" />
-        </div>
+            {/* Right column spacer to balance globe */}
+            <div className="hidden lg:block lg:col-span-6" aria-hidden="true" />
+          </div>
+        </Container>
       </div>
 
       {/* Scroll indicator */}
