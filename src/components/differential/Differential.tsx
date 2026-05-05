@@ -22,7 +22,7 @@ export default function Differential() {
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-accent/[0.04] rounded-full blur-[180px] pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-16 w-full relative">
+      <div className="max-w-[1240px] mx-auto px-6 sm:px-10 lg:px-20 w-full relative">
         <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: EASE }} className="mb-20 text-center max-w-2xl mx-auto">
           <span className="inline-block text-[11px] font-mono font-bold uppercase tracking-[0.3em] text-accent mb-5">{t.differential.label[locale]}</span>
           <h2 className="text-[2.2rem] sm:text-[2.8rem] lg:text-[3.2rem] font-bold tracking-[-0.03em] text-primary leading-[1.1]">{t.differential.title[locale]}</h2>

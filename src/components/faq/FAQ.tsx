@@ -16,7 +16,8 @@ export default function FAQ() {
     <section id="faq" ref={ref} className="relative py-32 sm:py-40 bg-surface dark:bg-[#0e0e0e] overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
-      <div className="max-w-3xl mx-auto px-6 sm:px-8 lg:px-12 w-full">
+      <div className="max-w-[1240px] mx-auto px-6 sm:px-10 lg:px-20 w-full">
+        <div className="max-w-3xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: EASE }} className="mb-16 text-center">
           <span className="inline-block text-[11px] font-mono font-bold uppercase tracking-[0.3em] text-accent mb-5">{t.faq.label[locale]}</span>
           <h2 className="text-[2.2rem] sm:text-[2.8rem] lg:text-[3.2rem] font-bold tracking-[-0.03em] text-primary leading-[1.1]">{t.faq.title[locale]}</h2>
@@ -49,6 +50,7 @@ export default function FAQ() {
               </AnimatePresence>
             </motion.div>
           ))}
+        </div>
         </div>
       </div>
     </section>

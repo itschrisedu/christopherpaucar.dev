@@ -9,22 +9,23 @@ const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "sw
 const jetbrainsMono = JetBrains_Mono({ variable: "--font-jetbrains", subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Christopher Paucar — Full Stack Developer",
-  description: "I build web applications focused on conversion and performance. Clean architecture, real results.",
-  keywords: ["Christopher Paucar", "Full Stack Developer", "Next.js", "React", "TypeScript", "NestJS", "Portfolio"],
+  title: "Christopher Paucar — Full Stack Developer | Web Apps That Convert",
+  description: "I help startups and growing businesses ship full-stack web applications that load fast, convert visitors, and scale. Next.js, NestJS, TypeScript, PostgreSQL.",
+  keywords: ["Christopher Paucar", "Full Stack Developer", "Next.js", "React", "TypeScript", "NestJS", "Web Development", "Ecuador", "Freelance Developer"],
   authors: [{ name: "Christopher Paucar" }],
   openGraph: {
     title: "Christopher Paucar — Full Stack Developer",
-    description: "Web applications focused on conversion and performance.",
+    description: "Web applications built to convert, not just to look good. From database to UI — one developer, zero gaps.",
     url: "https://christopherpaucar.dev",
     siteName: "Christopher Paucar",
     type: "website",
     locale: "en_US",
+    alternateLocale: "es_EC",
   },
   twitter: {
     card: "summary_large_image",
     title: "Christopher Paucar — Full Stack Developer",
-    description: "Web applications focused on conversion and performance.",
+    description: "Web applications built to convert, not just to look good.",
   },
   icons: {
     icon: "/assets/icons/logoC.svg",

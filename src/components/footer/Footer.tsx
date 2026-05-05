@@ -7,14 +7,14 @@ const links = [
   { label: "Contact", href: "#contact" },
 ];
 const socials = [
-  { label: "GitHub", href: "https://github.com/christopherpaucar", icon: "GH" },
-  { label: "LinkedIn", href: "https://linkedin.com/in/christopherpaucar", icon: "LI" },
+  { label: "GitHub", href: "https://github.com/itschrisedu", icon: "GH" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/christopher-paucar-949a32234/", icon: "LI" },
 ];
 
 export default function Footer() {
   return (
     <footer className="border-t border-border dark:border-white/8 bg-surface dark:bg-[#0e0e0e]">
-      <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-16 py-16">
+      <div className="max-w-[1240px] mx-auto px-6 sm:px-10 lg:px-20 py-16">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-10">
           {/* Logo */}
           <div className="flex items-center gap-4">

@@ -37,12 +37,12 @@ const TERMINAL_LINES: TerminalLine[] = [
 ];
 
 /* ── Timing ───────────────────────────────────────────────────── */
-const TYPING_SPEED = 55;
-const OUTPUT_DELAY = 250;
-const LINE_OUTPUT_DELAY = 120;
-const NEXT_COMMAND_DELAY = 700;
-const ACCESS_TYPING_SPEED = 40;
-const WAIT_BEFORE_TRANSITION = 4000;
+const TYPING_SPEED = 30;
+const OUTPUT_DELAY = 120;
+const LINE_OUTPUT_DELAY = 60;
+const NEXT_COMMAND_DELAY = 300;
+const ACCESS_TYPING_SPEED = 25;
+const WAIT_BEFORE_TRANSITION = 1200;
 
 /* ────────────────────────────────────────────────────────────────
    COMPONENT

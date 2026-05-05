@@ -5,22 +5,53 @@ import { useLanguage } from "@/context/LanguageContext";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 const WHATSAPP = "593987964745";
+const FORMSPREE_URL = "https://formspree.io/f/xpwrpjqo";
 
 export default function Contact() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const { locale, t } = useLanguage();
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
-  const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); setSubmitted(true); setTimeout(() => setSubmitted(false), 3000); };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus("sending");
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const res = await fetch(FORMSPREE_URL, {
+        method: "POST",
+        body: formData,
+        headers: { Accept: "application/json" },
+      });
+
+      if (res.ok) {
+        setStatus("sent");
+        form.reset();
+        setTimeout(() => setStatus("idle"), 4000);
+      } else {
+        setStatus("error");
+        setTimeout(() => setStatus("idle"), 4000);
+      }
+    } catch {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 4000);
+    }
+  };
+
   const waMsg = locale === "en" ? "Hi Christopher, I have a project inquiry." : "Hola Christopher, tengo una consulta de proyecto.";
+
+  const selectClass = "w-full rounded-xl border border-border dark:border-white/10 bg-white dark:bg-[#0b0b0b] px-4 py-3.5 text-[14px] text-primary outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition-all duration-300 appearance-none cursor-pointer";
+  const inputClass = "w-full rounded-xl border border-border dark:border-white/10 bg-white dark:bg-[#0b0b0b] px-4 py-3.5 text-[14px] text-primary placeholder:text-muted outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition-all duration-300";
 
   return (
     <section id="contact" ref={ref} className="relative py-32 sm:py-40 bg-white dark:bg-[#0b0b0b] overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-accent/[0.04] rounded-full blur-[180px] pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-16 w-full relative">
+      <div className="max-w-[1240px] mx-auto px-6 sm:px-10 lg:px-20 w-full relative">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20">
           {/* Left: Info */}
           <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: EASE }}>
@@ -33,7 +64,7 @@ export default function Contact() {
                 <div className="flex h-13 w-13 items-center justify-center rounded-xl bg-gradient-to-br from-accent/20 to-accent-orange/10 flex-shrink-0">
                   <svg className="h-5 w-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
                 </div>
-                <div><p className="text-[14px] font-bold text-primary">Email</p><p className="text-[13px] text-secondary mt-0.5">hello@christopherpaucar.dev</p></div>
+                <div><p className="text-[14px] font-bold text-primary">Email</p><p className="text-[13px] text-secondary mt-0.5">chrispaucar49@gmail.com</p></div>
               </div>
               <div className="flex items-center gap-5 p-5 rounded-2xl bg-surface dark:bg-[#151515] border border-border dark:border-white/8 hover:border-accent/25 transition-all duration-500">
                 <div className="flex h-13 w-13 items-center justify-center rounded-xl bg-gradient-to-br from-accent/20 to-accent-orange/10 flex-shrink-0">
@@ -57,24 +88,53 @@ export default function Contact() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                   <label htmlFor="name" className="block text-[11px] font-bold text-primary mb-2.5 uppercase tracking-[0.15em]">{t.contact.name[locale]}</label>
-                  <input id="name" type="text" required placeholder={t.contact.namePlaceholder[locale]} className="w-full rounded-xl border border-border dark:border-white/10 bg-white dark:bg-[#0b0b0b] px-4 py-3.5 text-[14px] text-primary placeholder:text-muted outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition-all duration-300" />
+                  <input id="name" name="name" type="text" required placeholder={t.contact.namePlaceholder[locale]} className={inputClass} />
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-[11px] font-bold text-primary mb-2.5 uppercase tracking-[0.15em]">{t.contact.email[locale]}</label>
-                  <input id="email" type="email" required placeholder={t.contact.emailPlaceholder[locale]} className="w-full rounded-xl border border-border dark:border-white/10 bg-white dark:bg-[#0b0b0b] px-4 py-3.5 text-[14px] text-primary placeholder:text-muted outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition-all duration-300" />
+                  <input id="email" name="email" type="email" required placeholder={t.contact.emailPlaceholder[locale]} className={inputClass} />
                 </div>
               </div>
               <div>
                 <label htmlFor="subject" className="block text-[11px] font-bold text-primary mb-2.5 uppercase tracking-[0.15em]">{t.contact.subject[locale]}</label>
-                <input id="subject" type="text" required placeholder={t.contact.subjectPlaceholder[locale]} className="w-full rounded-xl border border-border dark:border-white/10 bg-white dark:bg-[#0b0b0b] px-4 py-3.5 text-[14px] text-primary placeholder:text-muted outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition-all duration-300" />
+                <input id="subject" name="subject" type="text" required placeholder={t.contact.subjectPlaceholder[locale]} className={inputClass} />
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label htmlFor="budget" className="block text-[11px] font-bold text-primary mb-2.5 uppercase tracking-[0.15em]">{t.contact.budget[locale]}</label>
+                  <select id="budget" name="budget" className={selectClass} defaultValue="">
+                    {t.contact.budgetOptions[locale].map((opt: string, i: number) => (
+                      <option key={opt} value={i === 0 ? "" : opt} disabled={i === 0}>{opt}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="timeline" className="block text-[11px] font-bold text-primary mb-2.5 uppercase tracking-[0.15em]">{t.contact.timeline[locale]}</label>
+                  <select id="timeline" name="timeline" className={selectClass} defaultValue="">
+                    {t.contact.timelineOptions[locale].map((opt: string, i: number) => (
+                      <option key={opt} value={i === 0 ? "" : opt} disabled={i === 0}>{opt}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
               <div>
                 <label htmlFor="message" className="block text-[11px] font-bold text-primary mb-2.5 uppercase tracking-[0.15em]">{t.contact.message[locale]}</label>
-                <textarea id="message" required rows={5} placeholder={t.contact.messagePlaceholder[locale]} className="w-full rounded-xl border border-border dark:border-white/10 bg-white dark:bg-[#0b0b0b] px-4 py-3.5 text-[14px] text-primary placeholder:text-muted outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition-all duration-300 resize-none" />
+                <textarea id="message" name="message" required rows={5} placeholder={t.contact.messagePlaceholder[locale]} className={`${inputClass} resize-none`} />
               </div>
-              <button type="submit" disabled={submitted}
-                className="w-full sm:w-auto inline-flex h-[52px] items-center justify-center gap-2 rounded-2xl bg-accent px-10 text-[14px] font-bold text-[#0b0b0b] shadow-xl shadow-accent/20 hover:shadow-2xl hover:shadow-accent/30 hover:bg-accent-hover transition-all duration-300 disabled:opacity-50 cursor-pointer"
-              >{submitted ? t.contact.sent[locale] : t.contact.cta[locale]}</button>
+              <button type="submit" disabled={status === "sending" || status === "sent"}
+                className={`w-full sm:w-auto inline-flex h-[52px] items-center justify-center gap-2 rounded-2xl px-10 text-[14px] font-bold shadow-xl transition-all duration-300 cursor-pointer ${
+                  status === "sent"
+                    ? "bg-green-500 text-white shadow-green-500/20"
+                    : status === "error"
+                    ? "bg-red-500 text-white shadow-red-500/20"
+                    : "bg-accent text-[#0b0b0b] shadow-accent/20 hover:shadow-2xl hover:shadow-accent/30 hover:bg-accent-hover"
+                } disabled:opacity-60`}
+              >
+                {status === "sending" && t.contact.sending[locale]}
+                {status === "sent" && t.contact.sent[locale]}
+                {status === "error" && t.contact.error[locale]}
+                {status === "idle" && t.contact.cta[locale]}
+              </button>
             </form>
           </motion.div>
         </div>

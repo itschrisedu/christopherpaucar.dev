@@ -117,8 +117,8 @@ export default function Navbar() {
           href="#contact"
           className="rounded-xl px-6 py-2.5 text-[13px] font-semibold bg-accent text-[#0b0b0b] hover:bg-accent-hover transition-all duration-200 hover:shadow-lg hover:shadow-accent/30"
         >
-          <span className="hidden sm:block">{t.contact.cta[locale]}</span>
-          <span className="block sm:hidden text-base">✉</span>
+          <span className="hidden sm:block">{t.contact.ctaNav[locale]}</span>
+          <span className="block sm:hidden text-[12px] font-bold">{locale === "en" ? "Start" : "Iniciar"}</span>
         </a>
       </div>
     </motion.nav>
