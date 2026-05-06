@@ -6,6 +6,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { Container } from "@/components/layout/Container";
 import { SectionContent } from "@/components/layout/SectionContent";
 import { SectionHeading } from "@/components/layout/SectionHeading";
+import { IconCloudDemo } from "@/components/about/IconCloudDemo";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -59,6 +60,14 @@ export default function About() {
                 ? "I'm a Full Stack Developer from Ecuador. I build web applications that solve real business problems using modern technologies. My approach: understand the problem, design clean architecture, execute with precision, deliver measurable results."
                 : "Soy Desarrollador Full Stack de Ecuador. Construyo aplicaciones web que resuelven problemas reales de negocio con tecnologías modernas. Mi enfoque: entender el problema, diseñar arquitectura limpia, ejecutar con precisión, entregar resultados medibles."}
             </p>
+
+            <div>
+              <h3 className="text-[11px] font-mono font-bold uppercase tracking-[0.3em] text-accent mb-6">
+                {locale === "en" ? "Tech stack" : "Tecnologías"}
+              </h3>
+              <IconCloudDemo />
+            </div>
+
             <div className="h-px bg-gradient-to-r from-border to-transparent" />
             <div>
               <h3 className="text-[11px] font-mono font-bold uppercase tracking-[0.3em] text-accent mb-6">{locale === "en" ? "Experience" : "Experiencia"}</h3>
