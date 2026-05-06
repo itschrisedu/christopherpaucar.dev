@@ -93,6 +93,7 @@ const translations = {
           result: "80 commits of production code. Complete CRUD for policies, clients, contracts, and reimbursements. Deployed with Docker.",
           tags: ["Next.js", "NestJS", "PostgreSQL", "Docker", "JWT"],
           github: "https://github.com/itschrisedu/life_insurance_front",
+          image: "/assets/projects/insurance.svg",
         },
         {
           title: "GeoRutas — Route Optimizer",
@@ -102,6 +103,7 @@ const translations = {
           result: "Real-time route optimization with fuel cost estimation. Multi-stop support, responsive design, and geolocation.",
           tags: ["React", "TypeScript", "Node.js", "Leaflet", "OSRM"],
           github: "https://github.com/itschrisedu/GeoRutas_-ptimas",
+          image: "/assets/projects/georutas.svg",
         },
         {
           title: "BioAcces — Biometric Security",
@@ -111,6 +113,7 @@ const translations = {
           result: "Multi-factor biometric authentication deployed in university lab. Zero unauthorized access incidents.",
           tags: ["Python", "Django", "JavaScript", "OpenCV", "Biometrics"],
           github: "https://github.com/itschrisedu/Bioacces",
+          image: "/assets/projects/bioacces.svg",
         },
         {
           title: "MoviPass — Mobility Platform",
@@ -120,6 +123,7 @@ const translations = {
           result: "Clean, responsive interface with optimized user flow. Scalable component structure for future expansion.",
           tags: ["Angular", "TypeScript", "SCSS", "RxJS"],
           github: "https://github.com/itschrisedu/movipass-frontend",
+          image: "/assets/projects/movipass.svg",
         },
       ],
       es: [
@@ -131,6 +135,7 @@ const translations = {
           result: "80 commits de código en producción. CRUD completo para pólizas, clientes, contratos y reembolsos. Desplegado con Docker.",
           tags: ["Next.js", "NestJS", "PostgreSQL", "Docker", "JWT"],
           github: "https://github.com/itschrisedu/life_insurance_front",
+          image: "/assets/projects/insurance.svg",
         },
         {
           title: "GeoRutas — Optimizador de Rutas",
@@ -140,6 +145,7 @@ const translations = {
           result: "Optimización de rutas en tiempo real con estimación de costos de combustible. Soporte multi-parada, diseño responsive y geolocalización.",
           tags: ["React", "TypeScript", "Node.js", "Leaflet", "OSRM"],
           github: "https://github.com/itschrisedu/GeoRutas_-ptimas",
+          image: "/assets/projects/georutas.svg",
         },
         {
           title: "BioAcces — Seguridad Biométrica",
@@ -149,6 +155,7 @@ const translations = {
           result: "Autenticación biométrica multifactor desplegada en laboratorio universitario. Cero incidentes de acceso no autorizado.",
           tags: ["Python", "Django", "JavaScript", "OpenCV", "Biometrics"],
           github: "https://github.com/itschrisedu/Bioacces",
+          image: "/assets/projects/bioacces.svg",
         },
         {
           title: "MoviPass — Plataforma de Movilidad",
@@ -158,6 +165,7 @@ const translations = {
           result: "Interfaz limpia y responsive con flujo de usuario optimizado. Estructura de componentes escalable para expansión futura.",
           tags: ["Angular", "TypeScript", "SCSS", "RxJS"],
           github: "https://github.com/itschrisedu/movipass-frontend",
+          image: "/assets/projects/movipass.svg",
         },
       ],
     },

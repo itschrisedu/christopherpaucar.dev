@@ -36,17 +36,18 @@ export default function FAQ() {
                       : "bg-white dark:bg-[#151515] border-border dark:border-white/8 hover:border-accent/20 hover:shadow-lg hover:shadow-accent/[0.03]"
                     }`}
                 >
-                  <span className="text-[15px] font-bold text-primary">{item.q}</span>
+                  <span className="text-[15px] font-bold text-primary dark:text-white">{item.q}</span>
                   <motion.div animate={{ rotate: open === i ? 45 : 0 }} transition={{ duration: 0.25 }}
-                    className={`flex items-center justify-center h-9 w-9 rounded-xl text-lg flex-shrink-0 font-bold transition-colors duration-300
-                      ${open === i ? "bg-accent text-[#0b0b0b]" : "bg-accent/10 text-accent"}`}
-                  >+</motion.div>
+                    className={`flex items-center justify-center h-9 w-9 rounded-xl text-lg flex-shrink-0 font-bold transition-colors duration-300 ${open === i ? "bg-accent text-[#0b0b0b] dark:text-white" : "bg-accent/10 text-accent"}`}
+                  >
+                    +
+                  </motion.div>
                 </button>
                 <AnimatePresence>
                   {open === i && (
                     <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.35, ease: EASE }} className="overflow-hidden">
                       <div className="px-7 pb-7 pt-4">
-                        <p className="text-[14px] text-secondary leading-[1.8]">{item.a}</p>
+                        <p className="text-[14px] text-secondary dark:text-gray-400 leading-[1.8]">{item.a}</p>
                       </div>
                     </motion.div>
                   )}

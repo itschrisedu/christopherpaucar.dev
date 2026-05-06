@@ -71,58 +71,58 @@ export default function Hero() {
       {/* Globe */}
       <motion.div
         initial={{ opacity: 0, scale: 0.85 }}
-        animate={{ opacity: 1, scale: 1 }}
+        animate={{ opacity: 1, scale: 0.85 }}
         transition={{ duration: 1.2, delay: 0.5, ease: EASE }}
         className="absolute bottom-[-20%] right-[-12%] w-[550px] h-[550px] sm:w-[650px] sm:h-[650px] lg:w-[850px] lg:h-[850px] pointer-events-none hidden sm:block"
       >
         <World data={arcs} globeConfig={globeConfig} />
       </motion.div>
 
-      {/* Content — centered with grid layout */}
+      {/* Content — centered hero layout */}
       <div className="relative z-10 flex min-h-screen items-center pt-28 pb-20 sm:pt-32 sm:pb-24">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-12 lg:gap-10">
-            <div className="mx-auto max-w-2xl lg:mx-0 lg:col-span-5 lg:col-start-2 lg:max-w-none flex flex-col gap-7 rounded-3xl border border-border/80 dark:border-white/10 bg-white/80 dark:bg-white/[0.04] p-6 sm:p-8 backdrop-blur-md shadow-xl shadow-black/5">
-            {/* Badge */}
-            <motion.div custom={0} variants={fadeUp} initial="hidden" animate="visible">
-              <span className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-border bg-white/80 dark:bg-white/5 backdrop-blur-sm shadow-sm">
+          <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-16 w-full">
+            <div className="group/card relative flex w-full max-w-3xl flex-col items-center gap-6 rounded-3xl border border-border/80 dark:border-white/10 bg-white/80 dark:bg-white/[0.04] p-8 sm:p-10 text-center backdrop-blur-md shadow-xl shadow-black/5 min-h-[520px]">
+            {/* Badge (normal flow, at top) */}
+            <motion.div custom={0} variants={fadeUp} initial="hidden" animate="visible" className="w-full flex justify-start">
+              <span className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-border bg-white/95 dark:bg-white/6 backdrop-blur-sm shadow-sm text-[13px] font-medium text-secondary dark:text-gray-400 tracking-wide">
                 <span className="relative flex h-2.5 w-2.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75" />
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-success" />
                 </span>
-                <span className="text-[13px] font-medium text-secondary tracking-wide">{t.hero.badge[locale]}</span>
+                <span>{t.hero.badge[locale]}</span>
               </span>
             </motion.div>
 
             {/* Photo + Name */}
-            <motion.div custom={1} variants={fadeUp} initial="hidden" animate="visible" className="flex items-center gap-6">
-              <div className="relative flex-shrink-0">
-                <div className="h-20 w-20 sm:h-24 sm:w-24 rounded-2xl overflow-hidden ring-[3px] ring-accent/40 ring-offset-4 ring-offset-white dark:ring-offset-[#0b0b0b] shadow-2xl shadow-black/10">
-                  <Image src="/assets/icons/hero1.svg" alt="Christopher Paucar" width={104} height={104} className="h-full w-full object-cover" priority />
+            <motion.div custom={1} variants={fadeUp} initial="hidden" animate="visible" className="flex flex-col items-center gap-6 sm:flex-row sm:items-center">
+              <div className="group relative flex-shrink-0 cursor-pointer">
+                <div className="absolute inset-0 h-44 w-44 sm:h-56 sm:w-56 rounded-full ring-[4px] ring-accent/50 ring-offset-6 ring-offset-white dark:ring-offset-[#0b0b0b] shadow-2xl shadow-accent/20 dark:shadow-accent/10 bg-gradient-to-br from-accent/10 via-accent/5 to-transparent" />
+                <div className="relative h-44 w-44 sm:h-56 sm:w-56 overflow-visible">
+                  <Image src="/assets/icons/hero1.svg" alt="Christopher Paucar" width={200} height={200} className="h-full w-full object-cover [clip-path:inset(0_0_0_0_round_0_0_999px_999px)] transition-transform duration-300 ease-out group-hover/card:-translate-y-2 group-hover/card:scale-110" priority />
                 </div>
-                <span className="absolute -bottom-1 -right-1 block h-5 w-5 rounded-full bg-success ring-[3px] ring-white dark:ring-[#0b0b0b]" />
               </div>
-              <div>
+              <div className="flex flex-col items-center sm:items-start">
                 <p className="text-[12px] font-mono font-bold text-accent tracking-[0.2em] uppercase mb-1.5">{t.hero.role[locale]}</p>
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-primary leading-[1.02]">
+                <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight text-primary dark:text-white leading-[1.02]">
                   Christopher<br />
-                  <span className="text-primary/80">Paucar</span>
+                  <span className="text-primary/80 dark:text-white/80">Paucar</span>
                 </h1>
               </div>
             </motion.div>
 
             {/* Tagline */}
-            <motion.h2 custom={2} variants={fadeUp} initial="hidden" animate="visible" className="text-xl sm:text-2xl font-semibold text-primary leading-snug max-w-lg whitespace-pre-line">
+            <motion.h2 custom={2} variants={fadeUp} initial="hidden" animate="visible" className="text-xl sm:text-2xl font-semibold text-primary dark:text-white leading-snug max-w-lg whitespace-pre-line text-left">
               {t.hero.title[locale]}
             </motion.h2>
 
             {/* Description */}
-            <motion.p custom={3} variants={fadeUp} initial="hidden" animate="visible" className="text-[15px] text-secondary leading-relaxed max-w-lg">
+            <motion.p custom={3} variants={fadeUp} initial="hidden" animate="visible" className="text-[15px] text-secondary dark:text-gray-400 leading-relaxed max-w-2xl">
               {t.hero.description[locale]}
             </motion.p>
 
             {/* CTAs */}
-            <motion.div custom={4} variants={fadeUp} initial="hidden" animate="visible" className="flex flex-col sm:flex-row items-start gap-4">
+            <motion.div custom={4} variants={fadeUp} initial="hidden" animate="visible" className="flex items-center justify-center gap-4 mt-6">
               <Button asChild size="lg" className="group hover:-translate-y-0.5">
                 <a href="#contact">
                 {t.hero.cta[locale]}
@@ -136,19 +136,8 @@ export default function Hero() {
               </Button>
             </motion.div>
 
-            {/* Stack */}
-            <motion.div custom={5} variants={fadeUp} initial="hidden" animate="visible" className="flex items-center gap-5 pt-6 border-t border-border/60 dark:border-white/8">
-              <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-muted">Stack</span>
-              <div className="flex items-center gap-2.5 flex-wrap">
-                {["Next.js", "TypeScript", "NestJS", "AI"].map((tech) => (
-                  <span key={tech} className="px-3.5 py-1.5 rounded-lg text-[11px] font-mono font-semibold text-muted bg-surface dark:bg-white/5 border border-border dark:border-white/8 hover:border-accent/30 hover:text-accent transition-all duration-200">{tech}</span>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-
-            {/* Right column spacer to balance globe */}
-            <div className="hidden lg:block lg:col-span-6" aria-hidden="true" />
+            {/* Stack removed per request */}
+            </div>
           </div>
         </Container>
       </div>
@@ -156,7 +145,7 @@ export default function Hero() {
       {/* Scroll indicator */}
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.5 }} className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10">
         <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }} className="flex flex-col items-center gap-2.5">
-          <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-faint">Scroll</span>
+          <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-faint dark:text-gray-500">Scroll</span>
           <div className="h-9 w-[22px] rounded-full border-2 border-border dark:border-white/15 flex items-start justify-center pt-1.5">
             <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }} className="h-2 w-2 rounded-full bg-accent" />
           </div>

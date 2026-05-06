@@ -57,12 +57,39 @@ body {
   color: #ffffff;
 }
 
+* {
+  cursor: none !important;
+}
+
+input,
+textarea,
+select {
+  cursor: text !important;
+}
+
+button,
+a,
+[role="button"] {
+  cursor: none !important;
+}
+
 /* ── Dark mode color overrides ────────────────────────────────── */
 [data-theme="dark"] {
   --color-primary: #ffffff;
-  --color-secondary: #b4b4b4;
-  --color-muted: #8a8a8a;
-  --color-faint: #5a5a5a;
+  --color-secondary: #e0e0e0;
+  --color-muted: #a0a0a0;
+  --color-faint: #7a7a7a;
+  --color-surface: #101010;
+  --color-card: #171717;
+  --color-border: #2f2f2f;
+  --color-border-hover: #454545;
+}
+
+html.dark {
+  --color-primary: #ffffff;
+  --color-secondary: #e0e0e0;
+  --color-muted: #a0a0a0;
+  --color-faint: #7a7a7a;
   --color-surface: #101010;
   --color-card: #171717;
   --color-border: #2f2f2f;
@@ -149,4 +176,15 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--color-border);
   border-radius: 4px;
+}
+
+/* ── Infinite Scroll Animation ────────────────────────────────── */
+@keyframes scroll {
+  to {
+    transform: translate(calc(-50% - 0.5rem));
+  }
+}
+
+.animate-scroll {
+  animation: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
 }

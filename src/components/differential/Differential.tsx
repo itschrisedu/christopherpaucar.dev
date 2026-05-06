@@ -43,8 +43,8 @@ export default function Differential() {
                   <div className={`flex items-center justify-center h-16 w-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br ${iconsBg[i]} group-hover:scale-110 transition-transform duration-500 shadow-sm`}>
                     <span className="text-2xl">{["🎯", "🔧", "💡", "📐"][i]}</span>
                   </div>
-                  <h3 className="text-[16px] font-bold text-primary mb-3 group-hover:text-accent transition-colors duration-300">{item.title}</h3>
-                  <p className="text-[13px] text-secondary leading-[1.75]">{item.desc}</p>
+                  <h3 className="text-[16px] font-bold text-primary dark:text-white mb-3 group-hover:text-accent transition-colors duration-300">{item.title}</h3>
+                  <p className="text-[13px] text-secondary dark:text-gray-400 leading-[1.75]">{item.desc}</p>
                 </div>
               </motion.div>
             ))}

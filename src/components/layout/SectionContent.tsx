@@ -8,12 +8,13 @@ type SectionContentProps = React.HTMLAttributes<HTMLDivElement> & {
 
 export function SectionContent({ className, inset = "gutter", children, ...props }: SectionContentProps) {
   return (
-    <div className={cn("grid grid-cols-1 lg:grid-cols-12", className)} {...props}>
+    <div className={cn("grid grid-cols-1 lg:grid-cols-12 justify-center", className)} {...props}>
       <div
         className={cn(
+          "lg:col-span-12",
           inset === "gutter"
-            ? "lg:col-start-2 lg:col-span-10 xl:col-start-3 xl:col-span-8"
-            : "lg:col-span-12",
+            ? ""
+            : "",
         )}
       >
         {children}

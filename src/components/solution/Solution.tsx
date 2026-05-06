@@ -44,8 +44,8 @@ export default function Solution() {
                 <div className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${stepColors[i]} text-white text-sm font-bold mb-5 shadow-lg shadow-black/10 group-hover:scale-110 transition-transform duration-500`}>
                   {String(i + 1).padStart(2, "0")}
                 </div>
-                <h3 className="text-base font-bold text-primary mb-2.5 group-hover:text-accent transition-colors duration-300">{step.title}</h3>
-                <p className="text-[14px] text-secondary leading-[1.75]">{step.desc}</p>
+                <h3 className="text-base font-bold text-primary dark:text-white mb-2.5 group-hover:text-accent transition-colors duration-300">{step.title}</h3>
+                <p className="text-[14px] text-secondary dark:text-gray-400 leading-[1.75]">{step.desc}</p>
               </motion.div>
             ))}
           </div>

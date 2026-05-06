@@ -6,6 +6,7 @@ import { Container } from "@/components/layout/Container";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { SectionContent } from "@/components/layout/SectionContent";
 import { SectionHeading } from "@/components/layout/SectionHeading";
+import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -27,14 +28,25 @@ export default function Projects() {
             <SectionHeading label={t.projects.label[locale]} title={t.projects.title[locale]} subtitle={t.projects.subtitle[locale]} />
           </motion.div>
 
-          {/* Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-            {items.map((p, i) => (
-              <motion.div key={p.title} initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.1 + i * 0.1, ease: EASE }}>
-                <ProjectCard project={p} locale={locale} />
-              </motion.div>
-            ))}
-          </div>
+          {/* Infinite Scroll */}
+          <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.1, ease: EASE }}>
+            <div className="group w-full">
+              <InfiniteMovingCards
+                items={[]}
+                direction="left"
+                speed="normal"
+                pauseOnHover={true}
+                className="max-w-full"
+                itemClassName="w-[300px] sm:w-[400px] lg:w-[500px]"
+              >
+                {items.map((project) => (
+                  <div key={project.title} className="w-[300px] sm:w-[400px] lg:w-[500px] h-[620px] sm:h-[650px] flex-shrink-0">
+                    <ProjectCard project={project} locale={locale} />
+                  </div>
+                ))}
+              </InfiniteMovingCards>
+            </div>
+          </motion.div>
         </SectionContent>
       </Container>
     </section>

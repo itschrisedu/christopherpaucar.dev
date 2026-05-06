@@ -6,16 +6,20 @@ type ContainerProps = React.HTMLAttributes<HTMLDivElement> & {
   size?: "default" | "wide";
 };
 
-export function Container({ className, size = "default", ...props }: ContainerProps) {
+export function Container({ className, size = "default", children, ...props }: ContainerProps) {
   return (
-    <div
-      className={cn(
-        "mx-auto w-full max-w-6xl px-6 lg:px-8",
-        size === "wide" ? "max-w-6xl" : null,
-        className,
-      )}
-      {...props}
-    />
+    <div className="flex justify-center w-full">
+      <div
+        className={cn(
+          "px-6 sm:px-10 w-full",
+          size === "wide" ? "max-w-[1800px]" : "max-w-[1400px]",
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </div>
+    </div>
   );
 }
 

@@ -27,8 +27,8 @@ export default function Showcase() {
       <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-16 w-full">
         <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: EASE }} className="mb-20 max-w-2xl">
           <span className="inline-block text-[11px] font-mono font-bold uppercase tracking-[0.3em] text-accent mb-5">{t.showcase.label[locale]}</span>
-          <h2 className="text-[2.2rem] sm:text-[2.8rem] lg:text-[3.2rem] font-bold tracking-[-0.03em] text-primary leading-[1.1]">{t.showcase.title[locale]}</h2>
-          <p className="mt-6 text-base sm:text-[17px] text-secondary leading-relaxed max-w-lg">{t.showcase.subtitle[locale]}</p>
+          <h2 className="text-[2.2rem] sm:text-[2.8rem] lg:text-[3.2rem] font-bold tracking-[-0.03em] text-primary dark:text-white leading-[1.1]">{t.showcase.title[locale]}</h2>
+          <p className="mt-6 text-base sm:text-[17px] text-secondary dark:text-gray-400 leading-relaxed max-w-lg">{t.showcase.subtitle[locale]}</p>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
@@ -48,8 +48,8 @@ export default function Showcase() {
                   <span className="text-xl">{["⚡", "🔗", "🚀", "✨"][i]}</span>
                 </div>
                 <div>
-                  <h3 className="text-[17px] font-bold text-primary mb-3 group-hover:text-accent transition-colors duration-300">{item.title}</h3>
-                  <p className="text-[14px] text-secondary leading-[1.7]">{item.desc}</p>
+                  <h3 className="text-[17px] font-bold text-primary dark:text-white mb-3 group-hover:text-accent transition-colors duration-300">{item.title}</h3>
+                  <p className="text-[14px] text-secondary dark:text-gray-400 leading-[1.7]">{item.desc}</p>
                 </div>
               </div>
             </motion.div>

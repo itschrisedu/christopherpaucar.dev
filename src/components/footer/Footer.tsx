@@ -25,29 +25,29 @@ export default function Footer() {
               <Image src="/assets/icons/logoC.svg" alt="Logo" width={22} height={22} className="h-5.5 w-5.5" />
             </div>
             <div>
-              <span className="text-[15px] font-bold text-primary block">Christopher Paucar</span>
-              <span className="text-[12px] text-muted">Full Stack Developer</span>
+              <span className="text-[15px] font-bold text-primary dark:text-white block">Christopher Paucar</span>
+              <span className="text-[12px] text-muted dark:text-gray-400">Full Stack Developer</span>
             </div>
           </div>
 
           {/* Links */}
           <nav className="flex items-center gap-8">
-            {links.map((l) => (<a key={l.label} href={l.href} className="text-[13px] font-medium text-secondary hover:text-accent transition-colors duration-200">{l.label}</a>))}
+            {links.map((l) => (<a key={l.label} href={l.href} className="text-[13px] font-medium text-secondary dark:text-gray-400 hover:text-accent transition-colors duration-200">{l.label}</a>))}
           </nav>
 
           {/* Socials */}
           <div className="flex items-center gap-3">
             {socials.map((s) => (
               <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
-                className="flex items-center justify-center h-10 w-10 rounded-xl border border-border dark:border-white/10 text-[12px] font-bold text-secondary hover:text-accent hover:border-accent/25 transition-all duration-200"
+                className="flex items-center justify-center h-10 w-10 rounded-xl border border-border dark:border-white/10 text-[12px] font-bold text-secondary dark:text-gray-400 hover:text-accent hover:border-accent/25 transition-all duration-200"
               >{s.icon}</a>
             ))}
           </div>
         </div>
 
         <div className="mt-12 pt-8 border-t border-border dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-[12px] text-muted">&copy; {new Date().getFullYear()} Christopher Paucar. All rights reserved.</p>
-          <p className="text-[12px] text-faint">Built with Next.js, TailwindCSS & Framer Motion</p>
+          <p className="text-[12px] text-muted dark:text-gray-400">&copy; {new Date().getFullYear()} Christopher Paucar. All rights reserved.</p>
+          <p className="text-[12px] text-faint dark:text-gray-500">Built with Next.js, TailwindCSS & Framer Motion</p>
         </div>
         </SectionContent>
       </Container>

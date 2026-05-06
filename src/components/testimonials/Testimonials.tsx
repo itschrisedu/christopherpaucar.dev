@@ -5,6 +5,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { Container } from "@/components/layout/Container";
 import { SectionContent } from "@/components/layout/SectionContent";
 import { SectionHeading } from "@/components/layout/SectionHeading";
+import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -13,7 +14,72 @@ export default function Testimonials() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const { locale, t } = useLanguage();
 
-  const items = t.testimonials.items[locale];
+  const testimonials =
+    locale === "en"
+      ? [
+          {
+            quote: "The attention to detail and innovative features have completely transformed our workflow. This is exactly what we've been looking for.",
+            name: "Sarah Chen",
+            designation: "Product Manager at TechFlow",
+            src: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1200&auto=format&fit=crop",
+          },
+          {
+            quote: "Implementation was seamless and the results exceeded our expectations. The platform's flexibility is remarkable.",
+            name: "Michael Rodriguez",
+            designation: "CTO at InnovateSphere",
+            src: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1200&auto=format&fit=crop",
+          },
+          {
+            quote: "This solution has significantly improved our team's productivity. The intuitive interface makes complex tasks simple.",
+            name: "Emily Watson",
+            designation: "Operations Director at CloudScale",
+            src: "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?q=80&w=1200&auto=format&fit=crop",
+          },
+          {
+            quote: "Outstanding support and robust features. It's rare to find a product that delivers on all its promises.",
+            name: "James Kim",
+            designation: "Engineering Lead at DataPro",
+            src: "https://images.unsplash.com/photo-1636041293178-808a6762ab39?q=80&w=1200&auto=format&fit=crop",
+          },
+          {
+            quote: "The scalability and performance have been game-changing for our organization. Highly recommend to any growing business.",
+            name: "Lisa Thompson",
+            designation: "VP of Technology at FutureNet",
+            src: "https://images.unsplash.com/photo-1624561172888-ac93c696e10c?q=80&w=1200&auto=format&fit=crop",
+          },
+        ]
+      : [
+          {
+            quote: "La atención al detalle y las funciones innovadoras transformaron por completo nuestro flujo de trabajo. Era exactamente lo que buscábamos.",
+            name: "Sarah Chen",
+            designation: "Product Manager en TechFlow",
+            src: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1200&auto=format&fit=crop",
+          },
+          {
+            quote: "La implementación fue fluida y los resultados superaron nuestras expectativas. La flexibilidad de la plataforma es notable.",
+            name: "Michael Rodriguez",
+            designation: "CTO en InnovateSphere",
+            src: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1200&auto=format&fit=crop",
+          },
+          {
+            quote: "Esta solución mejoró significativamente la productividad del equipo. La interfaz intuitiva vuelve simples las tareas complejas.",
+            name: "Emily Watson",
+            designation: "Directora de Operaciones en CloudScale",
+            src: "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?q=80&w=1200&auto=format&fit=crop",
+          },
+          {
+            quote: "Soporte sobresaliente y funcionalidades robustas. Es raro encontrar un producto que cumpla todo lo que promete.",
+            name: "James Kim",
+            designation: "Engineering Lead en DataPro",
+            src: "https://images.unsplash.com/photo-1636041293178-808a6762ab39?q=80&w=1200&auto=format&fit=crop",
+          },
+          {
+            quote: "La escalabilidad y el rendimiento fueron un cambio total para nuestra organización. Muy recomendado para negocios en crecimiento.",
+            name: "Lisa Thompson",
+            designation: "VP de Tecnología en FutureNet",
+            src: "https://images.unsplash.com/photo-1624561172888-ac93c696e10c?q=80&w=1200&auto=format&fit=crop",
+          },
+        ];
 
   return (
     <section id="testimonials" ref={ref} className="relative scroll-mt-28 py-20 sm:py-24 bg-surface dark:bg-[#0d0d0d] overflow-hidden">
@@ -26,31 +92,7 @@ export default function Testimonials() {
             <SectionHeading centered label={t.testimonials.label[locale]} title={t.testimonials.title[locale]} />
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {items.map((item, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.1 + i * 0.12, ease: EASE }}
-                className="group min-h-[280px] p-8 sm:p-10 rounded-3xl bg-card dark:bg-[#151515] border border-border dark:border-white/10
-                           hover:border-accent/25 transition-all duration-500
-                           hover:shadow-2xl hover:shadow-accent/[0.06] hover:-translate-y-1.5
-                           overflow-hidden relative"
-              >
-                <div className="absolute inset-0 bg-gradient-to-b from-accent/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                <div className="relative">
-                  <div className="text-5xl text-accent/30 mb-6 select-none leading-none font-serif">&ldquo;</div>
-                  <p className="text-[14px] text-secondary leading-[1.8] mb-8">{item.text}</p>
-                  <div className="flex items-center gap-4 pt-6 border-t border-border dark:border-white/8">
-                    <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-accent/20 to-accent-orange/10 flex items-center justify-center text-[15px] font-bold text-accent shadow-sm">
-                      {item.author.charAt(0)}
-                    </div>
-                    <div>
-                      <p className="text-[14px] font-bold text-primary">{item.author}</p>
-                      <p className="text-[12px] text-muted mt-0.5">{item.role}</p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          <AnimatedTestimonials testimonials={testimonials} autoplay={inView} autoplayIntervalMs={5000} />
         </SectionContent>
       </Container>
     </section>

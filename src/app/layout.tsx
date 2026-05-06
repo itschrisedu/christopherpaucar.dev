@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { LanguageProvider } from "@/context/LanguageContext";
 import NavbarClient from "@/components/navbar/NavbarClient";
+import { SmoothCursor } from "@/components/ui/smooth-cursor";
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
@@ -37,9 +38,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" data-theme="light" suppressHydrationWarning className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col font-sans" suppressHydrationWarning>
+      <body className="min-h-full w-full flex flex-col font-sans cursor-none" suppressHydrationWarning>
         <ThemeProvider>
           <LanguageProvider>
+            <SmoothCursor />
             <NavbarClient />
             {children}
           </LanguageProvider>

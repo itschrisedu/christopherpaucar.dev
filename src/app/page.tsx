@@ -4,12 +4,13 @@ import { useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import TerminalIntro from "@/components/terminal/TerminalIntro";
 import Hero from "@/components/hero/Hero";
-import Solution from "@/components/solution/Solution";
+import HowIWork from "@/components/howitworks/HowIWork";
 import Projects from "@/components/projects/Projects";
 import About from "@/components/about/About";
 import Differential from "@/components/differential/Differential";
 import Testimonials from "@/components/testimonials/Testimonials";
 import FAQ from "@/components/faq/FAQ";
+import Pricing from "@/components/pricing/Pricing";
 import Contact from "@/components/contact/Contact";
 import Footer from "@/components/footer/Footer";
 
@@ -27,7 +28,7 @@ export default function Home() {
   }, [phase, done]);
 
   return (
-    <main className="relative min-h-screen">
+    <main className="relative w-full min-h-screen">
       <AnimatePresence mode="wait">
         {phase === "terminal" && (
           <motion.div key="terminal" exit={{ opacity: 0, y: -40, filter: "blur(8px)", transition: { duration: 0.6, ease: EASE } }}>
@@ -37,13 +38,16 @@ export default function Home() {
         {phase === "portfolio" && (
           <motion.div key="portfolio" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE, delay: 0.1 } }}>
             <Hero />
-            <Solution />
-            <Projects />
-            <About />
-            <Differential />
-            <Testimonials />
-            <FAQ />
-            <Contact />
+            <div className="relative flex w-full flex-col gap-24 pb-28 lg:gap-32">
+              <HowIWork />
+              <Projects />
+              <About />
+              <Differential />
+              <Testimonials />
+              <FAQ />
+              <Pricing />
+              <Contact />
+            </div>
             <Footer />
           </motion.div>
         )}

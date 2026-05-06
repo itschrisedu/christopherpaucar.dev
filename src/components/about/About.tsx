@@ -42,7 +42,7 @@ export default function About() {
                              hover:border-accent/25 transition-all duration-500 hover:-translate-y-0.5"
                 >
                   <p className="text-[1.75rem] sm:text-[2rem] font-bold text-accent tracking-tight">{s.value}</p>
-                  <p className="mt-1 text-[11px] sm:text-[12px] font-semibold text-secondary uppercase tracking-wider">{s.label}</p>
+                  <p className="mt-1 text-[11px] sm:text-[12px] font-semibold text-secondary dark:text-gray-400 uppercase tracking-wider">{s.label}</p>
                 </motion.div>
               ))}
             </div>
@@ -54,7 +54,7 @@ export default function About() {
               label={locale === "en" ? "About" : "Acerca"}
               title={locale === "en" ? "Focused on what matters — building software that works." : "Enfocado en lo que importa — construir software que funciona."}
             />
-            <p className="text-[15px] leading-[1.8] text-secondary">
+            <p className="text-[15px] leading-[1.8] text-secondary dark:text-gray-400">
               {locale === "en"
                 ? "I'm a Full Stack Developer from Ecuador. I build web applications that solve real business problems using modern technologies. My approach: understand the problem, design clean architecture, execute with precision, deliver measurable results."
                 : "Soy Desarrollador Full Stack de Ecuador. Construyo aplicaciones web que resuelven problemas reales de negocio con tecnologías modernas. Mi enfoque: entender el problema, diseñar arquitectura limpia, ejecutar con precisión, entregar resultados medibles."}
@@ -65,14 +65,14 @@ export default function About() {
               <div className="p-6 sm:p-7 rounded-2xl bg-surface dark:bg-[#151515] border border-border dark:border-white/8 hover:border-accent/25 transition-all duration-500">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h4 className="text-[16px] font-bold text-primary">Full Stack Developer</h4>
+                    <h4 className="text-[16px] font-bold text-primary dark:text-white">Full Stack Developer</h4>
                     <p className="text-[14px] text-accent font-semibold mt-0.5">Freelance</p>
                   </div>
                   <span className="text-[11px] font-mono font-bold text-accent/70 whitespace-nowrap px-3.5 py-1.5 rounded-full bg-accent/8 border border-accent/15">
                     2023 — {locale === "en" ? "Present" : "Actual"}
                   </span>
                 </div>
-                <p className="mt-4 text-[14px] text-secondary leading-[1.75]">{locale === "en" ? "Building scalable web apps for clients across industries. Focus on conversion and performance." : "Construyendo apps web escalables para clientes de diversas industrias. Enfoque en conversión y rendimiento."}</p>
+                <p className="mt-4 text-[14px] text-secondary dark:text-gray-400 leading-[1.75]">{locale === "en" ? "Building scalable web apps for clients across industries. Focus on conversion and performance." : "Construyendo apps web escalables para clientes de diversas industrias. Enfoque en conversión y rendimiento."}</p>
               </div>
             </div>
           </motion.div>
