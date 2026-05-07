@@ -29,7 +29,10 @@ export default function About() {
 
       <Container>
         <SectionContent>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start">
+          <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: EASE }} className="mb-12 sm:mb-16">
+            <SectionHeading centered label={locale === "en" ? "About" : "Acerca"} title={locale === "en" ? "Focused on what matters — building software that works." : "Enfocado en lo que importa — construir software que funciona."} />
+          </motion.div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start">
           {/* Photo + Stats */}
           <motion.div initial={{ opacity: 0, x: -30 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.8, ease: EASE }} className="space-y-6">
             <div className="relative overflow-hidden rounded-3xl border border-border dark:border-white/10 shadow-xl shadow-black/8 dark:shadow-black/30">
@@ -51,10 +54,6 @@ export default function About() {
 
           {/* Text */}
           <motion.div initial={{ opacity: 0, x: 30 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.8, delay: 0.15, ease: EASE }} className="space-y-8 lg:pt-4">
-            <SectionHeading
-              label={locale === "en" ? "About" : "Acerca"}
-              title={locale === "en" ? "Focused on what matters — building software that works." : "Enfocado en lo que importa — construir software que funciona."}
-            />
             <p className="text-[15px] leading-[1.8] text-secondary dark:text-gray-400">
               {locale === "en"
                 ? "I'm a Full Stack Developer from Ecuador. I build web applications that solve real business problems using modern technologies. My approach: understand the problem, design clean architecture, execute with precision, deliver measurable results."

@@ -25,12 +25,12 @@ export default function Solution() {
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       <div className="absolute top-[30%] left-[-5%] w-[400px] h-[400px] bg-accent/[0.04] rounded-full blur-[130px] pointer-events-none" />
 
+      <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: EASE }} className="mb-8 sm:mb-12">
+        <SectionHeading label={t.solution.label[locale]} title={t.solution.title[locale]} />
+      </motion.div>
+
       <Container>
         <SectionContent>
-          <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: EASE }} className="mb-16 sm:mb-20">
-            <SectionHeading label={t.solution.label[locale]} title={t.solution.title[locale]} />
-          </motion.div>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 lg:gap-8 relative">
             {/* Connector */}
             <div className="hidden lg:block absolute top-[60px] left-[12%] right-[12%] h-[2px] bg-gradient-to-r from-border via-accent/20 to-border rounded-full" />
