@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
+:root {
+  --spacing: 0.25rem;
+}
+
 /* ── Design System Tokens ─────────────────────────────────────── */
 @theme inline {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -31,12 +35,41 @@
 }
 
 /* ── Base ──────────────────────────────────────────────────────── */
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Consistent moderate vertical padding for all sections (user requested uniform, not large) */
+@layer components {
+  /* Default: 2.5rem (40px) top/bottom padding to keep spacing visible but controlled */
+  section {
+    padding-top: 2.5rem !important;
+    padding-bottom: 2.5rem !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  /* Prevent extra margins between consecutive sections */
+  section + section {
+    margin-top: 0 !important;
+    padding-top: 2.5rem !important;
+  }
+
+  /* Larger screens: slightly more vertical breathing room */
+  @media (min-width: 1024px) {
+    section {
+      padding-top: 3rem !important;
+      padding-bottom: 3rem !important;
+    }
+    section + section {
+      padding-top: 3rem !important;
+    }
+  }
 }
 
 html {

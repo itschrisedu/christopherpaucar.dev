@@ -49,7 +49,7 @@ export default function Contact() {
     "w-full rounded-xl border border-border/70 dark:border-white/10 bg-white/95 dark:bg-white/[0.04] px-4 py-3.5 text-[14px] text-primary dark:text-white placeholder:text-muted dark:placeholder:text-gray-500 outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all duration-300";
 
   return (
-    <section id="contact" ref={ref} className="relative scroll-mt-28 py-24 sm:py-28 bg-white dark:bg-[#0b0b0b] overflow-hidden">
+    <section id="contact" ref={ref} className="relative -mt-24 pt-6 pb-10 sm:pt-8 sm:pb-12 bg-white dark:bg-[#0b0b0b] overflow-hidden">
       <Container className="relative">
         <SectionContent>
           <div className="rounded-[28px] border border-border/70 bg-surface/60 p-4 dark:border-white/10 dark:bg-[#0f0f12] sm:p-6">

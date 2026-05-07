@@ -25,7 +25,7 @@ export default function Showcase() {
       <div className="absolute bottom-[20%] right-[-5%] w-[500px] h-[500px] bg-accent/[0.04] rounded-full blur-[150px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-16 w-full">
-        <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: EASE }} className="mb-20 max-w-2xl">
+        <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: EASE }} className="mb-6 max-w-2xl">
           <span className="inline-block text-[11px] font-mono font-bold uppercase tracking-[0.3em] text-accent mb-5">{t.showcase.label[locale]}</span>
           <h2 className="text-[2.2rem] sm:text-[2.8rem] lg:text-[3.2rem] font-bold tracking-[-0.03em] text-primary dark:text-white leading-[1.1]">{t.showcase.title[locale]}</h2>
           <p className="mt-6 text-base sm:text-[17px] text-secondary dark:text-gray-400 leading-relaxed max-w-lg">{t.showcase.subtitle[locale]}</p>

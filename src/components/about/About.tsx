@@ -23,13 +23,13 @@ export default function About() {
   ];
 
   return (
-    <section id="about" ref={ref} className="relative scroll-mt-28 py-20 sm:py-24 bg-white dark:bg-[#0b0b0b] overflow-hidden">
+    <section id="about" ref={ref} className="relative -mt-24 pt-6 pb-10 sm:pt-8 sm:pb-12 bg-white dark:bg-[#0b0b0b] overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       <div className="absolute top-[20%] right-[-5%] w-[500px] h-[500px] bg-accent/[0.04] rounded-full blur-[150px] pointer-events-none" />
 
       <Container>
         <SectionContent>
-          <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: EASE }} className="mb-12 sm:mb-16">
+          <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: EASE }} className="mb-6 sm:mb-8">
             <SectionHeading centered label={locale === "en" ? "About" : "Acerca"} title={locale === "en" ? "Focused on what matters — building software that works." : "Enfocado en lo que importa — construir software que funciona."} />
           </motion.div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start">

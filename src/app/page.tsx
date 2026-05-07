@@ -38,7 +38,7 @@ export default function Home() {
         {phase === "portfolio" && (
           <motion.div key="portfolio" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE, delay: 0.1 } }}>
             <Hero />
-            <div className="relative flex w-full flex-col gap-24 pb-28 lg:gap-32">
+            <div className="relative flex w-full flex-col gap-0 pb-0 lg:gap-0">
               <HowIWork />
               <Projects />
               <About />

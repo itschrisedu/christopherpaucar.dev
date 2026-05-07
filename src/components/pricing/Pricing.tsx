@@ -58,7 +58,7 @@ export default function Pricing() {
   const current = plans[locale];
 
   return (
-    <section id="pricing" className="relative scroll-mt-28 py-20 sm:py-24 bg-white dark:bg-[#0b0b0b] overflow-hidden">
+    <section id="pricing" className="relative -mt-24 pt-6 pb-10 sm:pt-8 sm:pb-12 bg-white dark:bg-[#0b0b0b] overflow-hidden">
       <Container>
         <SectionContent>
           <SectionHeading
@@ -68,7 +68,7 @@ export default function Pricing() {
             subtitle={locale === "en" ? "Clear scope, clear pricing, clear delivery." : "Alcance claro, precio claro, entrega clara."}
           />
 
-          <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
             {current.map((plan) => (
               <Card
                 key={plan.name}

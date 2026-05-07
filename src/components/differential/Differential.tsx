@@ -21,13 +21,13 @@ export default function Differential() {
   const items = t.differential.items[locale];
 
   return (
-    <section id="differential" ref={ref} className="relative scroll-mt-28 py-20 sm:py-24 bg-white dark:bg-[#0b0b0b] overflow-hidden">
+    <section id="differential" ref={ref} className="relative -mt-24 py-8 sm:py-10 bg-white dark:bg-[#0b0b0b] overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-accent/[0.04] rounded-full blur-[180px] pointer-events-none" />
 
       <Container className="relative">
         <SectionContent>
-          <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: EASE }} className="mb-20">
+          <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: EASE }} className="mb-6">
             <SectionHeading centered label={t.differential.label[locale]} title={t.differential.title[locale]} />
           </motion.div>
 

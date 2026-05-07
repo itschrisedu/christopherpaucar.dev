@@ -82,13 +82,13 @@ export default function Testimonials() {
         ];
 
   return (
-    <section id="testimonials" ref={ref} className="relative scroll-mt-28 py-20 sm:py-24 bg-surface dark:bg-[#0d0d0d] overflow-hidden">
+    <section id="testimonials" ref={ref} className="relative -mt-24 pt-6 pb-10 sm:pt-8 sm:pb-12 bg-surface dark:bg-[#0d0d0d] overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       <div className="absolute bottom-[20%] left-[-5%] w-[400px] h-[400px] bg-accent/[0.04] rounded-full blur-[130px] pointer-events-none" />
 
       <Container>
         <SectionContent>
-          <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: EASE }} className="mb-20">
+          <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: EASE }} className="mb-6">
             <SectionHeading centered label={t.testimonials.label[locale]} title={t.testimonials.title[locale]} />
           </motion.div>
 

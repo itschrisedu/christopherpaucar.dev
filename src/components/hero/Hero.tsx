@@ -54,7 +54,7 @@ export default function Hero() {
   const { locale, t } = useLanguage();
 
   return (
-    <section id="hero" className="relative scroll-mt-28 min-h-screen overflow-hidden bg-white dark:bg-[#070707]">
+    <section id="hero" className="relative min-h-screen overflow-hidden bg-white dark:bg-[#070707]">
       {/* Background effects */}
       <div className="absolute inset-0">
         <div className="hidden dark:block">
@@ -79,10 +79,10 @@ export default function Hero() {
       </motion.div>
 
       {/* Content — centered hero layout */}
-      <div className="relative z-10 flex min-h-screen items-center pt-28 pb-20 sm:pt-32 sm:pb-24">
+      <div className="relative z-10 flex min-h-screen items-start pt-12 pb-10 sm:pt-16 sm:pb-12">
         <Container>
-          <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-16 w-full">
-            <div className="group/card relative flex w-full max-w-3xl flex-col items-center gap-6 rounded-3xl border border-border/80 dark:border-white/10 bg-white/80 dark:bg-white/[0.04] p-8 sm:p-10 text-center backdrop-blur-md shadow-xl shadow-black/5 min-h-[520px]">
+          <div className="max-w-6xl mx-0 px-6 sm:px-8 lg:px-16 w-full">
+            <div className="group/card relative flex w-full max-w-3xl flex-col items-start gap-6 rounded-3xl border border-border/80 dark:border-white/10 bg-white/80 dark:bg-white/[0.04] p-8 sm:p-10 text-left backdrop-blur-md shadow-xl shadow-black/5 min-h-[520px]">
             {/* Badge (normal flow, at top) */}
             <motion.div custom={0} variants={fadeUp} initial="hidden" animate="visible" className="w-full flex justify-start">
               <span className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-border bg-white/95 dark:bg-white/6 backdrop-blur-sm shadow-sm text-[13px] font-medium text-secondary dark:text-gray-400 tracking-wide">

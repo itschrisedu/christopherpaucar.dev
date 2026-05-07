@@ -97,7 +97,7 @@ export default function HowIWork() {
   ];
 
   return (
-    <section id="how-i-work" ref={ref} className="relative scroll-mt-28 py-20 sm:py-24 bg-white dark:bg-[#0b0b0b] overflow-hidden">
+    <section id="how-i-work" ref={ref} className="relative mt-0 py-0 sm:py-0 bg-white dark:bg-[#0b0b0b] overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       <div className="absolute top-[30%] left-[-5%] w-[400px] h-[400px] bg-accent/[0.04] rounded-full blur-[130px] pointer-events-none" />
 
@@ -107,7 +107,7 @@ export default function HowIWork() {
             initial={{ opacity: 0, y: 28 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, ease: EASE }}
-            className="mb-16 sm:mb-20"
+            className="mb-6 sm:mb-8"
           >
             <SectionHeading label={t.solution.label[locale]} title={t.solution.title[locale]} />
           </motion.div>
