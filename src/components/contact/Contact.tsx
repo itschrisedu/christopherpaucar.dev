@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 import { Container } from "@/components/layout/Container";
@@ -37,6 +37,22 @@ export default function Contact() {
     subject: "",
     message: "",
   });
+
+  useEffect(() => {
+    const handleSelectPlan = (e: Event) => {
+      const customEvent = e as CustomEvent<string>;
+      const planName = customEvent.detail;
+      setFormData((current) => ({
+        ...current,
+        message: locale === "en" 
+          ? `Hi Christopher, I am interested in the ${planName} plan.\n\n`
+          : `Hola Christopher, estoy interesado en el plan ${planName}.\n\n`
+      }));
+    };
+
+    window.addEventListener("selectPlan", handleSelectPlan);
+    return () => window.removeEventListener("selectPlan", handleSelectPlan);
+  }, [locale]);
 
   const handleSubmit = async () => {
     const payload = new FormData();

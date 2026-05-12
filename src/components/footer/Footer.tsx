@@ -21,8 +21,8 @@ export default function Footer() {
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-10">
             {/* Logo */}
             <div className="flex items-center gap-4">
-              <div className="h-10 w-10 rounded-2xl bg-ink dark:bg-[#2c2c2e] flex items-center justify-center">
-                <Image src="/assets/icons/logoC.svg" alt="Logo" width={22} height={22} className="h-5.5 w-5.5 brightness-0 invert" />
+              <div className="h-10 w-10 rounded-full bg-[#000000] flex items-center justify-center">
+                <Image src="/assets/icons/logoC.svg" alt="Logo" width={28} height={28} className="h-7 w-7 brightness-0 invert" />
               </div>
               <div>
                 <span className="text-[15px] font-semibold text-ink dark:text-[var(--color-ink)] block">Christopher Paucar</span>

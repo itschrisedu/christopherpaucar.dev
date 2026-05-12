@@ -69,8 +69,8 @@ export default function Navbar() {
           shadow-[0_2px_20px_rgba(0,0,0,0.06)]">
 
           {/* Logo */}
-          <a href="#hero" className="flex h-9 w-9 items-center justify-center rounded-full bg-ink dark:bg-[#2c2c2e] hover:scale-105 transition-transform duration-200">
-            <Image src="/assets/icons/logoC.svg" alt="CP" width={22} height={22} className="h-5 w-5 brightness-0 invert" priority />
+          <a href="#hero" className="flex h-9 w-9 items-center justify-center rounded-full bg-[#000000] hover:scale-105 transition-transform duration-200">
+            <Image src="/assets/icons/logoC.svg" alt="CP" width={28} height={28} className="h-7 w-7 brightness-0 invert" priority />
           </a>
 
           {/* Nav links */}

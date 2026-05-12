@@ -55,7 +55,7 @@ export function ProjectCard({ project, locale }: { project: Project; locale: "en
   return (
     <div
       className={cn(
-        "group relative h-[620px] sm:h-[650px] overflow-hidden rounded-[28px] p-6 sm:p-7 flex flex-col",
+        "group relative min-h-[680px] overflow-hidden rounded-[28px] p-6 sm:p-7 flex flex-col",
         "bg-snow dark:bg-[#1c1c1e]",
         "hover:scale-[1.01] transition-transform duration-344 ease",
       )}
@@ -85,28 +85,28 @@ export function ProjectCard({ project, locale }: { project: Project; locale: "en
           {project.title}
         </h3>
 
-        <div className="space-y-2.5 mb-4 h-[236px]">
-          <div className="flex gap-3 rounded-xl p-2.5 min-h-[72px] bg-fog dark:bg-[#0a0a0a]">
+        <div className="space-y-2.5 mb-4 flex-1">
+          <div className="flex gap-3 rounded-xl p-3 bg-fog dark:bg-[#0a0a0a]">
             <span className="flex-shrink-0 w-1 rounded-full bg-[#ff375f]/40 mt-1" />
-            <p className="text-[13px] text-graphite dark:text-[var(--color-graphite)] leading-relaxed [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical] overflow-hidden">
+            <p className="text-[15px] text-graphite dark:text-[var(--color-graphite)] leading-[1.6] [display:-webkit-box] [-webkit-line-clamp:3] [-webkit-box-orient:vertical] overflow-hidden">
               <span className="font-semibold text-ink dark:text-[var(--color-ink)]">{locale === "en" ? "Problem" : "Problema"}:</span> {project.problem}
             </p>
           </div>
-          <div className="flex gap-3 rounded-xl p-2.5 min-h-[72px] bg-fog dark:bg-[#0a0a0a]">
+          <div className="flex gap-3 rounded-xl p-3 bg-fog dark:bg-[#0a0a0a]">
             <span className="flex-shrink-0 w-1 rounded-full bg-azure/40 mt-1" />
-            <p className="text-[13px] text-graphite dark:text-[var(--color-graphite)] leading-relaxed [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical] overflow-hidden">
+            <p className="text-[15px] text-graphite dark:text-[var(--color-graphite)] leading-[1.6] [display:-webkit-box] [-webkit-line-clamp:3] [-webkit-box-orient:vertical] overflow-hidden">
               <span className="font-semibold text-ink dark:text-[var(--color-ink)]">{locale === "en" ? "Solution" : "Solución"}:</span> {project.solution}
             </p>
           </div>
-          <div className="flex gap-3 rounded-xl bg-[#34c759]/8 p-2.5 min-h-[68px]">
+          <div className="flex gap-3 rounded-xl bg-[#34c759]/8 p-3">
             <span className="flex-shrink-0 w-1 rounded-full bg-[#34c759]/60 mt-1" />
-            <p className="text-[13px] font-semibold text-[#34c759] leading-relaxed [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical] overflow-hidden">
+            <p className="text-[15px] font-semibold text-[#34c759] leading-[1.6] [display:-webkit-box] [-webkit-line-clamp:3] [-webkit-box-orient:vertical] overflow-hidden">
               {locale === "en" ? "Result" : "Resultado"}: {project.result}
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 h-[58px] overflow-hidden">
+        <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 overflow-hidden">
           {project.tags.slice(0, 4).map((tag) => (
             <TechTag key={tag} tag={tag} />
           ))}

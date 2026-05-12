@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useLanguage } from "@/context/LanguageContext";
-import { Container } from "@/components/layout/Container";
 
 const World = dynamic(() => import("@/components/ui/globe").then((m) => m.World), { ssr: false });
 
@@ -15,9 +14,9 @@ const fadeUp = {
 };
 
 const globeConfig = {
-  pointSize: 4, globeColor: "#d2d2d7", showAtmosphere: true, atmosphereColor: "#0071e3",
-  atmosphereAltitude: 0.15, emissive: "#e8e8ed", emissiveIntensity: 0.08, shininess: 0.9,
-  polygonColor: "rgba(0,0,0,0.15)", ambientLight: "#f5f5f7",
+  pointSize: 4, globeColor: "#003366", showAtmosphere: true, atmosphereColor: "#007aff",
+  atmosphereAltitude: 0.15, emissive: "#002244", emissiveIntensity: 0.1, shininess: 0.9,
+  polygonColor: "rgba(255,255,255,0.7)", ambientLight: "#ffffff",
   directionalLeftLight: "#e8e8ed", directionalTopLight: "#ffffff", pointLight: "#ffffff",
   arcTime: 1200, arcLength: 0.9, rings: 3, maxRings: 6,
   initialPosition: { lat: -1.2544, lng: -78.6226 }, autoRotate: true, autoRotateSpeed: 0.4,
@@ -51,7 +50,7 @@ export default function Hero() {
   const { locale, t } = useLanguage();
 
   return (
-    <section id="hero" className="relative min-h-[100vh] overflow-hidden bg-fog dark:bg-[#0a0a0a]">
+    <section id="hero" className="relative h-dvh overflow-hidden bg-fog dark:bg-[#0a0a0a]">
       {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-[0.3] dark:opacity-[0.02]"
         style={{
@@ -70,13 +69,13 @@ export default function Hero() {
         <World data={arcs} globeConfig={globeConfig} />
       </motion.div>
 
-      {/* Content — Apple centered-stack hero */}
-      <div className="relative z-10 flex min-h-[100vh] items-center">
-        <Container>
-          <div className="max-w-4xl mx-auto text-center lg:text-left lg:mx-0 py-20">
+      {/* Content — locked to viewport */}
+      <div className="relative z-10 h-full flex flex-col justify-center px-6 sm:px-10">
+        <div className="w-full max-w-[1200px] mx-auto">
+          <div className="max-w-4xl text-center lg:text-left">
             {/* Availability badge */}
-            <motion.div custom={0} variants={fadeUp} initial="hidden" animate="visible" className="mb-8">
-              <span className="inline-flex items-center gap-3 px-4 py-2 rounded-full
+            <motion.div custom={0} variants={fadeUp} initial="hidden" animate="visible" className="mb-4">
+              <span className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full
                 bg-snow/80 dark:bg-[#1c1c1e]/80 backdrop-blur-sm
                 border border-silver-mist/60 dark:border-[#38383a]
                 text-[13px] font-normal text-graphite dark:text-[var(--color-graphite)]">
@@ -90,14 +89,14 @@ export default function Hero() {
 
             {/* Eyebrow */}
             <motion.p custom={1} variants={fadeUp} initial="hidden" animate="visible"
-              className="text-[14px] font-semibold tracking-[0.1em] uppercase text-azure mb-4"
+              className="text-[13px] sm:text-[14px] font-semibold tracking-[0.1em] uppercase text-azure mb-3"
             >
               {t.hero.role[locale]}
             </motion.p>
 
-            {/* Display headline — Apple 80px weight 700 */}
+            {/* Display headline */}
             <motion.h1 custom={2} variants={fadeUp} initial="hidden" animate="visible"
-              className="text-[2.5rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5rem] font-bold tracking-[-0.03em] text-ink dark:text-[var(--color-ink)] leading-[1.04] mb-6"
+              className="text-[2.2rem] sm:text-[3rem] md:text-[3.8rem] lg:text-[4.5rem] font-bold tracking-[-0.03em] text-ink dark:text-[var(--color-ink)] leading-[1.04] mb-3"
             >
               Christopher
               <br />
@@ -106,23 +105,22 @@ export default function Hero() {
 
             {/* Tagline */}
             <motion.h2 custom={3} variants={fadeUp} initial="hidden" animate="visible"
-              className="text-[1.1rem] sm:text-[1.25rem] md:text-[1.5rem] font-semibold text-ink dark:text-[var(--color-ink)] leading-snug max-w-2xl lg:max-w-none whitespace-pre-line mb-4"
+              className="text-[1rem] sm:text-[1.15rem] md:text-[1.3rem] font-semibold text-ink dark:text-[var(--color-ink)] leading-snug max-w-2xl lg:max-w-none whitespace-pre-line mb-2"
             >
               {t.hero.title[locale]}
             </motion.h2>
 
             {/* Description */}
             <motion.p custom={4} variants={fadeUp} initial="hidden" animate="visible"
-              className="text-[15px] sm:text-[17px] font-normal text-graphite dark:text-[var(--color-graphite)] leading-[1.47] tracking-[-0.1px] max-w-xl lg:max-w-2xl mb-8"
+              className="text-[14px] sm:text-[16px] font-normal text-graphite dark:text-[var(--color-graphite)] leading-[1.47] tracking-[-0.1px] max-w-xl lg:max-w-2xl mb-5"
             >
               {t.hero.description[locale]}
             </motion.p>
 
             {/* CTA buttons */}
             <motion.div custom={5} variants={fadeUp} initial="hidden" animate="visible" className="flex items-center gap-4 justify-center lg:justify-start">
-              {/* Primary — Dark pill */}
               <a href="#contact"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full
+                className="inline-flex items-center gap-2 px-7 py-3 rounded-full
                   bg-obsidian dark:bg-snow text-snow dark:text-obsidian
                   text-[15px] font-normal
                   hover:scale-[1.02] transition-transform duration-200"
@@ -132,7 +130,6 @@ export default function Hero() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </a>
-              {/* Secondary — Ghost text link */}
               <a href="#projects"
                 className="text-[15px] font-normal text-cobalt-link dark:text-azure hover:underline underline-offset-4 transition-all duration-200"
               >
@@ -140,15 +137,15 @@ export default function Hero() {
               </a>
             </motion.div>
           </div>
-        </Container>
+        </div>
       </div>
 
       {/* Scroll indicator */}
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }} className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10">
-        <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }} className="flex flex-col items-center gap-2.5">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }} className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10">
+        <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }} className="flex flex-col items-center gap-2">
           <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-graphite/60 dark:text-[var(--color-graphite)]/60">Scroll</span>
-          <div className="h-9 w-[22px] rounded-full border-2 border-silver-mist dark:border-[#38383a] flex items-start justify-center pt-1.5">
-            <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }} className="h-2 w-2 rounded-full bg-azure" />
+          <div className="h-8 w-[20px] rounded-full border-2 border-silver-mist dark:border-[#38383a] flex items-start justify-center pt-1.5">
+            <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }} className="h-1.5 w-1.5 rounded-full bg-azure" />
           </div>
         </motion.div>
       </motion.div>

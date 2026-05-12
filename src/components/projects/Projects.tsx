@@ -38,7 +38,7 @@ export default function Projects() {
                 itemClassName="w-[300px] sm:w-[400px] lg:w-[500px]"
               >
                 {items.map((project) => (
-                  <div key={project.title} className="w-[300px] sm:w-[400px] lg:w-[500px] h-[620px] sm:h-[650px] flex-shrink-0">
+                  <div key={project.title} className="w-[320px] sm:w-[420px] lg:w-[500px] flex-shrink-0">
                     <ProjectCard project={project} locale={locale} />
                   </div>
                 ))}

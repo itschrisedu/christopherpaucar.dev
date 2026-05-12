@@ -11,22 +11,39 @@ const plans = {
     {
       name: "Starter",
       price: "$200+",
-      desc: "Landing page for validating your idea.",
-      features: ["Responsive page", "Contact form", "Basic SEO", "Delivery in 1-2 weeks"],
+      desc: "Perfect to launch your idea and start getting clients online.",
+      features: [
+        "Professional one-page website",
+        "Works perfectly on mobile & desktop",
+        "Contact form so clients reach you",
+        "Ready in 1–2 weeks",
+      ],
       highlight: false,
     },
     {
-      name: "Business",
+      name: "Growth",
       price: "$1,500+",
-      desc: "Multi-section website ready to convert.",
-      features: ["Custom UI", "Performance optimization", "CMS-ready structure", "Analytics integration"],
+      desc: "For businesses ready to stand out and convert visitors into clients.",
+      features: [
+        "Multi-page website with custom design",
+        "Optimized to appear on Google (SEO)",
+        "Fast loading — under 2 seconds",
+        "Analytics to track your visitors",
+        "Easy to update content yourself",
+      ],
       highlight: true,
     },
     {
-      name: "Pro App",
+      name: "Scale",
       price: "$3,000+",
-      desc: "Full-stack app with scalable architecture.",
-      features: ["Auth + roles", "Database + API", "Production deployment", "Post-launch support"],
+      desc: "Custom web application built to automate and grow your business.",
+      features: [
+        "User login & dashboard",
+        "Automated workflows that save you hours",
+        "Secure database for your data",
+        "Ready for thousands of users",
+        "30 days of free support after launch",
+      ],
       highlight: false,
     },
   ],
@@ -34,22 +51,39 @@ const plans = {
     {
       name: "Starter",
       price: "$200+",
-      desc: "Landing page para validar tu idea.",
-      features: ["Página responsive", "Formulario de contacto", "SEO básico", "Entrega en 1-2 semanas"],
+      desc: "Perfecto para lanzar tu idea y empezar a conseguir clientes en línea.",
+      features: [
+        "Sitio web profesional de una página",
+        "Se ve perfecto en celular y computadora",
+        "Formulario para que tus clientes te contacten",
+        "Listo en 1–2 semanas",
+      ],
       highlight: false,
     },
     {
-      name: "Business",
+      name: "Crecimiento",
       price: "$1,500+",
-      desc: "Sitio multipágina listo para convertir.",
-      features: ["UI personalizada", "Optimización de rendimiento", "Estructura lista para CMS", "Integración de analítica"],
+      desc: "Para negocios que quieren destacar y convertir visitantes en clientes.",
+      features: [
+        "Sitio multipágina con diseño personalizado",
+        "Optimizado para aparecer en Google (SEO)",
+        "Carga rápida — menos de 2 segundos",
+        "Analítica para ver quién te visita",
+        "Fácil de actualizar el contenido tú mismo",
+      ],
       highlight: true,
     },
     {
-      name: "Pro App",
+      name: "Escala",
       price: "$3,000+",
-      desc: "App full-stack con arquitectura escalable.",
-      features: ["Auth + roles", "Base de datos + API", "Despliegue en producción", "Soporte post-lanzamiento"],
+      desc: "Aplicación web a medida para automatizar y escalar tu negocio.",
+      features: [
+        "Login de usuarios y panel de control",
+        "Flujos automáticos que te ahorran horas",
+        "Base de datos segura para tu información",
+        "Preparado para miles de usuarios",
+        "30 días de soporte gratis después del lanzamiento",
+      ],
       highlight: false,
     },
   ],
@@ -65,9 +99,9 @@ export default function Pricing() {
         <SectionContent>
           <SectionHeading
             centered
-            label={locale === "en" ? "Basic Plans" : "Planes básicos"}
-            title={locale === "en" ? "Choose the right start point." : "Elige el punto de inicio correcto."}
-            subtitle={locale === "en" ? "Clear scope, clear pricing, clear delivery." : "Alcance claro, precio claro, entrega clara."}
+            label={locale === "en" ? "Investment" : "Inversión"}
+            title={locale === "en" ? "Plans that fit your stage." : "Planes que se adaptan a tu etapa."}
+            subtitle={locale === "en" ? "No hidden fees. You know exactly what you get and when." : "Sin costos ocultos. Sabes exactamente qué recibes y cuándo."}
           />
 
           <div className="mt-14 grid grid-cols-1 gap-5 lg:grid-cols-3">
@@ -108,15 +142,20 @@ export default function Pricing() {
                   ))}
                 </div>
 
-                <a href="#contact"
-                  className={`mt-8 block text-center py-3.5 rounded-full text-[15px] font-normal transition-all duration-200
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.dispatchEvent(new CustomEvent("selectPlan", { detail: plan.name }));
+                    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className={`mt-8 block w-full text-center py-3.5 rounded-full text-[15px] font-normal transition-all duration-200
                     ${plan.highlight
                       ? "bg-snow dark:bg-obsidian text-obsidian dark:text-snow hover:scale-[1.02]"
                       : "bg-azure text-snow hover:bg-[#0077ED] hover:scale-[1.02]"
                     }`}
                 >
                   {locale === "en" ? "Start this plan" : "Empezar este plan"}
-                </a>
+                </button>
               </div>
             ))}
           </div>
