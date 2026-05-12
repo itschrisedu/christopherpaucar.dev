@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { LanguageProvider } from "@/context/LanguageContext";
@@ -23,6 +23,14 @@ export const metadata: Metadata = {
     locale: "en_US",
     alternateLocale: "es_EC",
   },
+  alternates: {
+    canonical: "https://christopherpaucar.dev",
+    languages: {
+      "en-US": "/",
+      "es-EC": "/?lng=es",
+    },
+  },
+
   twitter: {
     card: "summary_large_image",
     title: "Christopher Paucar — Full Stack Developer",
@@ -35,9 +43,26 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f5f5f7" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
+};
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" data-theme="light" suppressHydrationWarning className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}>
+      <head>
+        {/* Preconnect for Google Fonts */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="canonical" href="https://christopherpaucar.dev" />
+        <link rel="alternate" href="https://christopherpaucar.dev" hrefLang="en-US" />
+        <link rel="alternate" href="https://christopherpaucar.dev/?lng=es" hrefLang="es-EC" />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5f5f7" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0a" />
+      </head>
       <body className="min-h-full w-full flex flex-col font-sans cursor-none" suppressHydrationWarning>
         <ThemeProvider>
           <LanguageProvider>

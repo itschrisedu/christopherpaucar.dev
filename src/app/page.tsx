@@ -28,7 +28,7 @@ export default function Home() {
   }, [phase, done]);
 
   return (
-    <main className="relative w-full min-h-screen">
+    <main className="relative w-full min-h-screen bg-fog dark:bg-[#0a0a0a]">
       <AnimatePresence mode="wait">
         {phase === "terminal" && (
           <motion.div key="terminal" exit={{ opacity: 0, y: -40, filter: "blur(8px)", transition: { duration: 0.6, ease: EASE } }}>
@@ -38,15 +38,16 @@ export default function Home() {
         {phase === "portfolio" && (
           <motion.div key="portfolio" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE, delay: 0.1 } }}>
             <Hero />
-            <div className="relative flex w-full flex-col gap-0 pb-0 lg:gap-0">
-              <HowIWork />
-              <Projects />
-              <About />
-              <Differential />
-              <Testimonials />
-              <FAQ />
-              <Pricing />
-              <Contact />
+            {/* Alternating fog / snow section bands */}
+            <div className="relative flex w-full flex-col">
+              <HowIWork />       {/* snow */}
+              <Projects />       {/* fog */}
+              <About />          {/* snow */}
+              <Differential />   {/* fog */}
+              <Testimonials />   {/* snow */}
+              <FAQ />            {/* fog */}
+              <Pricing />        {/* snow */}
+              <Contact />        {/* fog */}
             </div>
             <Footer />
           </motion.div>

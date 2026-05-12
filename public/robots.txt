@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://christopherpaucar.dev/sitemap.xml
+Host: https://christopherpaucar.dev

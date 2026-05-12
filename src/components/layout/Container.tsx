@@ -4,15 +4,17 @@ import { cn } from "@/lib/utils";
 
 type ContainerProps = React.HTMLAttributes<HTMLDivElement> & {
   size?: "default" | "wide";
+  fullWidth?: boolean;
+  align?: "center" | "start";
 };
 
-export function Container({ className, size = "default", children, ...props }: ContainerProps) {
+export function Container({ className, size = "default", fullWidth = false, align = "center", children, ...props }: ContainerProps) {
   return (
-    <div className="flex justify-center w-full">
+    <div className={align === "start" ? "flex justify-start w-full" : "flex justify-center w-full"}>
       <div
         className={cn(
-          "px-6 sm:px-10 w-full",
-          size === "wide" ? "max-w-[1800px]" : "max-w-[1400px]",
+          fullWidth ? "w-full" : "px-6 sm:px-10 w-full",
+          fullWidth ? "max-w-none" : size === "wide" ? "max-w-[1400px]" : "max-w-[1200px]",
           className,
         )}
         {...props}
@@ -22,4 +24,3 @@ export function Container({ className, size = "default", children, ...props }: C
     </div>
   );
 }
-

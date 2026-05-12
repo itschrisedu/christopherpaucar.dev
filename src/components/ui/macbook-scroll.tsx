@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { MotionValue, motion, useScroll, useTransform } from "motion/react";
+import { MotionValue, motion, useScroll, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 import {
   IconBrightnessDown,
@@ -30,11 +30,19 @@ export const MacbookScroll = ({
   showGradient,
   title,
   badge,
+  className = "",
+  titleClassName = "",
+  sizeClassName = "scale-[0.35] sm:scale-50 md:scale-100",
+  screenOnly = false,
 }: {
   src?: string;
   showGradient?: boolean;
   title?: string | React.ReactNode;
   badge?: React.ReactNode;
+  className?: string;
+  titleClassName?: string;
+  sizeClassName?: string;
+  screenOnly?: boolean;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -64,18 +72,31 @@ export const MacbookScroll = ({
   const rotate = useTransform(scrollYProgress, [0.1, 0.12, 0.3], [-28, -28, 0]);
   const textTransform = useTransform(scrollYProgress, [0, 0.3], [0, 100]);
   const textOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  if (screenOnly) {
+    return (
+      <div className={`flex flex-col items-center justify-start ${className} ${sizeClassName}`} ref={ref}>
+        <motion.div style={{ translateY: textTransform, opacity: textOpacity }} className={`mb-4 text-center ${titleClassName}`}>
+          {title}
+        </motion.div>
+        <motion.div className="relative rounded-lg overflow-hidden w-[320px] h-[200px] sm:w-[420px] sm:h-[260px] shadow-lg">
+          <img src={src} alt="preview" className="w-full h-full object-cover" />
+          {showGradient && <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />}
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div
       ref={ref}
-      className="flex min-h-[200vh] shrink-0 scale-[0.35] transform flex-col items-center justify-start py-0 [perspective:800px] sm:scale-50 md:scale-100 md:py-80"
+      className={`flex min-h-[200vh] shrink-0 transform flex-col items-center justify-start py-0 [perspective:800px] md:py-80 ${sizeClassName} ${className}`}
     >
       <motion.h2
         style={{
           translateY: textTransform,
           opacity: textOpacity,
         }}
-        className="mb-8 text-center text-3xl font-bold text-neutral-800 dark:text-white"
+        className={`mb-8 text-center text-3xl font-bold text-neutral-800 dark:text-white ${titleClassName}`}
       >
         {title || (
           <span>

@@ -30,7 +30,7 @@ export function AnimatedTestimonials({
   const prev = () => setIndex((v) => (v - 1 + total) % total);
   const next = () => setIndex((v) => (v + 1) % total);
 
-  const miniList = useMemo(() => testimonials.slice(0, Math.min(5, testimonials.length)), [testimonials]);
+  const miniList = useMemo(() => testimonials, [testimonials]);
 
   useEffect(() => {
     if (!autoplay || total <= 1) return;

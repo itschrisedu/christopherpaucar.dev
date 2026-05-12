@@ -5,18 +5,19 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-2xl text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:pointer-events-none disabled:opacity-50 dark:focus-visible:ring-offset-[#0b0b0b]",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-[15px] font-normal transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-azure focus-visible:ring-offset-2 focus-visible:ring-offset-fog disabled:pointer-events-none disabled:opacity-50 dark:focus-visible:ring-offset-[#0a0a0a]",
   {
     variants: {
       variant: {
-        primary: "bg-accent text-[#0b0b0b] dark:text-white shadow-xl shadow-accent/25 hover:shadow-2xl hover:shadow-accent/35 hover:bg-accent-hover",
-        secondary: "border-2 border-border bg-transparent text-primary dark:text-white hover:border-accent hover:text-accent hover:bg-accent/5 dark:hover:bg-accent/10",
-        ghost: "bg-transparent text-primary dark:text-white hover:bg-surface dark:hover:bg-white/5",
+        primary: "bg-azure text-snow rounded-full hover:bg-[#0077ED] hover:scale-[1.02]",
+        secondary: "bg-transparent text-cobalt-link dark:text-azure rounded-full hover:underline underline-offset-4",
+        ghost: "bg-transparent text-ink dark:text-[var(--color-ink)] hover:bg-ink/5 dark:hover:bg-snow/5 rounded-full",
+        dark: "bg-obsidian dark:bg-snow text-snow dark:text-obsidian rounded-full hover:scale-[1.02]",
       },
       size: {
         default: "h-12 px-7",
         lg: "h-[52px] px-9",
-        sm: "h-10 px-4 rounded-xl text-[13px]",
+        sm: "h-10 px-5 text-[14px]",
         icon: "h-11 w-11 p-0",
       },
     },
@@ -51,4 +52,3 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({ classN
 Button.displayName = "Button";
 
 export { buttonVariants };
-

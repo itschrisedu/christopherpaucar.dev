@@ -2,24 +2,12 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-type SectionContentProps = React.HTMLAttributes<HTMLDivElement> & {
-  inset?: "none" | "gutter";
-};
+type SectionContentProps = React.HTMLAttributes<HTMLDivElement>;
 
-export function SectionContent({ className, inset = "gutter", children, ...props }: SectionContentProps) {
+export function SectionContent({ className, children, ...props }: SectionContentProps) {
   return (
-    <div className={cn("grid grid-cols-1 lg:grid-cols-12", className)} {...props}>
-      <div
-        className={cn(
-          "lg:col-span-12 w-full",
-          inset === "gutter"
-            ? ""
-            : "",
-        )}
-      >
-        {children}
-      </div>
+    <div className={cn("w-full", className)} {...props}>
+      {children}
     </div>
   );
 }
-

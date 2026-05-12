@@ -93,7 +93,7 @@ const translations = {
           result: "80 commits of production code. Complete CRUD for policies, clients, contracts, and reimbursements. Deployed with Docker.",
           tags: ["Next.js", "NestJS", "PostgreSQL", "Docker", "JWT"],
           github: "https://github.com/itschrisedu/life_insurance_front",
-          image: "/assets/projects/insurance.svg",
+          image: "/assets/projects/insurance.png",
         },
         {
           title: "GeoRutas — Route Optimizer",
@@ -103,7 +103,7 @@ const translations = {
           result: "Real-time route optimization with fuel cost estimation. Multi-stop support, responsive design, and geolocation.",
           tags: ["React", "TypeScript", "Node.js", "Leaflet", "OSRM"],
           github: "https://github.com/itschrisedu/GeoRutas_-ptimas",
-          image: "/assets/projects/georutas.svg",
+          image: "/assets/projects/georutas.png",
         },
         {
           title: "BioAcces — Biometric Security",
@@ -113,7 +113,7 @@ const translations = {
           result: "Multi-factor biometric authentication deployed in university lab. Zero unauthorized access incidents.",
           tags: ["Python", "Django", "JavaScript", "OpenCV", "Biometrics"],
           github: "https://github.com/itschrisedu/Bioacces",
-          image: "/assets/projects/bioacces.svg",
+          image: "/assets/projects/bioacces.png",
         },
         {
           title: "MoviPass — Mobility Platform",
@@ -123,7 +123,7 @@ const translations = {
           result: "Clean, responsive interface with optimized user flow. Scalable component structure for future expansion.",
           tags: ["Angular", "TypeScript", "SCSS", "RxJS"],
           github: "https://github.com/itschrisedu/movipass-frontend",
-          image: "/assets/projects/movipass.svg",
+          image: "/assets/projects/movipass.png",
         },
       ],
       es: [
@@ -135,7 +135,7 @@ const translations = {
           result: "80 commits de código en producción. CRUD completo para pólizas, clientes, contratos y reembolsos. Desplegado con Docker.",
           tags: ["Next.js", "NestJS", "PostgreSQL", "Docker", "JWT"],
           github: "https://github.com/itschrisedu/life_insurance_front",
-          image: "/assets/projects/insurance.svg",
+          image: "/assets/projects/insurance.png",
         },
         {
           title: "GeoRutas — Optimizador de Rutas",
@@ -145,7 +145,7 @@ const translations = {
           result: "Optimización de rutas en tiempo real con estimación de costos de combustible. Soporte multi-parada, diseño responsive y geolocalización.",
           tags: ["React", "TypeScript", "Node.js", "Leaflet", "OSRM"],
           github: "https://github.com/itschrisedu/GeoRutas_-ptimas",
-          image: "/assets/projects/georutas.svg",
+          image: "/assets/projects/georutas.png",
         },
         {
           title: "BioAcces — Seguridad Biométrica",
@@ -155,7 +155,7 @@ const translations = {
           result: "Autenticación biométrica multifactor desplegada en laboratorio universitario. Cero incidentes de acceso no autorizado.",
           tags: ["Python", "Django", "JavaScript", "OpenCV", "Biometrics"],
           github: "https://github.com/itschrisedu/Bioacces",
-          image: "/assets/projects/bioacces.svg",
+          image: "/assets/projects/bioacces.png",
         },
         {
           title: "MoviPass — Plataforma de Movilidad",
@@ -165,7 +165,7 @@ const translations = {
           result: "Interfaz limpia y responsive con flujo de usuario optimizado. Estructura de componentes escalable para expansión futura.",
           tags: ["Angular", "TypeScript", "SCSS", "RxJS"],
           github: "https://github.com/itschrisedu/movipass-frontend",
-          image: "/assets/projects/movipass.svg",
+          image: "/assets/projects/movipass.png",
         },
       ],
     },
@@ -217,14 +217,14 @@ const translations = {
     title: { en: "Common questions.", es: "Preguntas comunes." },
     items: {
       en: [
-        { q: "How much does a project cost?", a: "It depends on scope and complexity. A landing page starts at $800, a multi-page site from $1,500, and a full web application from $3,000. Every project includes discovery, design, development, and post-launch support. I provide a detailed quote after understanding your specific needs." },
+        { q: "How much does a project cost?", a: "It depends on scope and complexity. A landing page starts at $200, a multi-page site from $1,500, and a full web application from $3,000. Every project includes discovery, design, development, and post-launch support. I provide a detailed quote after understanding your specific needs." },
         { q: "How long does a project take?", a: "A landing page with contact form: ~2 weeks. A complete website: 3-5 weeks. A full web application with backend: 6-10 weeks. I deliver in phases so you see real progress every week." },
         { q: "What results can I expect?", a: "A website that loads fast, looks professional on any device, and is designed to make your visitors contact you. I don't promise 'triple your sales' — I promise a technically solid product that works for you." },
         { q: "What's your development process?", a: "Discovery → Design → Development → Testing → Deploy. You get weekly updates and access to a staging environment. No surprises." },
         { q: "Do you offer ongoing support?", a: "Yes. I offer maintenance plans after launch, including bug fixes, updates, performance monitoring, and feature additions. Your site doesn't get abandoned after delivery." },
       ],
       es: [
-        { q: "¿Cuánto cuesta un proyecto?", a: "Depende del alcance y complejidad. Una landing page desde $800, un sitio multipágina desde $1,500 y una aplicación web completa desde $3,000. Cada proyecto incluye descubrimiento, diseño, desarrollo y soporte post-lanzamiento. Proporciono un presupuesto detallado después de entender tus necesidades." },
+        { q: "¿Cuánto cuesta un proyecto?", a: "Depende del alcance y complejidad. Una landing page desde $200, un sitio multipágina desde $1,500 y una aplicación web completa desde $3,000. Cada proyecto incluye descubrimiento, diseño, desarrollo y soporte post-lanzamiento. Proporciono un presupuesto detallado después de entender tus necesidades." },
         { q: "¿Cuánto tiempo toma un proyecto?", a: "Landing page con formulario: ~2 semanas. Sitio web completo: 3-5 semanas. Aplicación web con backend: 6-10 semanas. Entrego por fases para que veas avance real cada semana." },
         { q: "¿Qué resultados puedo esperar?", a: "Un sitio web que carga rápido, se ve profesional en cualquier dispositivo y está diseñado para que tus visitantes te contacten. No prometo 'triplicar tus ventas' — prometo un producto técnicamente sólido que trabaja por ti." },
         { q: "¿Cuál es tu proceso de desarrollo?", a: "Descubrimiento → Diseño → Desarrollo → Testing → Deploy. Recibes actualizaciones semanales y acceso a un entorno de staging. Sin sorpresas." },
@@ -263,8 +263,7 @@ const translations = {
     ctaNav: { en: "Start a Project", es: "Iniciar proyecto" },
     sending: { en: "Sending...", es: "Enviando..." },
     sent: { en: "Message sent ✓", es: "Mensaje enviado ✓" },
-    error: { en: "Error sending. Try again or use WhatsApp.", es: "Error al enviar. Intenta de nuevo o usa WhatsApp." },
-    whatsapp: { en: "Chat on WhatsApp", es: "Chatear por WhatsApp" },
+    error: { en: "Error sending. Try again.", es: "Error al enviar. Intenta de nuevo." },
     location: { en: "Ecuador — Available remotely worldwide", es: "Ecuador — Disponible remoto a nivel mundial" },
   },
 

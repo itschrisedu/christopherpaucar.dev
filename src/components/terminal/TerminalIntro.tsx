@@ -196,8 +196,8 @@ export default function TerminalIntro({ onComplete }: TerminalIntroProps) {
 
   /* ── Render helpers ─────────────────────────────────────────── */
   const renderPrompt = () => (
-    <span className="text-terminal-prompt font-medium select-none">
-      <span className="text-terminal-green">❯</span>{" "}
+    <span className="text-azure font-medium select-none">
+      <span className="text-[#34c759] dark:text-[#30d158]">❯</span>{" "}
     </span>
   );
 
@@ -214,7 +214,7 @@ export default function TerminalIntro({ onComplete }: TerminalIntroProps) {
           className="flex items-start"
         >
           {renderPrompt()}
-          <span className="text-terminal-text">{line.text}</span>
+          <span className="text-ink dark:text-[var(--color-terminal-text)]">{line.text}</span>
         </motion.div>
       );
     }
@@ -226,7 +226,7 @@ export default function TerminalIntro({ onComplete }: TerminalIntroProps) {
           initial={{ opacity: 0, x: -4 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.2 }}
-          className="pl-5 text-terminal-green text-sm font-medium"
+          className="pl-5 text-[#34c759] dark:text-[#30d158] text-sm font-medium"
         >
           {line.text}
           {isComplete && <span>{accessDots}</span>}
@@ -240,51 +240,52 @@ export default function TerminalIntro({ onComplete }: TerminalIntroProps) {
         initial={{ opacity: 0, x: -4 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.15 }}
-        className="pl-5 text-terminal-muted text-sm"
+        className="pl-5 text-graphite dark:text-[var(--color-terminal-muted)] text-sm"
       >
         {line.text}
       </motion.div>
     );
   };
 
-  /* ── UI ─────────────────────────────────────────────────────── */
+  /* ── UI — Light Apple-style terminal ────────────────────────── */
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-terminal-bg p-4 sm:p-8"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-fog dark:bg-[#0a0a0a] p-4 sm:p-8"
     >
-      {/* Background grid */}
+      {/* Subtle dot grid background */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 opacity-[0.4] dark:opacity-[0.03]"
         style={{
-          backgroundImage: `
-            linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: "60px 60px",
+          backgroundImage: `radial-gradient(circle at 1px 1px, #d2d2d7 0.5px, transparent 0)`,
+          backgroundSize: "24px 24px",
         }}
       />
 
-      {/* Terminal window */}
+      {/* Terminal window — Apple frosted card */}
       <motion.div
         initial={{ scale: 0.95, y: 20 }}
         animate={{ scale: 1, y: 0 }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as const }}
-        className="terminal-glow relative w-full max-w-2xl rounded-xl bg-terminal-surface overflow-hidden"
+        className="relative w-full max-w-2xl rounded-[28px]
+          bg-snow dark:bg-[#1c1c1e]
+          border border-silver-mist/70 dark:border-[#38383a]
+          shadow-[0_20px_60px_rgba(0,0,0,0.08)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.5)]
+          overflow-hidden"
       >
         <div className="terminal-scanline" />
 
-        {/* Title bar */}
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-terminal-border">
-          <div className="flex items-center gap-1.5">
-            <span className="block h-3 w-3 rounded-full bg-terminal-red/80" />
-            <span className="block h-3 w-3 rounded-full bg-terminal-amber/80" />
-            <span className="block h-3 w-3 rounded-full bg-terminal-green/80" />
+        {/* Title bar — macOS style */}
+        <div className="flex items-center gap-2 px-5 py-3.5 border-b border-silver-mist/50 dark:border-[#38383a]">
+          <div className="flex items-center gap-2">
+            <span className="block h-3 w-3 rounded-full bg-[#ff5f57]" />
+            <span className="block h-3 w-3 rounded-full bg-[#febc2e]" />
+            <span className="block h-3 w-3 rounded-full bg-[#28c840]" />
           </div>
           <div className="flex-1 text-center">
-            <span suppressHydrationWarning className="text-xs font-mono text-terminal-muted tracking-wide">
+            <span suppressHydrationWarning className="text-xs font-mono text-graphite dark:text-[var(--color-terminal-muted)] tracking-wide">
               christopher@dev ~ portfolio
             </span>
           </div>
@@ -294,15 +295,15 @@ export default function TerminalIntro({ onComplete }: TerminalIntroProps) {
         {/* Terminal body */}
         <div
           ref={scrollRef}
-          className="terminal-scroll p-5 font-mono text-sm leading-7 min-h-[300px] max-h-[450px] overflow-y-auto"
+          className="terminal-scroll p-6 font-mono text-sm leading-7 min-h-[300px] max-h-[450px] overflow-y-auto"
         >
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="text-terminal-muted mb-4 text-xs select-none"
+            className="text-graphite dark:text-[var(--color-terminal-muted)] mb-4 text-xs select-none"
           >
-            <span className="text-terminal-cyan">christopherpaucar.dev</span>{" "}
+            <span className="text-azure">christopherpaucar.dev</span>{" "}
             — v1.0.0
           </motion.div>
 
@@ -315,7 +316,7 @@ export default function TerminalIntro({ onComplete }: TerminalIntroProps) {
           {currentTyping && (
             <div className="flex items-start mt-1">
               {renderPrompt()}
-              <span className="text-terminal-text">{currentTyping}</span>
+              <span className="text-ink dark:text-[var(--color-terminal-text)]">{currentTyping}</span>
               {isTyping && <span className="terminal-cursor" />}
             </div>
           )}
@@ -330,22 +331,22 @@ export default function TerminalIntro({ onComplete }: TerminalIntroProps) {
         </div>
       </motion.div>
 
-      {/* Skip button */}
+      {/* Skip button — Apple frosted pill */}
       <motion.button
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
         onClick={onComplete}
         className="absolute bottom-6 right-6 sm:bottom-10 sm:right-10 
-                   flex items-center gap-2 px-4 py-2 rounded-lg
-                   text-xs font-mono text-terminal-muted 
-                   border border-terminal-border
-                   hover:text-terminal-text hover:border-terminal-muted
-                   transition-colors duration-200 cursor-pointer
-                   backdrop-blur-sm bg-terminal-bg/50"
+                   flex items-center gap-2 px-4 py-2 rounded-full
+                   text-xs font-mono text-graphite dark:text-[var(--color-terminal-muted)]
+                   border border-silver-mist dark:border-[#38383a]
+                   bg-snow/80 dark:bg-[#1c1c1e]/80 backdrop-blur-[20px]
+                   hover:text-ink dark:hover:text-snow hover:border-graphite dark:hover:border-[#636366]
+                   transition-colors duration-200 cursor-pointer"
       >
         Skip
-        <kbd className="hidden sm:inline-block px-1.5 py-0.5 rounded bg-terminal-border text-[10px] text-terminal-muted">
+        <kbd className="hidden sm:inline-block px-1.5 py-0.5 rounded-md bg-fog dark:bg-[#38383a] text-[10px] text-graphite dark:text-[var(--color-terminal-muted)]">
           ESC
         </kbd>
       </motion.button>
