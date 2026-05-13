@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 import { Container } from "@/components/layout/Container";
@@ -54,12 +54,41 @@ export default function Contact() {
     return () => window.removeEventListener("selectPlan", handleSelectPlan);
   }, [locale]);
 
+  /* ── Security: sanitize input to prevent XSS / injection ──────── */
+  const sanitize = (str: string) =>
+    str.replace(/<[^>]*>/g, "").replace(/[<>]/g, "").trim();
+
+  /* ── Rate limiting: prevent spam (5s cooldown) ────────────────── */
+  const lastSubmitRef = React.useRef(0);
+
+  /* ── Honeypot: invisible field to catch bots ──────────────────── */
+  const [honeypot, setHoneypot] = React.useState("");
+
   const handleSubmit = async () => {
+    // Bot check: if honeypot is filled, silently reject
+    if (honeypot) { setStatus("sent"); return; }
+
+    // Rate limit: minimum 5s between submissions
+    const now = Date.now();
+    if (now - lastSubmitRef.current < 5000) return;
+    lastSubmitRef.current = now;
+
+    // Sanitize all inputs
+    const clean = {
+      name: sanitize(formData.name),
+      email: sanitize(formData.email),
+      subject: sanitize(formData.subject),
+      message: sanitize(formData.message),
+    };
+
+    // Validate required fields
+    if (!clean.name || !clean.email || !clean.message) return;
+
     const payload = new FormData();
-    payload.set("name", formData.name);
-    payload.set("email", formData.email);
-    payload.set("subject", formData.subject);
-    payload.set("message", formData.message);
+    payload.set("name", clean.name);
+    payload.set("email", clean.email);
+    payload.set("subject", clean.subject);
+    payload.set("message", clean.message);
 
     try {
       const res = await fetch(FORMSPREE_URL, {
@@ -132,6 +161,17 @@ export default function Contact() {
                 className="rounded-[28px] bg-fog dark:bg-[#0a0a0a] p-8 sm:p-10"
               >
                 <form onSubmit={handleFormSubmit} className="space-y-5">
+                  {/* Honeypot — invisible to users, catches bots */}
+                  <input
+                    type="text"
+                    name="_gotcha"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                    className="hidden"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                  />
                   <div>
                     <label htmlFor="name" className="mb-2 block text-[14px] font-semibold text-ink dark:text-[var(--color-ink)]">{locale === "en" ? "Full name" : "Nombre completo"}</label>
                     <input
