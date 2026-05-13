@@ -61,6 +61,7 @@ export default function Hero() {
 
       {/* Globe — subtle decorative element */}
       <motion.div
+        id="hero-globe"
         initial={{ opacity: 0, scale: 0.85 }}
         animate={{ opacity: 0.4, scale: 0.85 }}
         transition={{ duration: 1.2, delay: 0.5, ease: EASE }}

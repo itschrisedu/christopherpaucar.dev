@@ -15,11 +15,14 @@ export function SmoothCursor() {
   const targetAngleRef = useRef(0);
   const rafRef = useRef<number | null>(null);
 
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     if (isTouchDevice()) return;
 
     const cursor = cursorRef.current;
-    if (!cursor) return;
+    const wrapper = wrapperRef.current;
+    if (!cursor || !wrapper) return;
 
     const handleMove = (event: MouseEvent) => {
       const dx = event.clientX - lastPointerRef.current.x;
@@ -34,6 +37,28 @@ export function SmoothCursor() {
       lastPointerRef.current.x = event.clientX;
       lastPointerRef.current.y = event.clientY;
       cursor.style.opacity = "1";
+
+      /* ── Detect hover over Hero Globe to disable blend mode ── */
+      const globe = document.getElementById("hero-globe");
+      let isOverGlobe = false;
+      if (globe) {
+        const rect = globe.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const radius = (rect.width / 2) * 0.95; // 95% of its bounding box to be precise
+        const dist = Math.hypot(event.clientX - cx, event.clientY - cy);
+        if (dist < radius) {
+          isOverGlobe = true;
+        }
+      }
+
+      if (isOverGlobe) {
+        wrapper.classList.remove("mix-blend-difference", "text-white");
+        wrapper.classList.add("text-ink", "dark:text-snow");
+      } else {
+        wrapper.classList.add("mix-blend-difference", "text-white");
+        wrapper.classList.remove("text-ink", "dark:text-snow");
+      }
     };
 
     const animate = () => {
@@ -59,7 +84,7 @@ export function SmoothCursor() {
   }, []);
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-[10000] hidden md:block mix-blend-difference text-white">
+    <div ref={wrapperRef} className="pointer-events-none fixed inset-0 z-[10000] hidden md:block mix-blend-difference text-white transition-colors duration-150">
       <div
         ref={cursorRef}
         className="smooth-cursor absolute left-0 top-0 h-6 w-5 opacity-0"
