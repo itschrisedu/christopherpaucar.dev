@@ -117,13 +117,14 @@ export default function WorldMap({ dots = [], width = "100%", height = 260, clas
   }, [dots]);
 
   return (
-    <div className={`w-full overflow-hidden rounded-3xl border ${isDark ? "border-white/10 bg-[#050505]" : "border-black/10 bg-white"} ${className}`}>
-      <svg viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} width={width} height={height} preserveAspectRatio="xMidYMid meet" aria-hidden>
+    <div className={`w-full overflow-hidden ${className}`}>
+      {/* 
+        viewBox was "0 0 1200 510". 
+        By changing to "100 0 1000 510" we crop 100px from the left and 100px from the right (mostly empty ocean),
+        which makes the aspect ratio tighter and naturally renders the map taller in the available column width. 
+      */}
+      <svg viewBox={`100 0 1000 510`} width={width} height={height} preserveAspectRatio="xMidYMid meet" aria-hidden>
         <defs>
-          <linearGradient id="worldMapFade" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={isDark ? "#050505" : "#ffffff"} stopOpacity="1" />
-            <stop offset="100%" stopColor={isDark ? "#111111" : "#f4f4f5"} stopOpacity="1" />
-          </linearGradient>
           <filter id="mapGlow" x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation="4" result="blur" />
             <feMerge>
@@ -133,25 +134,9 @@ export default function WorldMap({ dots = [], width = "100%", height = 260, clas
           </filter>
         </defs>
 
-        <rect width={VIEW_W} height={VIEW_H} fill="url(#worldMapFade)" />
-
         <g opacity={isDark ? 0.8 : 0.58}>
           {landDots.map((dot, index) => (
             <circle key={index} cx={dot.x} cy={dot.y} r="1.18" fill={isDark ? "#ffffff" : "#111111"} />
-          ))}
-        </g>
-
-        <g opacity={isDark ? 0.16 : 0.1}>
-          {[...Array(10)].map((_, index) => (
-            <line
-              key={`grid-${index}`}
-              x1={0}
-              y1={(index + 1) * (VIEW_H / 11)}
-              x2={VIEW_W}
-              y2={(index + 1) * (VIEW_H / 11)}
-              stroke={isDark ? "#8a8a8a" : "#5a5a5a"}
-              strokeWidth={1}
-            />
           ))}
         </g>
 

@@ -148,8 +148,8 @@ export default function Contact() {
                   <span>{t.contact.location[locale]}</span>
                 </div>
 
-                <div className="mt-8">
-                  <WorldMap dots={worldMapDots} height={300} />
+                <div className="mt-8 w-full">
+                  <WorldMap dots={worldMapDots} />
                 </div>
 
               </motion.div>
