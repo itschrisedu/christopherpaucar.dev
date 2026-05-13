@@ -1,6 +1,6 @@
 "use client";
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import { motion, useInView, animate } from "framer-motion";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import { Container } from "@/components/layout/Container";
@@ -16,10 +16,10 @@ export default function About() {
   const { locale } = useLanguage();
 
   const stats = [
-    { value: "3+", label: locale === "en" ? "Years Experience" : "Años experiencia" },
-    { value: "10+", label: locale === "en" ? "Projects Shipped" : "Proyectos lanzados" },
-    { value: "6+", label: locale === "en" ? "Clients Served" : "Clientes atendidos" },
-    { value: "100%", label: locale === "en" ? "Code Ownership" : "Propiedad del código" },
+    { value: 3, suffix: "+", label: locale === "en" ? "Years Experience" : "Años experiencia" },
+    { value: 10, suffix: "+", label: locale === "en" ? "Projects Shipped" : "Proyectos lanzados" },
+    { value: 6, suffix: "+", label: locale === "en" ? "Clients Served" : "Clientes atendidos" },
+    { value: 100, suffix: "%", label: locale === "en" ? "Code Ownership" : "Propiedad del código" },
   ];
 
   return (
@@ -44,7 +44,9 @@ export default function About() {
                       hover:bg-silver-mist/40 dark:hover:bg-[#2c2c2e]
                       transition-all duration-344"
                   >
-                    <p className="text-[1.75rem] sm:text-[2rem] font-bold text-azure tracking-tight">{s.value}</p>
+                    <p className="text-[1.75rem] sm:text-[2rem] font-bold text-azure tracking-tight">
+                      <AnimatedNumber value={s.value} inView={inView} />{s.suffix}
+                    </p>
                     <p className="mt-1 text-[11px] sm:text-[12px] font-semibold text-graphite dark:text-[var(--color-graphite)] uppercase tracking-wider">{s.label}</p>
                   </motion.div>
                 ))}
@@ -92,4 +94,21 @@ export default function About() {
       </Container>
     </section>
   );
+}
+
+function AnimatedNumber({ value, inView }: { value: number; inView: boolean }) {
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useEffect(() => {
+    if (inView) {
+      const controls = animate(0, value, {
+        duration: 2.5,
+        ease: "easeOut",
+        onUpdate: (v) => setDisplayValue(Math.floor(v)),
+      });
+      return controls.stop;
+    }
+  }, [value, inView]);
+
+  return <>{displayValue}</>;
 }
