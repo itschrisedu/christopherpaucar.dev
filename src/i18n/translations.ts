@@ -382,8 +382,8 @@ const translations = {
     label: { en: "Contact", es: "Contacto" },
     title: { en: "Let's talk about your project.", es: "Hablemos de tu proyecto." },
     subtitle: {
-      en: "If you've made it this far, something caught your attention. Tell me what you need — I'll reply within 24 hours.",
-      es: "Si llegaste hasta aquí, algo te llamó la atención. Cuéntame qué necesitas — respondo en 24 horas.",
+      en: "Let's make your idea work. Tell me about your project and let's figure out how I can help. I'll get back to you in less than 24 hours.",
+      es: "Hagamos que tu idea funcione. Cuéntame sobre tu proyecto y descubramos cómo puedo ayudarte. Te responderé en menos de 24 horas.",
     },
     name: { en: "Name", es: "Nombre" },
     email: { en: "Email", es: "Email" },
