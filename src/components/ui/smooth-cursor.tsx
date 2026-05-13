@@ -59,7 +59,7 @@ export function SmoothCursor() {
   }, []);
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-[9998] hidden md:block mix-blend-difference text-white">
+    <div className="pointer-events-none fixed inset-0 z-[10000] hidden md:block mix-blend-difference text-white">
       <div
         ref={cursorRef}
         className="smooth-cursor absolute left-0 top-0 h-6 w-5 opacity-0"

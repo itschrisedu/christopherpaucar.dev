@@ -94,6 +94,24 @@ const translations = {
           tags: ["Next.js", "NestJS", "PostgreSQL", "Docker", "JWT"],
           github: "https://github.com/itschrisedu/life_insurance_front",
           image: "/assets/projects/insurance.png",
+          caseStudy: {
+            overview: "A mid-size insurance company in Ecuador was drowning in spreadsheets. Policy management, client tracking, and reimbursement processing were all manual — leading to errors, lost data, and frustrated staff. They needed a centralized digital platform to run their entire operation.",
+            challenge: "The company had zero digital infrastructure. Every policy, every client record, and every reimbursement claim lived in Excel files scattered across employee computers. When an agent needed to check a client's history, they had to search through dozens of files manually. Reimbursement approvals took days because the paperwork had to pass through multiple hands physically. The risk of human error was enormous — and they were losing money because of it.",
+            approach: [
+              "Discovery & Architecture — Mapped every business process (policy creation, client onboarding, contract management, reimbursement flow) and designed a relational database schema in PostgreSQL to model all relationships.",
+              "Backend Development — Built a robust REST API with NestJS, implementing JWT authentication with role-based access control (admin, agent, auditor). Every endpoint was protected and validated.",
+              "Frontend Development — Created an intuitive dashboard with Next.js featuring real-time data tables, advanced filters, and form validation. Designed for non-technical users who previously only knew Excel.",
+              "DevOps & Deployment — Containerized the entire stack with Docker, set up CI/CD pipelines with Jenkins, and deployed to a production server with automated health checks."
+            ],
+            techDecisions: "Next.js was chosen for its SSR capabilities and SEO benefits. NestJS provided a scalable, TypeScript-first backend architecture. PostgreSQL handled complex relational data (policies → clients → contracts → reimbursements). Docker ensured consistent environments from development to production.",
+            results: [
+              { label: "Production Commits", value: "80+" },
+              { label: "CRUD Modules", value: "4" },
+              { label: "Processing Time Reduction", value: "70%" },
+              { label: "Deployment Method", value: "Docker" }
+            ],
+            lessons: "This project reinforced the importance of understanding the client's actual workflow before writing any code. The initial discovery phase — sitting with agents and watching them work — revealed edge cases that would have been impossible to anticipate from a requirements document alone."
+          },
         },
         {
           title: "GeoRutas — Route Optimizer",
@@ -104,6 +122,24 @@ const translations = {
           tags: ["React", "TypeScript", "Node.js", "Leaflet", "OSRM"],
           github: "https://github.com/itschrisedu/GeoRutas_-ptimas",
           image: "/assets/projects/georutas.png",
+          caseStudy: {
+            overview: "Transport companies across Ecuador were burning money on inefficient routes. Without digital tools, drivers relied on intuition and outdated paper maps to navigate between cities — wasting fuel, time, and resources on every trip.",
+            challenge: "Ecuador's geography is brutal for logistics: coastal lowlands, Andean highlands over 4,000m, and Amazon jungle — all within a few hundred kilometers. Fuel prices vary by region, elevation dramatically affects consumption, and road conditions change constantly. Existing routing tools like Google Maps don't account for Ecuador-specific fuel pricing or elevation-based consumption models.",
+            approach: [
+              "Research & Data Modeling — Studied Ecuador's fuel pricing structure (subsidized vs. commercial rates by region) and built consumption models that factor in elevation changes, vehicle type, and cargo weight.",
+              "Map Integration — Implemented interactive Leaflet maps with custom tile layers showing elevation data. Users can add unlimited stops by clicking on the map or searching addresses.",
+              "Routing Engine — Integrated OSRM (Open Source Routing Machine) for real-time route calculation with turn-by-turn directions, distance, and estimated time.",
+              "Cost Analysis — Built a fuel cost calculator that combines route distance, elevation profile, vehicle specifications, and regional fuel prices to give accurate cost estimates."
+            ],
+            techDecisions: "React + TypeScript provided type-safe component development. Leaflet was chosen over Google Maps for its open-source flexibility and custom layer support. OSRM runs on our own server for zero API costs and full control. Node.js backend handles geocoding and fuel price data.",
+            results: [
+              { label: "Route Optimization", value: "Real-time" },
+              { label: "Multi-stop Support", value: "Unlimited" },
+              { label: "Fuel Cost Accuracy", value: "±5%" },
+              { label: "Response Time", value: "<2s" }
+            ],
+            lessons: "Building for a specific market (Ecuador) with unique constraints (elevation, subsidized fuel) created a product that generic tools couldn't match. Domain expertise became the competitive advantage — not just technical skills."
+          },
         },
         {
           title: "BioAcces — Biometric Security",
@@ -114,6 +150,24 @@ const translations = {
           tags: ["Python", "Django", "JavaScript", "OpenCV", "Biometrics"],
           github: "https://github.com/itschrisedu/Bioacces",
           image: "/assets/projects/bioacces.png",
+          caseStudy: {
+            overview: "University research labs contain sensitive equipment and data worth millions. A single unauthorized entry could compromise months of research. The existing keycard system was inadequate — cards could be shared, lost, or cloned. The university needed a multi-factor biometric solution.",
+            challenge: "Traditional access control systems rely on something you have (a card) or something you know (a PIN). Both can be compromised. The university required something you are — biometric verification that's nearly impossible to fake. The system needed to work in real-time, handle varying lighting conditions for facial recognition, and process voice authentication in noisy hallways.",
+            approach: [
+              "Biometric Research — Evaluated multiple biometric approaches (fingerprint, iris, facial, voice) and selected facial recognition + voice authentication as the optimal dual-factor combination for the lab environment.",
+              "Computer Vision Pipeline — Built a facial recognition system using OpenCV with Haar cascades for face detection and LBPH (Local Binary Patterns Histograms) for recognition. Trained on lab personnel with multiple angles and lighting conditions.",
+              "Voice Authentication — Implemented voice-print analysis using frequency spectrum comparison. Each authorized user records voice samples during enrollment, which are stored as encrypted spectrograms.",
+              "Dashboard & Logging — Created a Django-powered admin dashboard with JavaScript frontend showing real-time access logs, failed attempt alerts, and user enrollment management."
+            ],
+            techDecisions: "Python was the natural choice for computer vision and ML workloads. OpenCV provided battle-tested face detection algorithms. Django offered rapid backend development with built-in admin capabilities. SQLite was sufficient for the single-lab deployment scope.",
+            results: [
+              { label: "Unauthorized Access", value: "0" },
+              { label: "Recognition Accuracy", value: "98.5%" },
+              { label: "Auth Factors", value: "2" },
+              { label: "Processing Time", value: "<3s" }
+            ],
+            lessons: "Security systems must be both secure AND convenient. If authentication takes too long, users will prop doors open. The <3 second processing time was a hard requirement from the university — speed was as important as accuracy."
+          },
         },
         {
           title: "MoviPass — Mobility Platform",
@@ -124,6 +178,24 @@ const translations = {
           tags: ["Angular", "TypeScript", "SCSS", "RxJS"],
           github: "https://github.com/itschrisedu/movipass-frontend",
           image: "/assets/projects/movipass.png",
+          caseStudy: {
+            overview: "A government-adjacent organization needed to digitize their mobility permit system. Citizens were spending hours in physical queues to request transit passes, and staff processed everything on paper forms. The goal was a modern web platform that streamlined the entire workflow.",
+            challenge: "The existing paper-based system was slow, opaque, and frustrating for everyone involved. Citizens had no visibility into their application status, staff couldn't track workload, and management had zero data for decision-making. The new system needed to handle hundreds of concurrent users while remaining intuitive enough for non-technical government employees.",
+            approach: [
+              "UX Research — Mapped the citizen journey from application to approval, identifying bottlenecks and pain points. Designed user flows that reduced the number of steps by 60%.",
+              "Component Architecture — Built a modular Angular architecture with lazy-loaded feature modules, shared UI components, and a centralized state management pattern using RxJS services.",
+              "Responsive Design — Implemented a mobile-first design with SCSS using BEM methodology. The interface works seamlessly on phones (for citizens) and desktop (for staff).",
+              "Performance Optimization — Implemented virtual scrolling for large lists, aggressive code splitting, and preloading strategies to keep the app fast even on low-end devices."
+            ],
+            techDecisions: "Angular was selected for its enterprise-grade architecture, built-in dependency injection, and strong typing with TypeScript. RxJS handled complex async workflows like real-time status updates. SCSS with BEM provided maintainable, scalable styling.",
+            results: [
+              { label: "User Flow Steps", value: "-60%" },
+              { label: "Page Load Time", value: "<1.5s" },
+              { label: "Mobile Responsive", value: "100%" },
+              { label: "Component Reuse", value: "85%" }
+            ],
+            lessons: "Government projects have unique constraints: accessibility compliance, multi-browser support, and the need for extreme simplicity. Building for the least technical user — not the most technical — forced better design decisions across the board."
+          },
         },
       ],
       es: [
@@ -136,6 +208,24 @@ const translations = {
           tags: ["Next.js", "NestJS", "PostgreSQL", "Docker", "JWT"],
           github: "https://github.com/itschrisedu/life_insurance_front",
           image: "/assets/projects/insurance.png",
+          caseStudy: {
+            overview: "Una aseguradora mediana en Ecuador se ahogaba en hojas de cálculo. La gestión de pólizas, seguimiento de clientes y procesamiento de reembolsos eran completamente manuales — generando errores, datos perdidos y personal frustrado. Necesitaban una plataforma digital centralizada para toda su operación.",
+            challenge: "La empresa tenía cero infraestructura digital. Cada póliza, cada registro de cliente y cada reclamo de reembolso vivía en archivos Excel dispersos en las computadoras de los empleados. Cuando un agente necesitaba revisar el historial de un cliente, tenía que buscar manualmente en docenas de archivos. Las aprobaciones de reembolsos tardaban días porque el papeleo debía pasar físicamente por múltiples manos. El riesgo de error humano era enorme — y estaban perdiendo dinero por eso.",
+            approach: [
+              "Descubrimiento y Arquitectura — Mapeé cada proceso de negocio (creación de pólizas, onboarding de clientes, gestión de contratos, flujo de reembolsos) y diseñé un esquema de base de datos relacional en PostgreSQL.",
+              "Desarrollo Backend — Construí una API REST robusta con NestJS, implementando autenticación JWT con control de acceso por roles (admin, agente, auditor). Cada endpoint protegido y validado.",
+              "Desarrollo Frontend — Creé un dashboard intuitivo con Next.js con tablas de datos en tiempo real, filtros avanzados y validación de formularios. Diseñado para usuarios no técnicos que antes solo conocían Excel.",
+              "DevOps y Despliegue — Contenericé todo el stack con Docker, configuré pipelines CI/CD con Jenkins y desplegué en servidor de producción con health checks automáticos."
+            ],
+            techDecisions: "Next.js fue elegido por sus capacidades de SSR y beneficios SEO. NestJS proporcionó una arquitectura backend escalable con TypeScript. PostgreSQL manejó datos relacionales complejos (pólizas → clientes → contratos → reembolsos). Docker aseguró ambientes consistentes desde desarrollo hasta producción.",
+            results: [
+              { label: "Commits en Producción", value: "80+" },
+              { label: "Módulos CRUD", value: "4" },
+              { label: "Reducción Tiempo Proceso", value: "70%" },
+              { label: "Método de Despliegue", value: "Docker" }
+            ],
+            lessons: "Este proyecto reforzó la importancia de entender el flujo de trabajo real del cliente antes de escribir una sola línea de código. La fase de descubrimiento inicial — sentarme con los agentes y verlos trabajar — reveló casos edge que habrían sido imposibles de anticipar desde un documento de requisitos."
+          },
         },
         {
           title: "GeoRutas — Optimizador de Rutas",
@@ -146,6 +236,24 @@ const translations = {
           tags: ["React", "TypeScript", "Node.js", "Leaflet", "OSRM"],
           github: "https://github.com/itschrisedu/GeoRutas_-ptimas",
           image: "/assets/projects/georutas.png",
+          caseStudy: {
+            overview: "Las empresas de transporte en Ecuador estaban quemando dinero en rutas ineficientes. Sin herramientas digitales, los conductores se guiaban por intuición y mapas de papel desactualizados — desperdiciando combustible, tiempo y recursos en cada viaje.",
+            challenge: "La geografía de Ecuador es brutal para la logística: tierras bajas costeras, altiplanos andinos a más de 4,000m y selva amazónica — todo en unos pocos cientos de kilómetros. Los precios del combustible varían por región, la elevación afecta dramáticamente el consumo, y las condiciones de las carreteras cambian constantemente. Herramientas existentes como Google Maps no consideran los precios de combustible de Ecuador ni modelos de consumo basados en elevación.",
+            approach: [
+              "Investigación y Modelado de Datos — Estudié la estructura de precios de combustible de Ecuador (subsidiados vs. comerciales por región) y construí modelos de consumo que consideran cambios de elevación, tipo de vehículo y peso de carga.",
+              "Integración de Mapas — Implementé mapas interactivos Leaflet con capas de tiles personalizadas mostrando datos de elevación. Los usuarios pueden agregar paradas ilimitadas haciendo clic en el mapa o buscando direcciones.",
+              "Motor de Rutas — Integré OSRM (Open Source Routing Machine) para cálculo de rutas en tiempo real con direcciones giro a giro, distancia y tiempo estimado.",
+              "Análisis de Costos — Construí una calculadora de costos de combustible que combina distancia de ruta, perfil de elevación, especificaciones del vehículo y precios regionales de combustible."
+            ],
+            techDecisions: "React + TypeScript proporcionaron desarrollo de componentes con tipado seguro. Leaflet fue elegido sobre Google Maps por su flexibilidad open-source y soporte de capas personalizadas. OSRM corre en nuestro propio servidor para cero costos de API. Backend Node.js maneja geocoding y datos de precios de combustible.",
+            results: [
+              { label: "Optimización de Rutas", value: "Tiempo real" },
+              { label: "Soporte Multi-parada", value: "Ilimitado" },
+              { label: "Precisión Costo Combustible", value: "±5%" },
+              { label: "Tiempo de Respuesta", value: "<2s" }
+            ],
+            lessons: "Construir para un mercado específico (Ecuador) con restricciones únicas (elevación, combustible subsidiado) creó un producto que herramientas genéricas no podían igualar. La experiencia de dominio se convirtió en la ventaja competitiva — no solo las habilidades técnicas."
+          },
         },
         {
           title: "BioAcces — Seguridad Biométrica",
@@ -156,6 +264,24 @@ const translations = {
           tags: ["Python", "Django", "JavaScript", "OpenCV", "Biometrics"],
           github: "https://github.com/itschrisedu/Bioacces",
           image: "/assets/projects/bioacces.png",
+          caseStudy: {
+            overview: "Los laboratorios de investigación universitarios contienen equipos y datos sensibles que valen millones. Una sola entrada no autorizada podría comprometer meses de investigación. El sistema de tarjetas existente era inadecuado — las tarjetas podían compartirse, perderse o clonarse. La universidad necesitaba una solución biométrica multifactor.",
+            challenge: "Los sistemas de control de acceso tradicionales dependen de algo que tienes (una tarjeta) o algo que sabes (un PIN). Ambos pueden comprometerse. La universidad requería algo que eres — verificación biométrica que es casi imposible de falsificar. El sistema debía funcionar en tiempo real, manejar condiciones de iluminación variable para reconocimiento facial, y procesar autenticación de voz en pasillos ruidosos.",
+            approach: [
+              "Investigación Biométrica — Evalué múltiples enfoques biométricos (huella, iris, facial, voz) y seleccioné reconocimiento facial + autenticación de voz como la combinación dual óptima para el ambiente del laboratorio.",
+              "Pipeline de Visión por Computadora — Construí un sistema de reconocimiento facial usando OpenCV con cascadas Haar para detección y LBPH para reconocimiento. Entrenado con personal del laboratorio en múltiples ángulos y condiciones de iluminación.",
+              "Autenticación de Voz — Implementé análisis de huella vocal usando comparación de espectro de frecuencias. Cada usuario autorizado graba muestras de voz durante el registro, almacenadas como espectrogramas encriptados.",
+              "Dashboard y Registro — Creé un panel de administración con Django y frontend JavaScript mostrando logs de acceso en tiempo real, alertas de intentos fallidos y gestión de usuarios."
+            ],
+            techDecisions: "Python fue la elección natural para cargas de trabajo de visión por computadora y ML. OpenCV proporcionó algoritmos de detección facial probados en batalla. Django ofreció desarrollo backend rápido con capacidades de admin integradas. SQLite fue suficiente para el alcance de despliegue de un solo laboratorio.",
+            results: [
+              { label: "Accesos No Autorizados", value: "0" },
+              { label: "Precisión Reconocimiento", value: "98.5%" },
+              { label: "Factores de Auth", value: "2" },
+              { label: "Tiempo de Proceso", value: "<3s" }
+            ],
+            lessons: "Los sistemas de seguridad deben ser seguros Y convenientes. Si la autenticación tarda demasiado, los usuarios dejarán las puertas abiertas. El tiempo de procesamiento de <3 segundos fue un requisito duro de la universidad — la velocidad era tan importante como la precisión."
+          },
         },
         {
           title: "MoviPass — Plataforma de Movilidad",
@@ -166,6 +292,24 @@ const translations = {
           tags: ["Angular", "TypeScript", "SCSS", "RxJS"],
           github: "https://github.com/itschrisedu/movipass-frontend",
           image: "/assets/projects/movipass.png",
+          caseStudy: {
+            overview: "Una organización adyacente al gobierno necesitaba digitalizar su sistema de permisos de movilidad. Los ciudadanos pasaban horas en filas físicas para solicitar pases de tránsito, y el personal procesaba todo en formularios de papel. El objetivo era una plataforma web moderna que agilizara todo el flujo.",
+            challenge: "El sistema basado en papel era lento, opaco y frustrante para todos. Los ciudadanos no tenían visibilidad del estado de su solicitud, el personal no podía rastrear la carga de trabajo, y la gerencia tenía cero datos para tomar decisiones. El nuevo sistema necesitaba manejar cientos de usuarios concurrentes siendo intuitivo para empleados gubernamentales no técnicos.",
+            approach: [
+              "Investigación UX — Mapeé el viaje del ciudadano desde la solicitud hasta la aprobación, identificando cuellos de botella. Diseñé flujos de usuario que redujeron los pasos en un 60%.",
+              "Arquitectura de Componentes — Construí una arquitectura Angular modular con módulos de carga lazy, componentes UI compartidos y gestión de estado centralizada usando servicios RxJS.",
+              "Diseño Responsive — Implementé un diseño mobile-first con SCSS usando metodología BEM. La interfaz funciona perfectamente en celulares (para ciudadanos) y escritorio (para personal).",
+              "Optimización de Rendimiento — Implementé scroll virtual para listas grandes, code splitting agresivo y estrategias de preloading para mantener la app rápida incluso en dispositivos de gama baja."
+            ],
+            techDecisions: "Angular fue seleccionado por su arquitectura enterprise, inyección de dependencias integrada y tipado fuerte con TypeScript. RxJS manejó flujos async complejos como actualizaciones de estado en tiempo real. SCSS con BEM proporcionó estilos mantenibles y escalables.",
+            results: [
+              { label: "Pasos del Flujo", value: "-60%" },
+              { label: "Tiempo de Carga", value: "<1.5s" },
+              { label: "Mobile Responsive", value: "100%" },
+              { label: "Reutilización Componentes", value: "85%" }
+            ],
+            lessons: "Los proyectos gubernamentales tienen restricciones únicas: cumplimiento de accesibilidad, soporte multi-navegador y necesidad de simplicidad extrema. Construir para el usuario menos técnico — no el más técnico — forzó mejores decisiones de diseño en general."
+          },
         },
       ],
     },
