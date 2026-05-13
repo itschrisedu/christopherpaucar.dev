@@ -10,13 +10,14 @@ import WorldMap from "@/components/ui/world-map";
 const EASE = [0.16, 1, 0.3, 1] as const;
 const FORMSPREE_URL = "https://formspree.io/f/xpwrpjqo";
 
+const ecuador = { lat: -0.1807, lng: -78.4678 }; // Quito, Ecuador
+
 const worldMapDots = [
-  { start: { lat: 64.2008, lng: -149.4937 }, end: { lat: 34.0522, lng: -118.2437 } },
-  { start: { lat: 64.2008, lng: -149.4937 }, end: { lat: -15.7975, lng: -47.8919 } },
-  { start: { lat: -15.7975, lng: -47.8919 }, end: { lat: 38.7223, lng: -9.1393 } },
-  { start: { lat: 51.5074, lng: -0.1278 }, end: { lat: 28.6139, lng: 77.209 } },
-  { start: { lat: 28.6139, lng: 77.209 }, end: { lat: 43.1332, lng: 131.9113 } },
-  { start: { lat: 28.6139, lng: 77.209 }, end: { lat: -1.2921, lng: 36.8219 } },
+  { start: ecuador, end: { lat: 41.8781, lng: -87.6298 } },  // Chicago (Center of North America)
+  { start: ecuador, end: { lat: 52.5200, lng: 13.4050 } },   // Berlin (Center of Europe)
+  { start: ecuador, end: { lat: -1.2921, lng: 36.8219 } },   // Nairobi (Center of Africa)
+  { start: ecuador, end: { lat: 39.9042, lng: 116.4074 } },  // Beijing (Center of Asia)
+  { start: ecuador, end: { lat: -23.6980, lng: 133.8807 } }, // Alice Springs (Center of Australia)
 ];
 
 type ContactFormData = {

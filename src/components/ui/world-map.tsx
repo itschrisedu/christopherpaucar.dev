@@ -119,11 +119,10 @@ export default function WorldMap({ dots = [], width = "100%", height = 260, clas
   return (
     <div className={`w-full overflow-hidden ${className}`}>
       {/* 
-        viewBox was "0 0 1200 510". 
-        By changing to "100 0 1000 510" we crop 100px from the left and 100px from the right (mostly empty ocean),
-        which makes the aspect ratio tighter and naturally renders the map taller in the available column width. 
+        viewBox was "100 0 1000 510". 
+        Changed to "100 0 1020 510" to include the right edge (Oceania/Japan) without cutting off dots. 
       */}
-      <svg viewBox={`100 0 1000 510`} width={width} height={height} preserveAspectRatio="xMidYMid meet" aria-hidden>
+      <svg viewBox={`100 0 1020 510`} width={width} height={height} preserveAspectRatio="xMidYMid meet" aria-hidden>
         <defs>
           <filter id="mapGlow" x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation="4" result="blur" />
