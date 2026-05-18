@@ -1,46 +1,49 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import CountryFlag from "./CountryFlag";
 
-/* ── Country data ──────────────────────────────────────────────── */
+/* ── Country data (id is unique; iso is for flag images) ───────── */
 const countries = [
-  { code: "+593", name: "Ecuador", flag: "🇪🇨" },
-  { code: "+1", name: "Estados Unidos", flag: "🇺🇸" },
-  { code: "+52", name: "México", flag: "🇲🇽" },
-  { code: "+57", name: "Colombia", flag: "🇨🇴" },
-  { code: "+51", name: "Perú", flag: "🇵🇪" },
-  { code: "+54", name: "Argentina", flag: "🇦🇷" },
-  { code: "+56", name: "Chile", flag: "🇨🇱" },
-  { code: "+55", name: "Brasil", flag: "🇧🇷" },
-  { code: "+58", name: "Venezuela", flag: "🇻🇪" },
-  { code: "+591", name: "Bolivia", flag: "🇧🇴" },
-  { code: "+595", name: "Paraguay", flag: "🇵🇾" },
-  { code: "+598", name: "Uruguay", flag: "🇺🇾" },
-  { code: "+507", name: "Panamá", flag: "🇵🇦" },
-  { code: "+506", name: "Costa Rica", flag: "🇨🇷" },
-  { code: "+502", name: "Guatemala", flag: "🇬🇹" },
-  { code: "+503", name: "El Salvador", flag: "🇸🇻" },
-  { code: "+504", name: "Honduras", flag: "🇭🇳" },
-  { code: "+34", name: "España", flag: "🇪🇸" },
-  { code: "+44", name: "Reino Unido", flag: "🇬🇧" },
-  { code: "+49", name: "Alemania", flag: "🇩🇪" },
-  { code: "+33", name: "Francia", flag: "🇫🇷" },
-  { code: "+39", name: "Italia", flag: "🇮🇹" },
-  { code: "+81", name: "Japón", flag: "🇯🇵" },
-  { code: "+86", name: "China", flag: "🇨🇳" },
-  { code: "+91", name: "India", flag: "🇮🇳" },
-  { code: "+61", name: "Australia", flag: "🇦🇺" },
-  { code: "+82", name: "Corea del Sur", flag: "🇰🇷" },
-  { code: "+1", name: "Canadá", flag: "🇨🇦" },
-  { code: "+351", name: "Portugal", flag: "🇵🇹" },
-];
+  { id: "ec", iso: "ec", code: "+593", name: "Ecuador" },
+  { id: "us", iso: "us", code: "+1", name: "Estados Unidos" },
+  { id: "mx", iso: "mx", code: "+52", name: "México" },
+  { id: "co", iso: "co", code: "+57", name: "Colombia" },
+  { id: "pe", iso: "pe", code: "+51", name: "Perú" },
+  { id: "ar", iso: "ar", code: "+54", name: "Argentina" },
+  { id: "cl", iso: "cl", code: "+56", name: "Chile" },
+  { id: "br", iso: "br", code: "+55", name: "Brasil" },
+  { id: "ve", iso: "ve", code: "+58", name: "Venezuela" },
+  { id: "bo", iso: "bo", code: "+591", name: "Bolivia" },
+  { id: "py", iso: "py", code: "+595", name: "Paraguay" },
+  { id: "uy", iso: "uy", code: "+598", name: "Uruguay" },
+  { id: "pa", iso: "pa", code: "+507", name: "Panamá" },
+  { id: "cr", iso: "cr", code: "+506", name: "Costa Rica" },
+  { id: "gt", iso: "gt", code: "+502", name: "Guatemala" },
+  { id: "sv", iso: "sv", code: "+503", name: "El Salvador" },
+  { id: "hn", iso: "hn", code: "+504", name: "Honduras" },
+  { id: "es", iso: "es", code: "+34", name: "España" },
+  { id: "gb", iso: "gb", code: "+44", name: "Reino Unido" },
+  { id: "de", iso: "de", code: "+49", name: "Alemania" },
+  { id: "fr", iso: "fr", code: "+33", name: "Francia" },
+  { id: "it", iso: "it", code: "+39", name: "Italia" },
+  { id: "jp", iso: "jp", code: "+81", name: "Japón" },
+  { id: "cn", iso: "cn", code: "+86", name: "China" },
+  { id: "in", iso: "in", code: "+91", name: "India" },
+  { id: "au", iso: "au", code: "+61", name: "Australia" },
+  { id: "kr", iso: "kr", code: "+82", name: "Corea del Sur" },
+  { id: "ca", iso: "ca", code: "+1", name: "Canadá" },
+  { id: "pt", iso: "pt", code: "+351", name: "Portugal" },
+] as const;
+
+type Country = (typeof countries)[number];
 
 /* ── Types ─────────────────────────────────────────────────────── */
 interface PhoneFieldProps {
   locale: string;
-  phoneCode: string;
+  phoneCountryId: string;
   phone: string;
-  onPhoneCodeChange: (code: string) => void;
+  onCountryChange: (country: Country) => void;
   onPhoneChange: (phone: string) => void;
   label: string;
   placeholder: string;
@@ -48,9 +51,9 @@ interface PhoneFieldProps {
 }
 
 export default function PhoneField({
-  phoneCode,
+  phoneCountryId,
   phone,
-  onPhoneCodeChange,
+  onCountryChange,
   onPhoneChange,
   label,
   placeholder,
@@ -61,7 +64,7 @@ export default function PhoneField({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
 
-  const selected = countries.find((c) => c.code === phoneCode) ?? countries[0];
+  const selected = countries.find((c) => c.id === phoneCountryId) ?? countries[0];
 
   /* Close on outside click */
   useEffect(() => {
@@ -112,7 +115,7 @@ export default function PhoneField({
               fontSize: "14px",
             }}
           >
-            <span style={{ fontSize: "20px", lineHeight: 1 }}>{selected.flag}</span>
+            <CountryFlag iso={selected.iso} />
             <span className="text-ink dark:text-[var(--color-ink)]" style={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "14px" }}>
               {selected.name}
             </span>
@@ -169,10 +172,10 @@ export default function PhoneField({
               <div style={{ padding: "4px" }}>
                 {filtered.map((country) => (
                   <button
-                    key={`${country.code}-${country.name}`}
+                    key={country.id}
                     type="button"
                     onClick={() => {
-                      onPhoneCodeChange(country.code);
+                      onCountryChange(country);
                       setOpen(false);
                       setSearch("");
                     }}
@@ -184,27 +187,27 @@ export default function PhoneField({
                       padding: "10px 12px",
                       borderRadius: "10px",
                       border: "none",
-                      background: phoneCode === country.code ? "var(--color-accent, #0071e3)" : "transparent",
+                      background: phoneCountryId === country.id ? "var(--color-accent, #0071e3)" : "transparent",
                       cursor: "pointer",
                       textAlign: "left",
                       transition: "background 150ms",
                     }}
-                    className={phoneCode === country.code
+                    className={phoneCountryId === country.id
                       ? "text-snow"
                       : "text-ink dark:text-[var(--color-ink)] hover:bg-fog dark:hover:bg-[#2c2c2e]"
                     }
                     onMouseEnter={(e) => {
-                      if (phoneCode !== country.code) {
+                      if (phoneCountryId !== country.id) {
                         (e.currentTarget as HTMLButtonElement).style.background = "";
                       }
                     }}
                     onMouseLeave={(e) => {
-                      if (phoneCode !== country.code) {
+                      if (phoneCountryId !== country.id) {
                         (e.currentTarget as HTMLButtonElement).style.background = "transparent";
                       }
                     }}
                   >
-                    <span style={{ fontSize: "20px", lineHeight: 1 }}>{country.flag}</span>
+                    <CountryFlag iso={country.iso} />
                     <span style={{ flex: 1, fontSize: "14px" }}>{country.name}</span>
                     <span style={{ fontSize: "12px", opacity: 0.5 }}>{country.code}</span>
                   </button>

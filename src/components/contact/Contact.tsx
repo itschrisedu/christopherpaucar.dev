@@ -23,6 +23,7 @@ const worldMapDots = [
 type ContactFormData = {
   name: string;
   email: string;
+  phoneCountryId: string;
   phoneCode: string;
   phone: string;
   subject: string;
@@ -37,6 +38,7 @@ export default function Contact() {
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
+    phoneCountryId: "ec",
     phoneCode: "+593",
     phone: "",
     subject: "",
@@ -101,7 +103,7 @@ export default function Contact() {
 
       if (res.ok) {
         setStatus("sent");
-        setFormData({ name: "", email: "", phoneCode: "+593", phone: "", subject: "", message: "" });
+        setFormData({ name: "", email: "", phoneCountryId: "ec", phoneCode: "+593", phone: "", subject: "", message: "" });
         setTimeout(() => setStatus("idle"), 4000);
       } else {
         setStatus("error");
@@ -202,9 +204,15 @@ export default function Contact() {
                   </div>
                   <PhoneField
                     locale={locale}
-                    phoneCode={formData.phoneCode}
+                    phoneCountryId={formData.phoneCountryId}
                     phone={formData.phone}
-                    onPhoneCodeChange={(code) => setFormData((current) => ({ ...current, phoneCode: code }))}
+                    onCountryChange={(country) =>
+                      setFormData((current) => ({
+                        ...current,
+                        phoneCountryId: country.id,
+                        phoneCode: country.code,
+                      }))
+                    }
                     onPhoneChange={(phone) => setFormData((current) => ({ ...current, phone }))}
                     label={t.contact.phone[locale]}
                     placeholder={t.contact.phonePlaceholder[locale]}
