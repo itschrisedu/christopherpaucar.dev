@@ -8,8 +8,6 @@ import { Button } from "@/components/ui/stateful-button";
 import WorldMap from "@/components/ui/world-map";
 import PhoneField from "./PhoneField";
 const EASE = [0.16, 1, 0.3, 1] as const;
-const FORMSPREE_URL = "https://formspree.io/f/xpwrpjqo";
-
 const ecuador = { lat: -0.1807, lng: -78.4678 }; // Quito, Ecuador
 
 const worldMapDots = [
