@@ -6,7 +6,7 @@ import { Container } from "@/components/layout/Container";
 import { SectionContent } from "@/components/layout/SectionContent";
 import { Button } from "@/components/ui/stateful-button";
 import WorldMap from "@/components/ui/world-map";
-
+import PhoneField from "./PhoneField";
 const EASE = [0.16, 1, 0.3, 1] as const;
 const FORMSPREE_URL = "https://formspree.io/f/xpwrpjqo";
 
@@ -23,6 +23,8 @@ const worldMapDots = [
 type ContactFormData = {
   name: string;
   email: string;
+  phoneCode: string;
+  phone: string;
   subject: string;
   message: string;
 };
@@ -35,6 +37,8 @@ export default function Contact() {
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
+    phoneCode: "+593",
+    phone: "",
     subject: "",
     message: "",
   });
@@ -78,29 +82,26 @@ export default function Contact() {
     const clean = {
       name: sanitize(formData.name),
       email: sanitize(formData.email),
+      phoneCode: sanitize(formData.phoneCode),
+      phone: sanitize(formData.phone),
       subject: sanitize(formData.subject),
       message: sanitize(formData.message),
+      _gotcha: honeypot,
     };
 
     // Validate required fields
     if (!clean.name || !clean.email || !clean.message) return;
 
-    const payload = new FormData();
-    payload.set("name", clean.name);
-    payload.set("email", clean.email);
-    payload.set("subject", clean.subject);
-    payload.set("message", clean.message);
-
     try {
-      const res = await fetch(FORMSPREE_URL, {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        body: payload,
-        headers: { Accept: "application/json" },
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(clean),
       });
 
       if (res.ok) {
         setStatus("sent");
-        setFormData({ name: "", email: "", subject: "", message: "" });
+        setFormData({ name: "", email: "", phoneCode: "+593", phone: "", subject: "", message: "" });
         setTimeout(() => setStatus("idle"), 4000);
       } else {
         setStatus("error");
@@ -199,6 +200,16 @@ export default function Contact() {
                       className={inputClass}
                     />
                   </div>
+                  <PhoneField
+                    locale={locale}
+                    phoneCode={formData.phoneCode}
+                    phone={formData.phone}
+                    onPhoneCodeChange={(code) => setFormData((current) => ({ ...current, phoneCode: code }))}
+                    onPhoneChange={(phone) => setFormData((current) => ({ ...current, phone }))}
+                    label={t.contact.phone[locale]}
+                    placeholder={t.contact.phonePlaceholder[locale]}
+                    inputClass={inputClass}
+                  />
                   <div>
                     <label htmlFor="subject" className="mb-2 block text-[14px] font-semibold text-ink dark:text-[var(--color-ink)]">{locale === "en" ? "Company" : "Compañía"}</label>
                     <input
