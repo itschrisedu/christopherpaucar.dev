@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import TerminalIntro from "@/components/terminal/TerminalIntro";
 import Hero from "@/components/hero/Hero";
+import { prefetchHeroGlobe } from "@/lib/prefetch-hero-globe";
 
 /* ── Lazy-loaded sections ────────────────────────────────────────────
    These components are NOT included in the initial JS bundle.
@@ -48,6 +49,11 @@ function LazySection({ children, fallbackHeight = "50vh" }: { children: React.Re
 export default function Home() {
   const [phase, setPhase] = useState<Phase>("terminal");
   const done = useCallback(() => setPhase("portfolio"), []);
+
+  /* Preload globe JS while the user watches the terminal (~5–15s window) */
+  useEffect(() => {
+    prefetchHeroGlobe();
+  }, []);
 
   useEffect(() => {
     const h = (e: KeyboardEvent) => { if (e.key === "Escape" && phase === "terminal") done(); };

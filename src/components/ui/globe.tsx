@@ -55,7 +55,7 @@ export type GlobeConfig = {
   autoRotateSpeed?: number;
 };
 
-interface WorldProps {
+export interface WorldProps {
   globeConfig: GlobeConfig;
   data: Position[];
 }
@@ -150,7 +150,7 @@ export function Globe({ globeConfig, data }: WorldProps) {
 
     globeRef.current
       .hexPolygonsData(countries.features)
-      .hexPolygonResolution(3)
+      .hexPolygonResolution(2)
       .hexPolygonMargin(0.7)
       .showAtmosphere(defaultProps.showAtmosphere)
       .atmosphereColor(defaultProps.atmosphereColor)
@@ -248,8 +248,15 @@ export function World(props: WorldProps) {
   const { globeConfig } = props;
   const scene = new Scene();
   scene.fog = new Fog(0xffffff, 400, 2000);
+  const dpr =
+    typeof window !== "undefined" ? Math.min(window.devicePixelRatio, 1.5) : 1;
   return (
-    <Canvas scene={scene} camera={new PerspectiveCamera(50, aspect, 180, 1800)}>
+    <Canvas
+      scene={scene}
+      camera={new PerspectiveCamera(50, aspect, 180, 1800)}
+      dpr={dpr}
+      gl={{ antialias: false, powerPreference: "high-performance", alpha: true }}
+    >
       <WebGLRendererConfig />
       <ambientLight color={globeConfig.ambientLight} intensity={0.6} />
       <directionalLight

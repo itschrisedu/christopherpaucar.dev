@@ -1,11 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
-import dynamic from "next/dynamic";
 import { useLanguage } from "@/context/LanguageContext";
-
-const World = dynamic(() => import("@/components/ui/globe").then((m) => m.World), { ssr: false });
+import HeroGlobe from "@/components/hero/HeroGlobe";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 const fadeUp = {
@@ -22,28 +19,16 @@ const globeConfig = {
   initialPosition: { lat: -1.2544, lng: -78.6226 }, autoRotate: true, autoRotateSpeed: 0.4,
 };
 const cc = ["#0071e3", "#0066cc", "#5ac8fa", "#007aff"];
+/* Fewer arcs = faster globe init; still reads as a connected world map */
 const arcs = [
   { order: 1, startLat: -1.25, startLng: -78.62, endLat: 40.71, endLng: -74.01, arcAlt: 0.3, color: cc[0] },
   { order: 1, startLat: -1.25, startLng: -78.62, endLat: 51.51, endLng: -0.13, arcAlt: 0.4, color: cc[1] },
   { order: 2, startLat: -1.25, startLng: -78.62, endLat: 35.68, endLng: 139.65, arcAlt: 0.5, color: cc[2] },
   { order: 2, startLat: -1.25, startLng: -78.62, endLat: 48.86, endLng: 2.35, arcAlt: 0.35, color: cc[3] },
   { order: 3, startLat: -1.25, startLng: -78.62, endLat: -33.87, endLng: 151.21, arcAlt: 0.6, color: cc[0] },
-  { order: 3, startLat: -1.25, startLng: -78.62, endLat: 52.52, endLng: 13.41, arcAlt: 0.35, color: cc[1] },
-  { order: 4, startLat: -1.25, startLng: -78.62, endLat: 25.2, endLng: 55.27, arcAlt: 0.5, color: cc[2] },
-  { order: 4, startLat: -1.25, startLng: -78.62, endLat: 28.61, endLng: 77.21, arcAlt: 0.45, color: cc[3] },
-  { order: 5, startLat: -1.25, startLng: -78.62, endLat: -22.91, endLng: -43.17, arcAlt: 0.2, color: cc[0] },
-  { order: 5, startLat: -1.25, startLng: -78.62, endLat: 34.05, endLng: -118.24, arcAlt: 0.15, color: cc[1] },
-  { order: 6, startLat: -1.25, startLng: -78.62, endLat: 19.43, endLng: -99.13, arcAlt: 0.2, color: cc[2] },
-  { order: 6, startLat: -1.25, startLng: -78.62, endLat: -34.60, endLng: -58.38, arcAlt: 0.25, color: cc[3] },
-  { order: 7, startLat: -1.25, startLng: -78.62, endLat: 4.71, endLng: -74.07, arcAlt: 0.1, color: cc[0] },
-  { order: 7, startLat: -1.25, startLng: -78.62, endLat: -12.05, endLng: -77.04, arcAlt: 0.12, color: cc[1] },
-  { order: 8, startLat: -1.25, startLng: -78.62, endLat: -33.45, endLng: -70.67, arcAlt: 0.22, color: cc[2] },
-  { order: 9, startLat: 40.71, startLng: -74.01, endLat: 51.51, endLng: -0.13, arcAlt: 0.2, color: cc[3] },
-  { order: 9, startLat: 51.51, startLng: -0.13, endLat: 1.35, endLng: 103.82, arcAlt: 0.35, color: cc[0] },
-  { order: 10, startLat: 48.86, startLng: 2.35, endLat: 35.68, endLng: 139.65, arcAlt: 0.4, color: cc[1] },
-  { order: 10, startLat: 34.05, startLng: -118.24, endLat: 37.57, endLng: 126.98, arcAlt: 0.45, color: cc[2] },
-  { order: 11, startLat: 1.35, startLng: 103.82, endLat: -33.87, endLng: 151.21, arcAlt: 0.15, color: cc[3] },
-  { order: 11, startLat: 25.2, startLng: 55.27, endLat: 28.61, endLng: 77.21, arcAlt: 0.1, color: cc[0] },
+  { order: 3, startLat: -1.25, startLng: -78.62, endLat: 34.05, endLng: -118.24, arcAlt: 0.2, color: cc[1] },
+  { order: 4, startLat: -1.25, startLng: -78.62, endLat: 28.61, endLng: 77.21, arcAlt: 0.45, color: cc[2] },
+  { order: 4, startLat: 40.71, startLng: -74.01, endLat: 51.51, endLng: -0.13, arcAlt: 0.2, color: cc[3] },
 ];
 
 export default function Hero() {
@@ -59,15 +44,15 @@ export default function Hero() {
         }}
       />
 
-      {/* Globe — subtle decorative element */}
+      {/* Globe — decorative; JS prefetched during terminal, placeholder until WebGL ready */}
       <motion.div
         id="hero-globe"
-        initial={{ opacity: 0, scale: 0.85 }}
+        initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 0.4, scale: 0.85 }}
-        transition={{ duration: 1.2, delay: 0.5, ease: EASE }}
+        transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
         className="absolute bottom-[-15%] right-[-10%] w-[450px] h-[450px] sm:w-[550px] sm:h-[550px] lg:w-[700px] lg:h-[700px] pointer-events-none hidden sm:block"
       >
-        <World data={arcs} globeConfig={globeConfig} />
+        <HeroGlobe data={arcs} globeConfig={globeConfig} />
       </motion.div>
 
       {/* Content — locked to viewport */}
