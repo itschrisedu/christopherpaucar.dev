@@ -202,15 +202,9 @@ export default function Contact() {
                   </div>
                   <PhoneField
                     locale={locale}
-                    phoneCountryId={formData.phoneCountryId}
+                    phoneCode={formData.phoneCode}
                     phone={formData.phone}
-                    onCountryChange={(country) =>
-                      setFormData((current) => ({
-                        ...current,
-                        phoneCountryId: country.id,
-                        phoneCode: country.code,
-                      }))
-                    }
+                    onPhoneCodeChange={(code) => setFormData((current) => ({ ...current, phoneCode: code }))}
                     onPhoneChange={(phone) => setFormData((current) => ({ ...current, phone }))}
                     label={t.contact.phone[locale]}
                     placeholder={t.contact.phonePlaceholder[locale]}

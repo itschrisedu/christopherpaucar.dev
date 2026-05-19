@@ -116,14 +116,10 @@ export default function Testimonials() {
     ],
   };
 
-  const [testimonials, setTestimonials] = useState<StoredTestimonial[]>(
+  const [testimonials, setTestimonials] = useState<StoredTestimonial[]>(() =>
     initialTestimonials[locale as keyof typeof initialTestimonials]
   );
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    setTestimonials(initialTestimonials[locale as keyof typeof initialTestimonials]);
-  }, [locale]);
 
   const handleSubmitTestimonial = async (data: TestimonialData) => {
     setIsLoading(true);

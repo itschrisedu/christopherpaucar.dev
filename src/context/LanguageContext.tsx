@@ -17,16 +17,13 @@ const LanguageContext = createContext<LanguageContextType>({
 });
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocale] = useState<Locale>("en");
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    const saved = localStorage.getItem("locale") as Locale | null;
-    if (saved && (saved === "en" || saved === "es")) {
-      setLocale(saved);
+  const [locale, setLocale] = useState<Locale>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("locale") as Locale | null;
+      if (saved && (saved === "en" || saved === "es")) return saved;
     }
-  }, []);
+    return "en";
+  });
 
   const toggleLocale = useCallback(() => {
     setLocale((prev) => {
@@ -36,11 +33,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
-  // During SSR and initial hydration, always use "en" to match server
-  const activeLocale = mounted ? locale : "en";
-
   return (
-    <LanguageContext.Provider value={{ locale: activeLocale, toggleLocale, t: translations }}>
+    <LanguageContext.Provider value={{ locale, toggleLocale, t: translations }}>
       {children}
     </LanguageContext.Provider>
   );

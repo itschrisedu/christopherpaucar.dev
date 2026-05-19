@@ -12,8 +12,8 @@ export function AnimatedThemeToggler({
   const { theme, toggleTheme } = useTheme();
   const [isAnimating, setIsAnimating] = useState(false);
   const [origin, setOrigin] = useState({ x: 50, y: 50 });
-  const [mounted, setMounted] = useState(true);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const [portalOrigin, setPortalOrigin] = useState("50% 50%");
 
   const handleToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (isAnimating) return;
@@ -34,17 +34,15 @@ export function AnimatedThemeToggler({
     }, duration);
   };
 
-  // Obtener las coordenadas globales del botón
-  const getGlobalOrigin = () => {
-    if (!buttonRef.current) return { x: "50%", y: "50%" };
-    const rect = buttonRef.current.getBoundingClientRect();
-    return {
-      x: `${rect.left + rect.width / 2}px`,
-      y: `${rect.top + rect.height / 2}px`,
-    };
-  };
+  // Compute portal origin when animation starts (safe to access ref here)
+  useEffect(() => {
+    if (isAnimating && buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setPortalOrigin(`${rect.left + rect.width / 2}px ${rect.top + rect.height / 2}px`);
+    }
+  }, [isAnimating]);
 
-  const globalOrigin = getGlobalOrigin();
+  // Obtener las coordenadas globales del botón (calculadas cuando se renderiza el portal)
 
   return (
     <>
@@ -88,8 +86,8 @@ export function AnimatedThemeToggler({
           <div
             className="fixed inset-0 pointer-events-none z-[9999] backdrop-blur-sm"
             style={{
-              transformOrigin: globalOrigin.x + " " + globalOrigin.y,
-            }}
+                transformOrigin: portalOrigin,
+              }}
           >
             <div
               className="absolute inset-0 bg-[#0b0b0b] dark:bg-white"
