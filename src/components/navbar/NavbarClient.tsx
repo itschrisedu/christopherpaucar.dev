@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import Navbar from "@/components/navbar/Navbar";
 
 export default function NavbarClient() {
-  const [mounted] = useState(() => typeof window !== "undefined");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   if (!mounted) return null;
 

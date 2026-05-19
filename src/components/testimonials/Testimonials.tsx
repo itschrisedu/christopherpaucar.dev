@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
-import { motion, useInView } from "framer-motion";
+import { LazyMotion, domAnimation, m, useInView } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 import { Container } from "@/components/layout/Container";
 import { SectionContent } from "@/components/layout/SectionContent";
@@ -153,9 +153,11 @@ export default function Testimonials() {
 
       <Container>
         <SectionContent>
-          <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: EASE }} className="mb-10 sm:mb-14">
-            <SectionHeading centered label={t.testimonials.label[locale]} title={t.testimonials.title[locale]} />
-          </motion.div>
+          <LazyMotion features={domAnimation}>
+            <m.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: EASE }} className="mb-10 sm:mb-14">
+              <SectionHeading centered label={t.testimonials.label[locale]} title={t.testimonials.title[locale]} />
+            </m.div>
+          </LazyMotion>
 
           <TestimonialModal onSubmit={handleSubmitTestimonial} />
 
