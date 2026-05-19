@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import Image from "next/image";
 
 export type AnimatedTestimonial = {
@@ -10,6 +10,7 @@ export type AnimatedTestimonial = {
   name: string;
   designation: string;
   src: string;
+  rating?: number;
 };
 
 type AnimatedTestimonialsProps = {
@@ -59,8 +60,13 @@ export function AnimatedTestimonials({
             <Image src={current.src} alt={current.name} fill className="object-cover" sizes="(min-width: 1024px) 40vw, 100vw" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
             <div className="absolute bottom-5 left-5 right-5 rounded-xl bg-black/55 p-4 backdrop-blur-sm">
-              <p className="text-lg font-semibold text-white">{current.name}</p>
-              <p className="text-sm text-white/80">{current.designation}</p>
+              <div className="flex items-center justify-end">
+                <div className="flex items-center gap-1" aria-label={`Rating ${current.rating ?? 0} of 5`}>
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <Star key={s} size={16} className={`${s <= (current.rating ?? 0) ? "fill-accent text-accent" : "text-white/40"}`} />
+                  ))}
+                </div>
+              </div>
             </div>
           </motion.div>
         </AnimatePresence>
