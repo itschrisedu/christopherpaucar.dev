@@ -60,7 +60,11 @@ export function AnimatedTestimonials({
             <Image src={current.src} alt={current.name} fill className="object-cover" sizes="(min-width: 1024px) 40vw, 100vw" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
             <div className="absolute bottom-5 left-5 right-5 rounded-xl bg-black/55 p-4 backdrop-blur-sm">
-              <div className="flex items-center justify-end">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-lg font-semibold text-white">{current.name}</p>
+                  <p className="text-sm text-white/80">{current.designation}</p>
+                </div>
                 <div className="flex items-center gap-1" aria-label={`Rating ${current.rating ?? 0} of 5`}>
                   {[1, 2, 3, 4, 5].map((s) => (
                     <Star key={s} size={16} className={`${s <= (current.rating ?? 0) ? "fill-accent text-accent" : "text-white/40"}`} />
@@ -83,8 +87,6 @@ export function AnimatedTestimonials({
           >
             <p className="text-3xl leading-none text-accent/35">&ldquo;</p>
             <p className="mt-4 text-[17px] leading-relaxed text-secondary dark:text-gray-400">{current.quote}</p>
-            <p className="mt-8 text-lg font-semibold text-primary dark:text-white">{current.name}</p>
-            <p className="text-sm text-muted dark:text-gray-500">{current.designation}</p>
           </motion.div>
         </AnimatePresence>
 
