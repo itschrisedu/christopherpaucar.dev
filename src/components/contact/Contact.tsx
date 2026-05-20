@@ -182,7 +182,27 @@ export default function Contact() {
                       type="text"
                       required
                       value={formData.name}
-                      onChange={(e) => setFormData((current) => ({ ...current, name: e.target.value }))}
+                      onChange={(e) => {
+                        // Auto-capitalize first letter of each word as user types.
+                        const raw = e.target.value;
+                        const endsWithSpace = /\s$/.test(raw);
+                        const parts = raw.split(/(\s+)/).map((seg) => {
+                          // keep whitespace segments as-is
+                          if (/^\s+$/.test(seg)) return seg;
+                          if (!seg) return seg;
+                          const first = seg[0];
+                          const rest = seg.slice(1);
+                          return first.toLocaleUpperCase() + rest.toLocaleLowerCase();
+                        });
+                        const formatted = parts.join("");
+                        // preserve trailing space if user typed it
+                        setFormData((current) => ({ ...current, name: formatted }));
+                      }}
+                      onBlur={() => {
+                        // Trim extra spaces on blur and normalize to single spaces
+                        const normalized = formData.name.trim().split(/\s+/).map((w) => w ? (w[0].toLocaleUpperCase() + w.slice(1).toLocaleLowerCase()) : '').filter(Boolean).join(' ');
+                        setFormData((current) => ({ ...current, name: normalized }));
+                      }}
                       placeholder={t.contact.namePlaceholder[locale]}
                       className={inputClass}
                     />
