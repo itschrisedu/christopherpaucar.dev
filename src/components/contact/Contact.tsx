@@ -183,24 +183,35 @@ export default function Contact() {
                       required
                       value={formData.name}
                       onChange={(e) => {
-                        // Auto-capitalize first letter of each word as user types.
+                        // Auto-capitalize first letter of each word as user types and
+                        // enforce a maximum of 5 words by removing extras as typed.
                         const raw = e.target.value;
-                        const endsWithSpace = /\s$/.test(raw);
-                        const parts = raw.split(/(\s+)/).map((seg) => {
-                          // keep whitespace segments as-is
-                          if (/^\s+$/.test(seg)) return seg;
+                        const parts = raw.split(/(\s+)/); // keep spaces as separate tokens
+                        let wordsSeen = 0;
+                        const limited = parts.map((seg) => {
+                          if (/^\s+$/.test(seg)) return seg; // preserve whitespace tokens
                           if (!seg) return seg;
-                          const first = seg[0];
-                          const rest = seg.slice(1);
-                          return first.toLocaleUpperCase() + rest.toLocaleLowerCase();
+                          if (wordsSeen < 5) {
+                            wordsSeen += 1;
+                            const first = seg[0];
+                            const rest = seg.slice(1);
+                            return first.toLocaleUpperCase() + rest.toLocaleLowerCase();
+                          }
+                          // beyond 5 words: drop extra content
+                          return "";
                         });
-                        const formatted = parts.join("");
-                        // preserve trailing space if user typed it
+                        const formatted = limited.join("");
                         setFormData((current) => ({ ...current, name: formatted }));
                       }}
                       onBlur={() => {
-                        // Trim extra spaces on blur and normalize to single spaces
-                        const normalized = formData.name.trim().split(/\s+/).map((w) => w ? (w[0].toLocaleUpperCase() + w.slice(1).toLocaleLowerCase()) : '').filter(Boolean).join(' ');
+                        // Normalize to single spaces, capitalize properly and limit to 5 words
+                        const normalized = formData.name
+                          .trim()
+                          .split(/\s+/)
+                          .slice(0, 5)
+                          .map((w) => (w ? w[0].toLocaleUpperCase() + w.slice(1).toLocaleLowerCase() : ""))
+                          .filter(Boolean)
+                          .join(" ");
                         setFormData((current) => ({ ...current, name: normalized }));
                       }}
                       placeholder={t.contact.namePlaceholder[locale]}
