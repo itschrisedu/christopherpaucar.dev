@@ -1,5 +1,6 @@
 "use client";
 import React, { useRef, useState, useEffect } from "react";
+import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { motion, useInView } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 import { Container } from "@/components/layout/Container";
@@ -79,6 +80,43 @@ export default function Contact() {
     return re.test(normalized);
   };
 
+  const phoneLengthRules: Record<string, { min: number; max: number }> = {
+    // country code => typical local phone number length (allowing optional trunk 0 where applicable)
+    "+593": { min: 9, max: 10 }, // Ecuador: 9 digits without trunk 0, 10 with leading 0
+    "+1": { min: 10, max: 10 }, // US/Canada
+    "+52": { min: 10, max: 10 }, // Mexico
+    "+57": { min: 10, max: 10 }, // Colombia
+    "+51": { min: 9, max: 9 }, // Peru
+    "+54": { min: 10, max: 10 }, // Argentina
+    "+55": { min: 10, max: 11 }, // Brazil
+    "+56": { min: 9, max: 9 }, // Chile
+    "+58": { min: 10, max: 10 }, // Venezuela
+    "+591": { min: 7, max: 8 }, // Bolivia (varies)
+    "+595": { min: 8, max: 9 }, // Paraguay
+    "+598": { min: 8, max: 9 }, // Uruguay
+    "+507": { min: 7, max: 8 }, // Panama
+    "+506": { min: 8, max: 8 }, // Costa Rica
+    "+502": { min: 8, max: 8 }, // Guatemala
+    "+503": { min: 8, max: 8 }, // El Salvador
+    "+504": { min: 8, max: 8 }, // Honduras
+    "+34": { min: 9, max: 9 }, // Spain
+    "+44": { min: 10, max: 10 }, // UK (without leading 0)
+    "+49": { min: 10, max: 11 }, // Germany
+    "+33": { min: 9, max: 9 }, // France
+    "+39": { min: 9, max: 10 }, // Italy
+    "+81": { min: 10, max: 10 }, // Japan
+    "+86": { min: 11, max: 11 }, // China
+    "+91": { min: 10, max: 10 }, // India
+    "+61": { min: 9, max: 9 }, // Australia
+    "+82": { min: 9, max: 10 }, // South Korea
+    "+351": { min: 9, max: 9 }, // Portugal
+    // default handled below
+  };
+
+  function getPhoneRule(code: string) {
+    return phoneLengthRules[code] ?? { min: 6, max: 15 };
+  }
+
   /* ── Rate limiting: prevent spam (5s cooldown) ────────────────── */
   const lastSubmitRef = React.useRef(0);
 
@@ -100,8 +138,14 @@ export default function Contact() {
     } else {
       setNameError(null);
     }
-    if (!formData.phone.trim() || formData.phone.trim().length < 6) {
-      setPhoneError(locale === "en" ? "Please enter a valid phone number." : "Por favor ingresa un número de teléfono válido.");
+    const fullNumber = `${formData.phoneCode}${formData.phone}`;
+    const phoneNumber = parsePhoneNumberFromString(fullNumber);
+    if (!phoneNumber || !phoneNumber.isValid()) {
+      setPhoneError(
+        locale === "en"
+          ? `Please enter a valid phone number for ${formData.phoneCode}`
+          : `Por favor ingresa un número válido para ${formData.phoneCode}`
+      );
       hasError = true;
     } else {
       setPhoneError(null);
@@ -128,11 +172,12 @@ export default function Contact() {
     lastSubmitRef.current = now;
 
     // Sanitize all inputs
+    const phoneNumberNormalized = parsePhoneNumberFromString(`${formData.phoneCode}${formData.phone}`);
     const clean = {
       name: sanitize(formData.name),
       email: sanitize(formData.email),
       phoneCode: sanitize(formData.phoneCode),
-      phone: sanitize(formData.phone),
+      phone: phoneNumberNormalized && phoneNumberNormalized.isValid() ? phoneNumberNormalized.number : sanitize(formData.phone),
       subject: sanitize(formData.subject),
       message: sanitize(formData.message),
       _gotcha: honeypot,
@@ -179,7 +224,9 @@ export default function Contact() {
   const isFormValid = () => {
     if (!formData.name.trim()) return false;
     if (!isValidEmail(formData.email)) return false;
-    if (!formData.phone.trim() || formData.phone.trim().length < 6) return false;
+    // phone validation via libphonenumber-js
+    const phoneNum = parsePhoneNumberFromString(`${formData.phoneCode}${formData.phone}`);
+    if (!phoneNum || !phoneNum.isValid()) return false;
     if (!formData.subject.trim()) return false;
     if (!formData.message.trim()) return false;
     if (emailError || nameError || phoneError || subjectError || messageError) return false;
@@ -325,7 +372,13 @@ export default function Contact() {
                     onPhoneCodeChange={(code) => setFormData((current) => ({ ...current, phoneCode: code }))}
                     onPhoneChange={(phone) => { setFormData((current) => ({ ...current, phone })); if (phoneError) setPhoneError(null); }}
                     label={t.contact.phone[locale]}
-                    placeholder={t.contact.phonePlaceholder[locale]}
+                    placeholder={(() => {
+                      const rule = getPhoneRule(formData.phoneCode || "+593");
+                      // Use max as the representative length; show that many 'x' characters
+                      const len = rule.max;
+                      return "x".repeat(len);
+                    })()}
+                    maxLength={(() => getPhoneRule(formData.phoneCode || "+593").max)()}
                     inputClass={inputClass}
                   />
                   {phoneError && <p className="mt-2 text-[13px] text-[#ff375f]">{phoneError}</p>}

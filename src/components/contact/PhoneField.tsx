@@ -60,6 +60,7 @@ interface PhoneFieldProps {
   label: string;
   placeholder: string;
   inputClass: string;
+  maxLength?: number;
 }
 
 export default function PhoneField({
@@ -70,6 +71,7 @@ export default function PhoneField({
   label,
   placeholder,
   inputClass,
+  maxLength,
 }: PhoneFieldProps) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -77,6 +79,7 @@ export default function PhoneField({
   const searchRef = useRef<HTMLInputElement>(null);
 
   const selected = countries.find((c) => c.code === phoneCode) ?? countries[0];
+  const effectiveMax = typeof maxLength === "number" ? maxLength : 15; // E.164 maximum
 
   /* Close on outside click */
   useEffect(() => {
@@ -243,10 +246,12 @@ export default function PhoneField({
           onChange={(e) => {
             // Allow only digits in the phone input; preserve cursor behavior by sending digits-only
             const digits = e.target.value.replace(/\D+/g, "");
-            onPhoneChange(digits);
+            const limited = digits.slice(0, effectiveMax);
+            onPhoneChange(limited);
           }}
           placeholder={placeholder}
           className={inputClass}
+          maxLength={effectiveMax}
           style={{ flex: 1, minWidth: 0 }}
         />
       </div>
