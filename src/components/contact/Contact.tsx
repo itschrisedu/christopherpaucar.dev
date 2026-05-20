@@ -34,6 +34,10 @@ export default function Contact() {
   const { locale, t } = useLanguage();
   const [status, setStatus] = useState<"idle" | "sent" | "error">("idle");
   const [emailError, setEmailError] = useState<string | null>(null);
+  const [nameError, setNameError] = useState<string | null>(null);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
+  const [subjectError, setSubjectError] = useState<string | null>(null);
+  const [messageError, setMessageError] = useState<string | null>(null);
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
@@ -88,6 +92,33 @@ export default function Contact() {
       return;
     }
     setEmailError(null);
+    // Validate other required fields
+    let hasError = false;
+    if (!formData.name.trim()) {
+      setNameError(locale === "en" ? "Please enter your full name." : "Por favor ingresa tu nombre completo.");
+      hasError = true;
+    } else {
+      setNameError(null);
+    }
+    if (!formData.phone.trim() || formData.phone.trim().length < 6) {
+      setPhoneError(locale === "en" ? "Please enter a valid phone number." : "Por favor ingresa un número de teléfono válido.");
+      hasError = true;
+    } else {
+      setPhoneError(null);
+    }
+    if (!formData.subject.trim()) {
+      setSubjectError(locale === "en" ? "Please enter your company or subject." : "Por favor ingresa la compañía o asunto.");
+      hasError = true;
+    } else {
+      setSubjectError(null);
+    }
+    if (!formData.message.trim()) {
+      setMessageError(locale === "en" ? "Please enter a message." : "Por favor ingresa un mensaje.");
+      hasError = true;
+    } else {
+      setMessageError(null);
+    }
+    if (hasError) return;
     // Bot check: if honeypot is filled, silently reject
     if (honeypot) { setStatus("sent"); return; }
 
@@ -119,6 +150,12 @@ export default function Contact() {
 
       if (res.ok) {
         setStatus("sent");
+        // clear errors and reset form
+        setNameError(null);
+        setEmailError(null);
+        setPhoneError(null);
+        setSubjectError(null);
+        setMessageError(null);
         setFormData({ name: "", email: "", phoneCountryId: "ec", phoneCode: "+593", phone: "", subject: "", message: "" });
         setTimeout(() => setStatus("idle"), 4000);
       } else {
@@ -137,6 +174,16 @@ export default function Contact() {
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     void handleSubmit();
+  };
+
+  const isFormValid = () => {
+    if (!formData.name.trim()) return false;
+    if (!isValidEmail(formData.email)) return false;
+    if (!formData.phone.trim() || formData.phone.trim().length < 6) return false;
+    if (!formData.subject.trim()) return false;
+    if (!formData.message.trim()) return false;
+    if (emailError || nameError || phoneError || subjectError || messageError) return false;
+    return true;
   };
 
   return (
@@ -220,6 +267,7 @@ export default function Contact() {
                         });
                         const formatted = limited.join("");
                         setFormData((current) => ({ ...current, name: formatted }));
+                            if (nameError) setNameError(null);
                       }}
                       onBlur={() => {
                         // Normalize to single spaces, capitalize properly and limit to 5 words
@@ -235,6 +283,7 @@ export default function Contact() {
                       placeholder={t.contact.namePlaceholder[locale]}
                       className={inputClass}
                     />
+                    {nameError && <p className="mt-2 text-[13px] text-[#ff375f]">{nameError}</p>}
                   </div>
                   <div>
                     <label htmlFor="email" className="mb-2 block text-[14px] font-semibold text-ink dark:text-[var(--color-ink)]">{locale === "en" ? "Email address" : "Dirección de correo electrónico"}</label>
@@ -274,11 +323,12 @@ export default function Contact() {
                     phoneCode={formData.phoneCode}
                     phone={formData.phone}
                     onPhoneCodeChange={(code) => setFormData((current) => ({ ...current, phoneCode: code }))}
-                    onPhoneChange={(phone) => setFormData((current) => ({ ...current, phone }))}
+                    onPhoneChange={(phone) => { setFormData((current) => ({ ...current, phone })); if (phoneError) setPhoneError(null); }}
                     label={t.contact.phone[locale]}
                     placeholder={t.contact.phonePlaceholder[locale]}
                     inputClass={inputClass}
                   />
+                  {phoneError && <p className="mt-2 text-[13px] text-[#ff375f]">{phoneError}</p>}
                   <div>
                     <label htmlFor="subject" className="mb-2 block text-[14px] font-semibold text-ink dark:text-[var(--color-ink)]">{locale === "en" ? "Company" : "Compañía"}</label>
                     <input
@@ -287,10 +337,11 @@ export default function Contact() {
                       type="text"
                       required
                       value={formData.subject}
-                      onChange={(e) => setFormData((current) => ({ ...current, subject: e.target.value }))}
+                      onChange={(e) => { setFormData((current) => ({ ...current, subject: e.target.value })); if (subjectError) setSubjectError(null); }}
                       placeholder={t.contact.subjectPlaceholder[locale]}
                       className={inputClass}
                     />
+                    {subjectError && <p className="mt-2 text-[13px] text-[#ff375f]">{subjectError}</p>}
                   </div>
                   <div>
                     <label htmlFor="message" className="mb-2 block text-[14px] font-semibold text-ink dark:text-[var(--color-ink)]">{t.contact.message[locale]}</label>
@@ -300,10 +351,11 @@ export default function Contact() {
                       required
                       rows={5}
                       value={formData.message}
-                      onChange={(e) => setFormData((current) => ({ ...current, message: e.target.value }))}
+                      onChange={(e) => { setFormData((current) => ({ ...current, message: e.target.value })); if (messageError) setMessageError(null); }}
                       placeholder={t.contact.messagePlaceholder[locale]}
                       className={`${inputClass} resize-none`}
                     />
+                    {messageError && <p className="mt-2 text-[13px] text-[#ff375f]">{messageError}</p>}
                   </div>
                   {status === "sent" && (
                     <div className="rounded-2xl bg-[#34c759]/10 px-4 py-3 text-[14px] text-[#34c759]">
@@ -319,7 +371,8 @@ export default function Contact() {
                     type="button"
                     onClick={handleSubmit}
                     loadingText={t.contact.sending[locale]}
-                    className="inline-flex h-[52px] items-center justify-center rounded-full px-8 text-[15px] font-normal bg-azure text-snow hover:bg-[#0077ED] transition-all duration-200"
+                    disabled={!isFormValid()}
+                    className="inline-flex h-[52px] items-center justify-center rounded-full px-8 text-[15px] font-normal bg-azure text-snow hover:bg-[#0077ED] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {t.contact.cta[locale]}
                   </Button>

@@ -240,7 +240,11 @@ export default function PhoneField({
           name="phone"
           type="tel"
           value={phone}
-          onChange={(e) => onPhoneChange(e.target.value)}
+          onChange={(e) => {
+            // Allow only digits in the phone input; preserve cursor behavior by sending digits-only
+            const digits = e.target.value.replace(/\D+/g, "");
+            onPhoneChange(digits);
+          }}
           placeholder={placeholder}
           className={inputClass}
           style={{ flex: 1, minWidth: 0 }}
