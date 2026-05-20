@@ -44,8 +44,10 @@ export function IconCloudDemo() {
   return (
     <div className="relative flex h-[240px] sm:h-[320px] md:h-[360px] lg:h-[420px] w-full max-w-[620px] mx-auto items-center justify-center overflow-hidden rounded-2xl border border-border bg-surface dark:border-white/10 dark:bg-[#151515]">
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/5 dark:to-white/5" />
-      <div className="absolute inset-0">
-        <IconCloud images={images} radius={120} />
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="transform origin-center scale-75 sm:scale-90 md:scale-95 lg:scale-100">
+          <IconCloud images={images} radius={120} />
+        </div>
       </div>
     </div>
   );

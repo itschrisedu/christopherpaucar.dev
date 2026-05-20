@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import dynamic from "next/dynamic";
 import TerminalIntro from "@/components/terminal/TerminalIntro";
 import Hero from "@/components/hero/Hero";
@@ -31,6 +31,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 function LazySection({ children, fallbackHeight = "50vh" }: { children: React.ReactNode; fallbackHeight?: string }) {
   const [isVisible, setIsVisible] = useState(false);
   const [ref, setRef] = useState<HTMLDivElement | null>(null);
+  const shouldReduce = useReducedMotion();
 
   useEffect(() => {
     if (!ref) return;
@@ -42,7 +43,19 @@ function LazySection({ children, fallbackHeight = "50vh" }: { children: React.Re
     return () => observer.disconnect();
   }, [ref]);
 
-  if (isVisible) return <>{children}</>;
+  if (isVisible) {
+    if (shouldReduce) return <>{children}</>;
+    return (
+      <motion.div
+        ref={setRef as any}
+        initial={{ opacity: 0, y: 28, scale: 0.995, filter: "blur(2px)" }}
+        animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)", transition: { duration: 0.8, ease: EASE } }}
+      >
+        {children}
+      </motion.div>
+    );
+  }
+
   return <div ref={setRef} style={{ minHeight: fallbackHeight }} />;
 }
 
