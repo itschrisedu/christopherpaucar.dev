@@ -135,7 +135,7 @@ export default function Footer() {
             {/* Brand column */}
             <div className="col-span-2 sm:col-span-1">
               <div className="flex items-center gap-3 mb-5">
-                <div className="h-9 w-9 rounded-full bg-snow flex items-center justify-center">
+                <div className="h-9 w-9 flex items-center justify-center">
                   <Image src="/assets/icons/logoC.svg" alt="CP" width={24} height={24} className="h-6 w-6" priority />
                 </div>
                 <span className="text-[15px] font-semibold text-snow">C. Paucar</span>
