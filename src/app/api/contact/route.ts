@@ -89,6 +89,42 @@ export async function POST(request: Request) {
     // 5. Send email
     await transporter.sendMail(mailOptions);
 
+    // 6. Send auto-reply to the sender to acknowledge receipt (brand-friendly)
+    try {
+      const replySubject = "Thanks — I received your message";
+      const replyText =
+        `Hi ${name || "there"},\n\nThanks for contacting me. I received your message and will respond within 24 hours.\n\nBest regards,\nChristopher`;
+
+      const replyHtml = [
+        '<div style="font-family:Arial,sans-serif;max-width:680px;margin:0 auto;border-radius:8px;overflow:hidden;border:1px solid #e6e6e6">',
+        '  <div style="background:#0b1724;padding:18px 24px;color:#fff;text-align:center">',
+        '    <h2 style="margin:0;font-size:20px">Thanks for getting in touch</h2>',
+        '  </div>',
+        '  <div style="padding:24px;background:#ffffff;color:#111">',
+        `    <p>Hi ${name || "there"},</p>`,
+        '    <p>Thanks for reaching out. I received your message and will review it shortly. If you provided project details, I will reply within 24 hours with next steps.</p>',
+        '    <p style="margin-top:18px">In the meantime you can review my recent work at <a href="https://christopherpaucar.dev">christopherpaucar.dev</a>.</p>',
+        '    <hr style="border:0;border-top:1px solid #eee;margin:20px 0">',
+        '    <p style="font-size:13px;color:#666;margin:0">This is an automated confirmation — you do not need to reply to this message.</p>',
+        '  </div>',
+        '  <div style="background:#f7f7f7;padding:12px 16px;text-align:center;font-size:12px;color:#666">',
+        '    Christopher Paucar — Full Stack Developer',
+        '  </div>',
+        '</div>',
+      ].join('\n');
+
+      await transporter.sendMail({
+        from: process.env.MAIL_FROM || process.env.SMTP_USER,
+        to: email,
+        subject: replySubject,
+        text: replyText,
+        html: replyHtml,
+      });
+    } catch (autoErr) {
+      console.error("Auto-reply failed:", autoErr);
+      // don't fail the main response if auto-reply fails
+    }
+
     // 6. Optional WhatsApp notification via CallMeBot
     if (process.env.WHATSAPP_PHONE && process.env.WHATSAPP_APIKEY) {
       try {

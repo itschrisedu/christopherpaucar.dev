@@ -33,6 +33,7 @@ export default function Contact() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const { locale, t } = useLanguage();
   const [status, setStatus] = useState<"idle" | "sent" | "error">("idle");
+  const [emailError, setEmailError] = useState<string | null>(null);
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
@@ -63,6 +64,17 @@ export default function Contact() {
   const sanitize = (str: string) =>
     str.replace(/<[^>]*>/g, "").replace(/[<>]/g, "").trim();
 
+  const isValidEmail = (email: string) => {
+    if (!email) return false;
+    // Basic RFC-like validation: local@domain.tld, only one @, domain with a dot and valid TLD
+    const normalized = email.trim().toLowerCase();
+    // ensure single @
+    if ((normalized.match(/@/g) || []).length !== 1) return false;
+    // basic regex for email validity
+    const re = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+    return re.test(normalized);
+  };
+
   /* ── Rate limiting: prevent spam (5s cooldown) ────────────────── */
   const lastSubmitRef = React.useRef(0);
 
@@ -70,6 +82,12 @@ export default function Contact() {
   const [honeypot, setHoneypot] = React.useState("");
 
   const handleSubmit = async () => {
+    // client-side email validation before sending
+    if (!isValidEmail(formData.email)) {
+      setEmailError(locale === "en" ? "Please enter a valid email address." : "Por favor ingresa un correo válido.");
+      return;
+    }
+    setEmailError(null);
     // Bot check: if honeypot is filled, silently reject
     if (honeypot) { setStatus("sent"); return; }
 
@@ -226,10 +244,30 @@ export default function Contact() {
                       type="email"
                       required
                       value={formData.email}
-                      onChange={(e) => setFormData((current) => ({ ...current, email: e.target.value }))}
+                      onChange={(e) => {
+                        // Force lowercase and allow only a single '@'
+                        const raw = e.target.value;
+                        let v = raw.toLowerCase();
+                        const atMatches = v.match(/@/g) || [];
+                        if (atMatches.length > 1) {
+                          const firstAt = v.indexOf("@");
+                          v = v.slice(0, firstAt + 1) + v.slice(firstAt + 1).replace(/@/g, "");
+                        }
+                        setFormData((current) => ({ ...current, email: v }));
+                        if (emailError) setEmailError(null);
+                      }}
+                      onBlur={() => {
+                        setFormData((current) => ({ ...current, email: current.email.trim().toLowerCase() }));
+                        if (!isValidEmail(formData.email)) {
+                          setEmailError(locale === "en" ? "Please enter a valid email address." : "Por favor ingresa un correo válido.");
+                        } else {
+                          setEmailError(null);
+                        }
+                      }}
                       placeholder={t.contact.emailPlaceholder[locale]}
                       className={inputClass}
                     />
+                    {emailError && <p className="mt-2 text-[13px] text-[#ff375f]">{emailError}</p>}
                   </div>
                   <PhoneField
                     locale={locale}
