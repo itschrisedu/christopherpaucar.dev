@@ -16,6 +16,7 @@ export async function POST(request: Request) {
       email,
       phoneCode,
       phone,
+      phoneCountryId,
       subject,
       budget,
       timeline,
@@ -55,7 +56,10 @@ export async function POST(request: Request) {
 
     let fullPhone = "Not provided";
     if (phone) {
-      const phoneNumber = parsePhoneNumberFromString(`${phoneCode}${phone}`);
+      const countryIso = phoneCountryId ? String(phoneCountryId).toUpperCase() : undefined;
+      const phoneNumber = countryIso
+        ? parsePhoneNumberFromString(String(phone), { defaultCountry: countryIso as any })
+        : parsePhoneNumberFromString(`${phoneCode}${phone}`);
       if (!phoneNumber || !phoneNumber.isValid()) {
         return NextResponse.json({ success: false, error: "Invalid phone number." }, { status: 400 });
       }
@@ -67,24 +71,35 @@ export async function POST(request: Request) {
     const safeEmail = sanitize(email);
     const safeSubject = sanitize(subject || "");
 
-    // 3. Configure Nodemailer
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || "smtp.gmail.com",
-      port: Number(process.env.SMTP_PORT) || 465,
-      secure: process.env.SMTP_SECURE === "true",
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    });
-
-    // In local development, if SMTP credentials are not configured, skip sending
-    // actual emails to avoid failures while validating input. The request will
-    // still be validated and normalized.
+    // 3. Configure Nodemailer. Prefer real SMTP credentials; otherwise in
+    // non-production create an Ethereal test account so we can preview messages.
+    let transporter: any;
     const hasSmtp = !!(process.env.SMTP_USER && process.env.SMTP_PASS);
-    if (!hasSmtp && process.env.NODE_ENV !== "production") {
-      console.log("SMTP not configured — skipping email send in dev. Returning success for testing.");
-      return NextResponse.json({ success: true, message: "Validation passed (dev mode: email not sent)." });
+    let usingTestAccount = false;
+    if (hasSmtp) {
+      transporter = nodemailer.createTransport({
+        host: process.env.SMTP_HOST || "smtp.gmail.com",
+        port: Number(process.env.SMTP_PORT) || 465,
+        secure: process.env.SMTP_SECURE === "true",
+        auth: {
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASS,
+        },
+      });
+    } else if (process.env.NODE_ENV !== "production") {
+      // Create a test account (Ethereal) so dev/staging can preview emails
+      // without real SMTP credentials.
+      const testAccount = await nodemailer.createTestAccount();
+      transporter = nodemailer.createTransport({
+        host: testAccount.smtp.host,
+        port: testAccount.smtp.port,
+        secure: testAccount.smtp.secure,
+        auth: { user: testAccount.user, pass: testAccount.pass },
+      });
+      usingTestAccount = true;
+    } else {
+      // In production require SMTP credentials
+      return NextResponse.json({ success: false, error: "SMTP credentials not configured." }, { status: 500 });
     }
 
     // 4. Build email
@@ -128,7 +143,14 @@ export async function POST(request: Request) {
     };
 
     // 5. Send email
-    await transporter.sendMail(mailOptions);
+    const info = await transporter.sendMail(mailOptions);
+
+    // If using Ethereal test account, include preview URL in logs/response
+    let previewUrl: string | undefined;
+    if (usingTestAccount) {
+      previewUrl = nodemailer.getTestMessageUrl(info) || undefined;
+      console.log("Ethereal preview URL:", previewUrl);
+    }
 
     // 6. Send auto-reply to the sender to acknowledge receipt (brand-friendly)
     try {
@@ -156,13 +178,17 @@ export async function POST(request: Request) {
         '</div>',
       ].join('\n');
 
-      await transporter.sendMail({
+      const replyInfo = await transporter.sendMail({
         from: process.env.MAIL_FROM || process.env.SMTP_USER,
         to: safeEmail,
         subject: replySubject,
         text: replyText,
         html: replyHtml,
       });
+      if (usingTestAccount) {
+        const replyPreview = nodemailer.getTestMessageUrl(replyInfo) || undefined;
+        console.log("Ethereal reply preview URL:", replyPreview);
+      }
     } catch (autoErr) {
       console.error("Auto-reply failed:", autoErr);
       // don't fail the main response if auto-reply fails
@@ -185,7 +211,7 @@ export async function POST(request: Request) {
       }
     }
 
-    return NextResponse.json({ success: true, message: "Message sent successfully" });
+    return NextResponse.json({ success: true, message: "Message sent successfully", previewUrl });
   } catch (error) {
     console.error("Email sending error:", error);
     return NextResponse.json(

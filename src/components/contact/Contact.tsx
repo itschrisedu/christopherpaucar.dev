@@ -34,6 +34,7 @@ export default function Contact() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const { locale, t } = useLanguage();
   const [status, setStatus] = useState<"idle" | "sent" | "error">("idle");
+  const [generalError, setGeneralError] = useState<string | null>(null);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [nameError, setNameError] = useState<string | null>(null);
   const [phoneError, setPhoneError] = useState<string | null>(null);
@@ -138,8 +139,8 @@ export default function Contact() {
     } else {
       setNameError(null);
     }
-    const fullNumber = `${formData.phoneCode}${formData.phone}`;
-    const phoneNumber = parsePhoneNumberFromString(fullNumber);
+    const countryIso = (formData.phoneCountryId || "").toUpperCase();
+    const phoneNumber = parsePhoneNumberFromString(formData.phone, countryIso ? { defaultCountry: countryIso as any } : undefined);
     if (!phoneNumber || !phoneNumber.isValid()) {
       setPhoneError(
         locale === "en"
@@ -172,11 +173,12 @@ export default function Contact() {
     lastSubmitRef.current = now;
 
     // Sanitize all inputs
-    const phoneNumberNormalized = parsePhoneNumberFromString(`${formData.phoneCode}${formData.phone}`);
+    const phoneNumberNormalized = parsePhoneNumberFromString(formData.phone, countryIso ? { defaultCountry: countryIso as any } : undefined);
     const clean = {
       name: sanitize(formData.name),
       email: sanitize(formData.email),
       phoneCode: sanitize(formData.phoneCode),
+      phoneCountryId: sanitize(formData.phoneCountryId),
       phone: phoneNumberNormalized && phoneNumberNormalized.isValid() ? phoneNumberNormalized.number : sanitize(formData.phone),
       subject: sanitize(formData.subject),
       message: sanitize(formData.message),
@@ -192,6 +194,7 @@ export default function Contact() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(clean),
       });
+      const data = await res.json().catch(() => ({}));
 
       if (res.ok) {
         setStatus("sent");
@@ -201,14 +204,18 @@ export default function Contact() {
         setPhoneError(null);
         setSubjectError(null);
         setMessageError(null);
+        setGeneralError(null);
         setFormData({ name: "", email: "", phoneCountryId: "ec", phoneCode: "+593", phone: "", subject: "", message: "" });
         setTimeout(() => setStatus("idle"), 4000);
       } else {
         setStatus("error");
+        const msg = (data && (data.error || data.message)) || "Error sending. Try again.";
+        setGeneralError(String(msg));
         setTimeout(() => setStatus("idle"), 4000);
       }
-    } catch {
+    } catch (err) {
       setStatus("error");
+      setGeneralError(err instanceof Error ? err.message : String(err));
       setTimeout(() => setStatus("idle"), 4000);
     }
   };
@@ -225,7 +232,8 @@ export default function Contact() {
     if (!formData.name.trim()) return false;
     if (!isValidEmail(formData.email)) return false;
     // phone validation via libphonenumber-js
-    const phoneNum = parsePhoneNumberFromString(`${formData.phoneCode}${formData.phone}`);
+    const countryIsoCheck = (formData.phoneCountryId || "").toUpperCase();
+    const phoneNum = parsePhoneNumberFromString(formData.phone, countryIsoCheck ? { defaultCountry: countryIsoCheck as any } : undefined);
     if (!phoneNum || !phoneNum.isValid()) return false;
     if (!formData.subject.trim()) return false;
     if (!formData.message.trim()) return false;
@@ -369,7 +377,7 @@ export default function Contact() {
                     locale={locale}
                     phoneCode={formData.phoneCode}
                     phone={formData.phone}
-                    onPhoneCodeChange={(code) => setFormData((current) => ({ ...current, phoneCode: code }))}
+                    onPhoneCodeChange={(code, iso) => setFormData((current) => ({ ...current, phoneCode: code, phoneCountryId: iso ?? current.phoneCountryId }))}
                     onPhoneChange={(phone) => { setFormData((current) => ({ ...current, phone })); if (phoneError) setPhoneError(null); }}
                     label={t.contact.phone[locale]}
                     placeholder={(() => {
@@ -417,7 +425,7 @@ export default function Contact() {
                   )}
                   {status === "error" && (
                     <div className="rounded-2xl bg-[#ff375f]/10 px-4 py-3 text-[14px] text-[#ff375f]">
-                      {t.contact.error[locale]}
+                      {generalError || t.contact.error[locale]}
                     </div>
                   )}
                   <Button

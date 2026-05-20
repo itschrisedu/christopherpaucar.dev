@@ -55,7 +55,7 @@ interface PhoneFieldProps {
   locale: string;
   phoneCode: string;
   phone: string;
-  onPhoneCodeChange: (code: string) => void;
+  onPhoneCodeChange: (code: string, iso?: string) => void;
   onPhoneChange: (phone: string) => void;
   label: string;
   placeholder: string;
@@ -190,7 +190,7 @@ export default function PhoneField({
                     key={`${country.code}-${country.name}`}
                     type="button"
                     onClick={() => {
-                      onPhoneCodeChange(country.code);
+                      onPhoneCodeChange(country.code, country.iso);
                       setOpen(false);
                       setSearch("");
                     }}
