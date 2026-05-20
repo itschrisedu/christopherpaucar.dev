@@ -108,7 +108,7 @@ export default function Navbar() {
 
           {/* CTA — Azure pill button */}
           <a
-            href="#contact"
+            href="#pricing"
             className="rounded-full px-5 py-2 text-[14px] font-normal
                 bg-azure text-snow
                 hover:bg-[#0077ED] transition-all duration-200"
